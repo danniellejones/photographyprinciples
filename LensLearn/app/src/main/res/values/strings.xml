@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">Lens Learn</string>
     <string name="play">Play</string>
-    <string name="learn_photography_through_the_seven_principles_of_design">Learn Photography through the seven Principles of Design</string>
-    <string name="lens_learn">Lens Learn</string>
-    <string name="lens_learn_icon">Lens Learn Icon</string>
+    <string name="landing_subtitle">Learn Photography through the seven Principles of Design</string>
+    <string name="landing_title">Lens Learn</string>
+    <string name="landing_icon_description">Lens Learn Icon</string>
+    <string name="category_activity_title">Photography Seven Principles of Design</string>
+    <string name="category_balance">Balance</string>
+    <string name="category_contrast">Contrast</string>
+    <string name="category_emphasis">Emphasis</string>
+    <string name="category_pattern">Pattern</string>
+    <string name="category_rhythm">Rhythm</string>
+    <string name="category_space">Space</string>
+    <string name="category_unity">Unity</string>
+    <string name="instructions">Instructions</string>
 </resources>
