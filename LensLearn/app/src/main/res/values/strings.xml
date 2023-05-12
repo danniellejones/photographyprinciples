@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Lens Learn</string>
+    <string name="play">Play</string>
+    <string name="learn_photography_through_the_seven_principles_of_design">Learn Photography through the seven Principles of Design</string>
+    <string name="lens_learn">Lens Learn</string>
+    <string name="lens_learn_icon">Lens Learn Icon</string>
 </resources>
