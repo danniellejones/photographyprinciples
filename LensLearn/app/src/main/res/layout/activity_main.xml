@@ -10,20 +10,20 @@
         android:id="@+id/iconBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp"
-        android:minHeight="300dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/very_dark_grey"
+        android:minHeight="300dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/iconLens"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/icon_lens_learn"
-        android:contentDescription="@string/lens_learn_icon" />
+        <ImageView
+            android:id="@+id/iconLens"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/lens_learn_icon"
+            app:srcCompat="@drawable/icon_lens_learn" />
 
     </LinearLayout>
 
@@ -31,10 +31,10 @@
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lens_learn"
         android:layout_marginTop="40dp"
-        android:textSize="30sp"
+        android:text="@string/lens_learn"
         android:textAlignment="center"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iconBackground" />
@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:maxWidth="250dp"
-        android:textAlignment="center"
         android:text="@string/learn_photography_through_the_seven_principles_of_design"
+        android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -61,8 +61,8 @@
         android:layout_marginBottom="100dp"
         android:minWidth="150dp"
         android:minHeight="55dp"
-        android:textAlignment="center"
         android:text="@string/play"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

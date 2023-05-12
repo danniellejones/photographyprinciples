@@ -22,7 +22,7 @@
         android:theme="@style/Theme.LensLearn"
         tools:targetApi="31">
         <activity
-            android:name=".CategoryActivity"
+            android:name=".view.CategoryActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
