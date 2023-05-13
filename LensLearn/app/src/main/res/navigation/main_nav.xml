@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/categoryActivity">
+
+    <activity
+        android:id="@+id/categoryActivity"
+        android:name="cp3406.a2.lenslearn.view.CategoryActivity"
+        android:label="@string/category"
+        tools:layout="@layout/activity_category">
+        <action
+            android:id="@+id/action_categoryActivity_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </activity>
+
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="cp3406.a2.lenslearn.view.SettingsFragment"
+        android:label="@string/settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_categoryActivity"
+            app:destination="@id/categoryActivity" />
+    </fragment>
+
+</navigation>
