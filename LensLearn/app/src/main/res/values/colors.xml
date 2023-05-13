@@ -9,4 +9,8 @@
     <color name="dark_blue">#00334d</color>
     <color name="mid_purple">#c933ff</color>
     <color name="dark_purple">#730099</color>
+    <color name="mid_green">#4012A518</color>
+    <color name="mid_red">#40E91E25</color>
+
+
 </resources>

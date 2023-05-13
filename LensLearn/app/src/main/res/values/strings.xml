@@ -36,6 +36,10 @@ updateImage(image: Image): Updates an existing image in the local database.
 deleteImage(image: Image): Deletes an image from the local database.
 </string>
     <string name="read_and_shake">Read to learn, shake to know more!</string>
+    <string name="identify_instructions_left">Swipe left to REJECT</string>
+    <string name="identify_instructions_middle">Identify the Principle above in the images below</string>
+    <string name="identify_instructions_right">Swipe right to ACCEPT</string>
+    <string name="identify_image_description">A photograph to identify the principle in...</string>
 
 
 </resources>
