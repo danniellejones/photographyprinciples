@@ -18,13 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/dark_blue"
-            android:textColor="@color/white"
-            android:paddingTop="30dp"
-            android:paddingBottom="16dp"
             android:paddingStart="8dp"
+            android:paddingTop="30dp"
             android:paddingEnd="8dp"
+            android:paddingBottom="16dp"
             android:text="@string/category_activity_title"
             android:textAlignment="center"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
         <LinearLayout
@@ -41,6 +41,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCategoryBalance"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -49,7 +50,7 @@
                     app:cardUseCompatPadding="true">
 
                     <TextView
-                        android:id="@+id/btn_balance"
+                        android:id="@+id/textCategoryBalance"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -57,11 +58,12 @@
                         android:text="@string/category_balance"
                         android:textAlignment="center"
                         android:textSize="16sp"
-                        app:drawableTopCompat="@drawable/ic_balance"
-                        app:drawableTint="@color/mid_blue" />
+                        app:drawableTint="@color/mid_blue"
+                        app:drawableTopCompat="@drawable/ic_balance" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCategoryContrast"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -70,15 +72,15 @@
                     app:cardUseCompatPadding="true">
 
                     <TextView
-                        android:id="@+id/btn_contrast"
+                        android:id="@+id/textCategoryContrast"
                         android:layout_width="match_parent"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        app:drawableTint="@color/mid_blue"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:onClick="startContrast"
                         android:text="@string/category_contrast"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        app:drawableTint="@color/mid_blue"
                         app:drawableTopCompat="@drawable/ic_contrast" />
                 </androidx.cardview.widget.CardView>
 
@@ -91,6 +93,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCategoryEmphasis"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -98,20 +101,21 @@
                     app:cardElevation="4dp"
                     app:cardUseCompatPadding="true">
 
-                <TextView
-                    android:id="@+id/btn_emphasis"
-                    app:drawableTint="@color/mid_blue"
-                    android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="startEmphasis"
-                    android:text="@string/category_emphasis"
-                    app:drawableTopCompat="@drawable/ic_emphasis" />
+                    <TextView
+                        android:id="@+id/textCategoryEmphasis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="startEmphasis"
+                        android:text="@string/category_emphasis"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        app:drawableTint="@color/mid_blue"
+                        app:drawableTopCompat="@drawable/ic_emphasis" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCategoryPattern"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -119,18 +123,18 @@
                     app:cardElevation="4dp"
                     app:cardUseCompatPadding="true">
 
-                <TextView
-                    android:id="@+id/btn_pattern"
-                    android:layout_height="match_parent"
-                    app:drawableTint="@color/mid_blue"
-                    android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:layout_weight="1"
-                    android:onClick="startPattern"
-                    android:text="@string/category_pattern"
-                    app:drawableTopCompat="@drawable/ic_pattern" />
-            </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/textCategoryPattern"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="startPattern"
+                        android:text="@string/category_pattern"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        app:drawableTint="@color/mid_blue"
+                        app:drawableTopCompat="@drawable/ic_pattern" />
+                </androidx.cardview.widget.CardView>
 
             </TableRow>
 
@@ -141,6 +145,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCategoryRhythm"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -148,20 +153,21 @@
                     app:cardElevation="4dp"
                     app:cardUseCompatPadding="true">
 
-                <TextView
-                    android:id="@+id/btn_rhythm"
-                    android:layout_height="match_parent"
-                    app:drawableTint="@color/mid_blue"
-                    android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:layout_weight="1"
-                    android:onClick="startRhythm"
-                    android:text="@string/category_rhythm"
-                    app:drawableTopCompat="@drawable/ic_rhythm" />
-            </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/textCategoryRhythm"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="startRhythm"
+                        android:text="@string/category_rhythm"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        app:drawableTint="@color/mid_blue"
+                        app:drawableTopCompat="@drawable/ic_rhythm" />
+                </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCategorySpace"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -169,18 +175,18 @@
                     app:cardElevation="4dp"
                     app:cardUseCompatPadding="true">
 
-                <TextView
-                    android:id="@+id/btn_space"
-                    app:drawableTint="@color/mid_blue"
-                    android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="startSpace"
-                    android:text="@string/category_space"
-                    app:drawableTopCompat="@drawable/ic_space" />
-    </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/textCategorySpace"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="startSpace"
+                        android:text="@string/category_space"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        app:drawableTint="@color/mid_blue"
+                        app:drawableTopCompat="@drawable/ic_space" />
+                </androidx.cardview.widget.CardView>
 
             </TableRow>
 
@@ -191,6 +197,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardCategoryUnity"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -198,29 +205,29 @@
                     app:cardElevation="4dp"
                     app:cardUseCompatPadding="true">
 
-                <TextView
-                    android:id="@+id/btn_unity"
-                    app:drawableTint="@color/mid_blue"
-                    android:layout_width="match_parent"
-                    android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="startUnity"
-                    android:text="@string/category_unity"
-                    app:drawableTopCompat="@drawable/ic_unity" />
-            </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/textCategoryUnity"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="startUnity"
+                        android:text="@string/category_unity"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        app:drawableTint="@color/mid_blue"
+                        app:drawableTopCompat="@drawable/ic_unity" />
+                </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/txt_instructions"
-                    android:layout_height="match_parent"
-                    app:drawableTint="@color/mid_blue"
+                    android:id="@+id/textInstructions"
                     android:layout_width="0dp"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/instructions" />
+                    android:text="@string/instructions"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    app:drawableTint="@color/mid_blue" />
 
             </TableRow>
         </LinearLayout>
