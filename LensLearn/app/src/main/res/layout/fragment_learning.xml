@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="learningViewModel"
+            type="cp3406.a2.lenslearn.model.LearningViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

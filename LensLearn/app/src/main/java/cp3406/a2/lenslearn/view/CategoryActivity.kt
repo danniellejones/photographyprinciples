@@ -1,6 +1,5 @@
 package cp3406.a2.lenslearn.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -11,7 +10,7 @@ import cp3406.a2.lenslearn.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {
 
-    val selectedCategory = ""
+    val selectedCategoryId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +27,6 @@ class CategoryActivity : AppCompatActivity() {
 
 
 //        val view = binding.root
-//        setContentView(R.layout.activity_category)
-        // Create an instance of CategoryViewModel
-//        val viewModel = ViewModelProvider(this)[CategoryViewModel::class.java]
-
 //        binding.lifecycleOwner = this
 //        binding.categoryViewModel = viewModel
 
@@ -47,9 +42,6 @@ class CategoryActivity : AppCompatActivity() {
     private fun startBalancePlay() {
         TODO("Not yet implemented")
 //        supportFragmentManager.beginTransaction().add(R.id.).commit()
-
-//        binding.textView.text = binding.getIdFromLayout.text
-
     }
 
 
