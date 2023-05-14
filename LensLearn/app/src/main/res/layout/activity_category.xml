@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="categoryViewModel"
+            type="cp3406.a2.lenslearn.model.CategoryViewModel" />
     </data>
 
     <LinearLayout
@@ -14,7 +16,7 @@
         tools:context=".view.CategoryActivity">
 
         <TextView
-            android:id="@+id/textCategoryTitle"
+            android:id="@+id/text_category_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/dark_blue"
@@ -41,7 +43,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardCategoryBalance"
+                    android:id="@+id/card_category_balance"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -50,7 +52,7 @@
                     app:cardUseCompatPadding="true">
 
                     <TextView
-                        android:id="@+id/textCategoryBalance"
+                        android:id="@+id/text_category_balance"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -63,7 +65,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardCategoryContrast"
+                    android:id="@+id/card_category_contrast"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -72,7 +74,7 @@
                     app:cardUseCompatPadding="true">
 
                     <TextView
-                        android:id="@+id/textCategoryContrast"
+                        android:id="@+id/text_category_contrast"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -93,7 +95,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardCategoryEmphasis"
+                    android:id="@+id/card_category_emphasis"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -102,7 +104,7 @@
                     app:cardUseCompatPadding="true">
 
                     <TextView
-                        android:id="@+id/textCategoryEmphasis"
+                        android:id="@+id/text_category_emphasis"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -115,7 +117,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardCategoryPattern"
+                    android:id="@+id/card_category_pattern"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -124,7 +126,7 @@
                     app:cardUseCompatPadding="true">
 
                     <TextView
-                        android:id="@+id/textCategoryPattern"
+                        android:id="@+id/text_category_pattern"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -145,7 +147,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardCategoryRhythm"
+                    android:id="@+id/card_category_rhythm"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -154,7 +156,7 @@
                     app:cardUseCompatPadding="true">
 
                     <TextView
-                        android:id="@+id/textCategoryRhythm"
+                        android:id="@+id/text_category_rhythm"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -167,7 +169,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardCategorySpace"
+                    android:id="@+id/card_category_space"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -176,7 +178,7 @@
                     app:cardUseCompatPadding="true">
 
                     <TextView
-                        android:id="@+id/textCategorySpace"
+                        android:id="@+id/text_category_space"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -197,7 +199,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardCategoryUnity"
+                    android:id="@+id/card_category_unity"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -206,7 +208,7 @@
                     app:cardUseCompatPadding="true">
 
                     <TextView
-                        android:id="@+id/textCategoryUnity"
+                        android:id="@+id/text_category_unity"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -219,7 +221,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/textInstructions"
+                    android:id="@+id/text_instructions"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -231,5 +233,13 @@
 
             </TableRow>
         </LinearLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_nav" />
     </LinearLayout>
 </layout>

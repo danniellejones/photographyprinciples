@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Button
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import cp3406.a2.lenslearn.view.CategoryActivity
 
 class MainActivity : AppCompatActivity() {
