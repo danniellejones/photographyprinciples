@@ -1,0 +1,29 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/theme_preference">
+
+        <SwitchPreference
+            app:defaultValue="false"
+            app:key="dark_theme_activate"
+            app:summary="@string/dark_theme_summary"
+            app:title="@string/dark_theme_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/permissions_preference">
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:key="camera_permission"
+            app:summary="@string/camera_permission_summary"
+            app:title="@string/camera_permission_title" />
+
+        <SwitchPreference
+            app:defaultValue="true"
+            app:key="internet_permission"
+            app:summary="@string/internet_permission_summary"
+            app:title="@string/internet_permission_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="categoryViewModel"
+            type="cp3406.a2.lenslearn.model.CategoryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/very_dark_grey"
+        tools:context=".view.IdentifyFragment">
+
+        <TextView
+            android:id="@+id/textIndividualCategoryTitleIdentify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_blue"
+            android:paddingTop="30dp"
+            android:paddingBottom="20dp"
+            android:text="@string/category"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/identifyInstructionsLeft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:padding="8dp"
+            android:text="@string/identify_instructions_left"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            android:background="@color/mid_red"
+            app:layout_constraintEnd_toStartOf="@id/identifyInstructionsMiddle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textIndividualCategoryTitleIdentify" />
+
+        <TextView
+            android:id="@+id/identifyInstructionsMiddle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:padding="8dp"
+            android:text="@string/identify_instructions_middle"
+            android:textAlignment="center"
+            android:textSize="14sp"
+
+            app:layout_constraintEnd_toStartOf="@id/identifyInstructionsRight"
+            app:layout_constraintStart_toEndOf="@id/identifyInstructionsLeft"
+            app:layout_constraintTop_toBottomOf="@+id/textIndividualCategoryTitleIdentify" />
+
+        <TextView
+            android:id="@+id/identifyInstructionsRight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:padding="8dp"
+            android:background="@color/mid_green"
+            android:text="@string/identify_instructions_right"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/identifyInstructionsMiddle"
+            app:layout_constraintTop_toBottomOf="@+id/textIndividualCategoryTitleIdentify" />
+
+
+        <ImageView
+            android:id="@+id/identifyImage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/identify_image_description"
+            android:src="@drawable/img_example_balance"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/identifyInstructionsMiddle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
