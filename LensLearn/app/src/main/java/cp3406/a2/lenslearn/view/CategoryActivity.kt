@@ -37,24 +37,6 @@ class CategoryActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
 
-        // Get reference to the view model
-//        binding.lifecycleOwner = this
-//        binding.categoryViewModel = viewModel
-
-        // Load and observe view model data
-//        viewModel.loadData()
-//        viewModel.categoryId.observe(this) {
-//            displaySnackbar(it)
-//        }
-
-        // Set click listeners for each category
-//        binding.cardCategoryBalance.setOnClickListener{viewModel.setCategoryId(1)}
-//        binding.cardCategoryContrast.setOnClickListener{viewModel.setCategoryId(2)}
-//        binding.cardCategoryEmphasis.setOnClickListener{viewModel.setCategoryId(3)}
-//        binding.cardCategoryPattern.setOnClickListener{viewModel.setCategoryId(4)}
-//        binding.cardCategoryRhythm.setOnClickListener{viewModel.setCategoryId(5)}
-//        binding.cardCategorySpace.setOnClickListener{viewModel.setCategoryId(6)}
-//        binding.cardCategoryUnity.setOnClickListener{viewModel.setCategoryId(7)}
 
 //        binding.cardCategoryContrast.setOnClickListener {
 //            supportFragmentManager.commit {
@@ -107,9 +89,14 @@ class CategoryActivity : AppCompatActivity() {
 //    }
 
 
-    /** Create navigation up buttons */
+    /** Create navigation up buttons to appear on all fragments, except category */
     override fun onSupportNavigateUp(): Boolean {
-        return super.onSupportNavigateUp() || super.onSupportNavigateUp()
+        val navController = this.findNavController(R.id.nav_host_fragment)
+        return if (navController.currentDestination?.id == R.id.categoryFragment) {
+            false
+        } else {
+            navController.navigateUp() || super.onSupportNavigateUp()
+        }
     }
 
 
@@ -134,9 +121,7 @@ class CategoryActivity : AppCompatActivity() {
 //
 //    }
 
-//    private fun displaySnackbar(catId: Int) {
-//        Snackbar.make(binding.root, "current value: $catId", Snackbar.LENGTH_LONG).show()
-//    }
+//
 }
 
 

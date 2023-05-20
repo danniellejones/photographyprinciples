@@ -8,7 +8,11 @@
     <fragment
         android:id="@+id/categoryFragment"
         android:name="cp3406.a2.lenslearn.view.CategoryFragment"
-        android:label="Select a Category" />
+        android:label="Select a Category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_learningFragment"
+            app:destination="@id/learningFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="cp3406.a2.lenslearn.view.SettingsFragment"
@@ -16,19 +20,35 @@
     <fragment
         android:id="@+id/learningFragment"
         android:name="cp3406.a2.lenslearn.view.LearningFragment"
-        android:label="Learn"/>
+        android:label="Learn">
+        <action
+            android:id="@+id/action_learningFragment_to_identifyFragment"
+            app:destination="@id/identifyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/identifyFragment"
         android:name="cp3406.a2.lenslearn.view.IdentifyFragment"
-        android:label="Identify"/>
+        android:label="Identify">
+        <action
+            android:id="@+id/action_identifyFragment_to_doFragment"
+            app:destination="@id/doFragment" />
+    </fragment>
     <fragment
         android:id="@+id/doFragment"
         android:name="cp3406.a2.lenslearn.view.DoFragment"
-        android:label="Take Photographs"/>
+        android:label="Take Photographs">
+        <action
+            android:id="@+id/action_doFragment_to_shareFragment"
+            app:destination="@id/shareFragment" />
+    </fragment>
     <fragment
         android:id="@+id/shareFragment"
         android:name="cp3406.a2.lenslearn.view.ShareFragment"
-        android:label="Share"/>
+        android:label="Share">
+        <action
+            android:id="@+id/action_shareFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/statsFragment"
         android:name="cp3406.a2.lenslearn.view.StatsFragment"

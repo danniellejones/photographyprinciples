@@ -6,28 +6,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cp3406.a2.lenslearn.R
-import cp3406.a2.lenslearn.model.IdentifyViewModel
+import cp3406.a2.lenslearn.databinding.FragmentIdentifyBinding
+import cp3406.a2.lenslearn.model.CategoryViewModel
 
 class IdentifyFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = IdentifyFragment()
+    private lateinit var binding: FragmentIdentifyBinding
+    private val categoryViewModel: CategoryViewModel by lazy {
+        ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
     }
-
-    private lateinit var viewModel: IdentifyViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_identify, container, false)
+        // Inflate with data binding
+        binding = FragmentIdentifyBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(IdentifyViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }

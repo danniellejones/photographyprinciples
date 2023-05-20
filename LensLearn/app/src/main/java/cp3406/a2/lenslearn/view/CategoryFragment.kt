@@ -6,17 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.FragmentCategoryBinding
-import cp3406.a2.lenslearn.databinding.FragmentLearningBinding
-import cp3406.a2.lenslearn.model.CategoryFragmentViewModel
-import cp3406.a2.lenslearn.model.LearningViewModel
+import cp3406.a2.lenslearn.model.CategoryViewModel
 
 class CategoryFragment : Fragment() {
 
     private lateinit var binding: FragmentCategoryBinding
-    private val viewModel: CategoryFragmentViewModel by viewModels()
+    private val categoryViewModel: CategoryViewModel by lazy {
+        ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +26,26 @@ class CategoryFragment : Fragment() {
         // Inflate with data binding
         binding = FragmentCategoryBinding.inflate(inflater, container, false)
 
+        // Set click listeners for each category
+        binding.cardCategoryBalance.setOnClickListener{
+            categoryViewModel.setCategoryId(1)
+            findNavController().navigate(R.id.action_categoryFragment_to_learningFragment)
+        }
+        binding.cardCategoryContrast.setOnClickListener{categoryViewModel.setCategoryId(2)}
+        binding.cardCategoryEmphasis.setOnClickListener{categoryViewModel.setCategoryId(3)}
+        binding.cardCategoryPattern.setOnClickListener{categoryViewModel.setCategoryId(4)}
+        binding.cardCategoryRhythm.setOnClickListener{categoryViewModel.setCategoryId(5)}
+        binding.cardCategorySpace.setOnClickListener{categoryViewModel.setCategoryId(6)}
+        binding.cardCategoryUnity.setOnClickListener{categoryViewModel.setCategoryId(7)}
+
+        categoryViewModel.categoryId.observe(viewLifecycleOwner) {
+            displaySnackbar(it)
+        }
+
         return binding.root
+    }
+
+    private fun displaySnackbar(catId: Int) {
+        Snackbar.make(binding.root, "current value: $catId", Snackbar.LENGTH_LONG).show()
     }
 }

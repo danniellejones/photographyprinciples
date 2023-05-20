@@ -12,7 +12,6 @@ import androidx.preference.SwitchPreference
 import android.Manifest
 import cp3406.a2.lenslearn.R
 
-
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private companion object {

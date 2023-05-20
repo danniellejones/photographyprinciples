@@ -6,28 +6,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cp3406.a2.lenslearn.R
-import cp3406.a2.lenslearn.model.ShareViewModel
+import cp3406.a2.lenslearn.databinding.FragmentShareBinding
+import cp3406.a2.lenslearn.model.CategoryViewModel
 
 class ShareFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ShareFragment()
+    private lateinit var binding: FragmentShareBinding
+    private val categoryViewModel: CategoryViewModel by lazy {
+        ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
     }
-
-    private lateinit var viewModel: ShareViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_share, container, false)
+        // Inflate with data binding
+        binding = FragmentShareBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ShareViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="categoryFragmentViewModel"
-            type="cp3406.a2.lenslearn.model.CategoryFragmentViewModel" />
+            name="categoryViewModel"
+            type="cp3406.a2.lenslearn.model.CategoryViewModel" />
     </data>
 
     <LinearLayout

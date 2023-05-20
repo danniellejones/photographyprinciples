@@ -13,8 +13,8 @@ import cp3406.a2.lenslearn.repository.CategoryRepository
 
 private const val LOG_TAG = "CategoryViewModel"
 
-//class CategoryViewModel(app: Application) : AndroidViewModel(app) {
-class CategoryViewModel : ViewModel() {
+class CategoryViewModel(app: Application) : AndroidViewModel(app) {
+//class CategoryViewModel : ViewModel() {
     private val _categoryId : MutableLiveData<Int> = MutableLiveData()  // Private for data
     val categoryId: LiveData<Int> = _categoryId  // Public accessible variable
 //    var categoryRepository: CategoryRepository = CategoryRepository()
