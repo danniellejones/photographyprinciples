@@ -42,10 +42,11 @@ deleteImage(image: Image): Deletes an image from the local database.
     <string name="identify_image_description">A photograph to identify the principle in...</string>
     <string name="share">Share</string>
     <string name="image_preview">Image Preview</string>
-    <string name="social_media_share">Social Media Share</string>
-    <string name="share_instructions">Select and Share your photo on social media! Sharing will help your progress!</string>
+    <string name="social_media_share">Select and Share</string>
+    <string name="share_instructions">Select and Share your photo on social media! </string>
     <string name="share_menu_button">Share</string>
     <string name="progress">Progress</string>
+    <string name="next">Next</string>
 
 
 </resources>

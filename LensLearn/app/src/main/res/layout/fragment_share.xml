@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="categoryViewModel"
             type="cp3406.a2.lenslearn.model.CategoryViewModel" />
@@ -30,16 +31,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/shareInstructions"
+        <Button
+            android:id="@+id/share2Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/share_instructions"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:text="@string/share"
+            app:icon="@drawable/ic_share"
+            app:layout_constraintEnd_toStartOf="@+id/toStatsFragmentButton"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textShareTitle" />
+
+        <Button
+            android:id="@+id/toStatsFragmentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/next"
+            app:icon="@drawable/ic_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/share2Button"
             app:layout_constraintTop_toBottomOf="@+id/textShareTitle" />
 
         <ImageView
@@ -52,7 +63,7 @@
             app:layout_constraintBottom_toTopOf="@+id/thumbnailImageMiddle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shareInstructions"
+            app:layout_constraintTop_toBottomOf="@+id/share2Button"
             app:srcCompat="@drawable/img_example_balance"
             tools:ignore="DuplicateSpeakableTextCheck" />
 
@@ -73,26 +84,14 @@
             android:id="@+id/thumbnailImageBottom"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
             android:contentDescription="@string/image_preview"
             android:onClick="selectBottomThumbnail"
-            app:layout_constraintBottom_toTopOf="@+id/shareButton"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/thumbnailImageMiddle"
             app:srcCompat="@drawable/img_example_unity" />
-
-        <Button
-            android:id="@+id/shareButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="@string/share"
-            app:icon="@drawable/ic_share"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/thumbnailImageBottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
