@@ -8,10 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.ActivityCategoryBinding
 import cp3406.a2.lenslearn.databinding.FragmentLearningBinding
+import cp3406.a2.lenslearn.model.CategoryFragmentViewModel
+import cp3406.a2.lenslearn.model.CategoryViewModel
 import cp3406.a2.lenslearn.model.LearningViewModel
 
 class LearningFragment : Fragment() {
@@ -21,15 +25,19 @@ class LearningFragment : Fragment() {
 //    }
 
     private lateinit var binding: FragmentLearningBinding
+    private val viewModel: LearningViewModel by viewModels()
+//    private lateinit var viewModel: LearningViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_learning, container, false)
+        // Inflate with data binding
+        binding = FragmentLearningBinding.inflate(inflater, container, false)
 
         // Get reference to view model
+//        binding.lifecycleOwner = this
+//        binding.learningViewModel = viewModel
 
         // Retrieve category information
 //        viewModel.categoryInformation.observe(viewLifecycleOwner, { categoryInformation

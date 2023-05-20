@@ -3,24 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/progressMenuButton"
-        android:enabled="true"
+        android:id="@+id/statsFragment"
         android:icon="@drawable/ic_stats"
         android:title="@string/progress"
-        android:visible="true"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/shareMenuButton"
-        android:enabled="true"
+        android:id="@+id/shareFragment"
         android:icon="@drawable/ic_share"
         android:title="@string/share_menu_button"
-        android:visible="true"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/settingsMenuButton"
-        android:enabled="true"
+        android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:title="@string/settings"
-        android:visible="true"
         app:showAsAction="always" />
 </menu>

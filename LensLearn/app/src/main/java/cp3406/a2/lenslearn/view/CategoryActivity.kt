@@ -2,6 +2,7 @@ package cp3406.a2.lenslearn.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
@@ -15,7 +16,10 @@ import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.ActivityCategoryBinding
 import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
+import cp3406.a2.lenslearn.databinding.FragmentLearningBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
+
+private const val LOG_TAG2 = "CategoryActivity"
 
 class CategoryActivity : AppCompatActivity() {
 
@@ -25,6 +29,7 @@ class CategoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_category)
+        Log.d(LOG_TAG2, "Category Activity is reached")
 
         // Add Navigation Bar and Navigation Graph
         val navHostFragment =
@@ -33,95 +38,73 @@ class CategoryActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
 
         // Get reference to the view model
-        binding.lifecycleOwner = this
-        binding.categoryViewModel = viewModel
+//        binding.lifecycleOwner = this
+//        binding.categoryViewModel = viewModel
 
         // Load and observe view model data
-        viewModel.loadData()
-        viewModel.categoryId.observe(this) {
-            displaySnackbar(it)
-        }
+//        viewModel.loadData()
+//        viewModel.categoryId.observe(this) {
+//            displaySnackbar(it)
+//        }
 
         // Set click listeners for each category
-        binding.cardCategoryBalance.setOnClickListener{viewModel.setCategoryId(1)}
-        binding.cardCategoryContrast.setOnClickListener{viewModel.setCategoryId(2)}
-        binding.cardCategoryEmphasis.setOnClickListener{viewModel.setCategoryId(3)}
-        binding.cardCategoryPattern.setOnClickListener{viewModel.setCategoryId(4)}
-        binding.cardCategoryRhythm.setOnClickListener{viewModel.setCategoryId(5)}
-        binding.cardCategorySpace.setOnClickListener{viewModel.setCategoryId(6)}
-        binding.cardCategoryUnity.setOnClickListener{viewModel.setCategoryId(7)}
+//        binding.cardCategoryBalance.setOnClickListener{viewModel.setCategoryId(1)}
+//        binding.cardCategoryContrast.setOnClickListener{viewModel.setCategoryId(2)}
+//        binding.cardCategoryEmphasis.setOnClickListener{viewModel.setCategoryId(3)}
+//        binding.cardCategoryPattern.setOnClickListener{viewModel.setCategoryId(4)}
+//        binding.cardCategoryRhythm.setOnClickListener{viewModel.setCategoryId(5)}
+//        binding.cardCategorySpace.setOnClickListener{viewModel.setCategoryId(6)}
+//        binding.cardCategoryUnity.setOnClickListener{viewModel.setCategoryId(7)}
 
-//        // Select a category
-//        binding.cardCategoryBalance.setOnClickListener {
-//            navController.navigate(action)
-//        }
-//
 //        binding.cardCategoryContrast.setOnClickListener {
-//            navController.navigate(action)
-//        }
-//
-//        binding.cardCategoryEmphasis.setOnClickListener {
-//            navController.navigate(action)
-//        }
-//
-//        binding.cardCategoryPattern.setOnClickListener {
-//            navController.navigate(action)
-//        }
-//
-//        binding.cardCategoryRhythm.setOnClickListener {
-//            navController.navigate(action)
-//        }
-//
-//        binding.cardCategorySpace.setOnClickListener {
-//            navController.navigate(action)
-//        }
-//
-//        binding.cardCategoryUnity.setOnClickListener {
-//            navController.navigate(action)
-//        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            R.id.shareMenuButton -> handleShare()
-//            R.id.settingsMenuButton-> navigateToSettings()
-//            R.id.progressMenuButton-> navigateToProgress()
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun handleShare(): Boolean {
-        val intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            type = "text/plain"
-            // Data to share
-            putExtra(Intent.EXTRA_TEXT, "Text to share")
-//            putExtra(Intent.EXTRA_TEXT, "Text to share ${viewModel.categoryId.value}")
-        }
-        startActivity(intent)
-        return true
-    }
-
-    private fun navigateToProgress() : Boolean {
-        supportFragmentManager.commit {
-            replace<StatsFragment>(R.id.categoryActivityMain, null, null)
 //            supportFragmentManager.commit {
-//                add<StatsFragment>(R.id.categoryActivityMain, null)
-        }
-        return true
+//                add<LearningFragment>(R.id.categoryActivityMain, null)
+//            navController.navigate(action)
+//        findNavController().navigate(R.id.action_doFragment_to_shareFragment)
+//        }
     }
 
-    private fun navigateToSettings() : Boolean {
-        supportFragmentManager.commit {
-            replace<StatsFragment>(R.id.categoryActivityMain, null, null)
-        }
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.menu_main, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when(item.itemId) {
+//            R.id.shareFragment -> handleShare()
+////            R.id.settingsFragment-> navigateToSettings()
+////            R.id.progressFragment-> navigateToProgress()
+//            else -> return super.onOptionsItemSelected(item)
+//        }
+//    }
+//
+//    private fun handleShare(): Boolean {
+//        val intent = Intent().apply {
+//            action = Intent.ACTION_SEND
+//            type = "text/plain"
+//            // Data to share
+//            putExtra(Intent.EXTRA_TEXT, "Text to share")
+////            putExtra(Intent.EXTRA_TEXT, "Text to share ${viewModel.categoryId.value}")
+//        }
+//        startActivity(intent)
+//        return true
+//    }
+//
+//    private fun navigateToProgress() : Boolean {
+//        supportFragmentManager.commit {
+//            replace<StatsFragment>(R.id.categoryActivityMain, null, null)
+////            supportFragmentManager.commit {
+////                add<StatsFragment>(R.id.categoryActivityMain, null)
+//        }
+//        return true
+//    }
+//
+//    private fun navigateToSettings() : Boolean {
+//        supportFragmentManager.commit {
+//            replace<StatsFragment>(R.id.categoryActivityMain, null, null)
+//        }
+//        return true
+//    }
 
 
     /** Create navigation up buttons */
@@ -129,10 +112,6 @@ class CategoryActivity : AppCompatActivity() {
         return super.onSupportNavigateUp() || super.onSupportNavigateUp()
     }
 
-    private fun startBalancePlay() {
-        TODO("Not yet implemented")
-//        supportFragmentManager.beginTransaction().add(R.id.).commit()
-    }
 
 //    override fun onClick(view: View) {
 //        // Determine which category card was clicked
@@ -155,9 +134,9 @@ class CategoryActivity : AppCompatActivity() {
 //
 //    }
 
-    private fun displaySnackbar(catId: Int) {
-        Snackbar.make(binding.root, "current value: $catId", Snackbar.LENGTH_LONG).show()
-    }
+//    private fun displaySnackbar(catId: Int) {
+//        Snackbar.make(binding.root, "current value: $catId", Snackbar.LENGTH_LONG).show()
+//    }
 }
 
 

@@ -11,7 +11,7 @@ import cp3406.a2.lenslearn.data.CategoryEntity
 import cp3406.a2.lenslearn.repository.CategoryRepository
 
 
-const val LOG_TAG = "CategoryViewModel"
+private const val LOG_TAG = "CategoryViewModel"
 
 //class CategoryViewModel(app: Application) : AndroidViewModel(app) {
 class CategoryViewModel : ViewModel() {

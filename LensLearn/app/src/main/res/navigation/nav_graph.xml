@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/categoryFragment">
+
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="cp3406.a2.lenslearn.view.CategoryFragment"
+        android:label="Select a Category" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="cp3406.a2.lenslearn.view.SettingsFragment"
+        android:label="Settings"/>
+    <fragment
+        android:id="@+id/learningFragment"
+        android:name="cp3406.a2.lenslearn.view.LearningFragment"
+        android:label="Learn"/>
+    <fragment
+        android:id="@+id/identifyFragment"
+        android:name="cp3406.a2.lenslearn.view.IdentifyFragment"
+        android:label="Identify"/>
+    <fragment
+        android:id="@+id/doFragment"
+        android:name="cp3406.a2.lenslearn.view.DoFragment"
+        android:label="Take Photographs"/>
+    <fragment
+        android:id="@+id/shareFragment"
+        android:name="cp3406.a2.lenslearn.view.ShareFragment"
+        android:label="Share"/>
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="cp3406.a2.lenslearn.view.StatsFragment"
+        android:label="Stats"/>
+
+
+</navigation>
