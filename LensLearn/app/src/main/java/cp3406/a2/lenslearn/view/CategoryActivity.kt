@@ -1,6 +1,5 @@
 package cp3406.a2.lenslearn.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -8,15 +7,13 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.ActivityCategoryBinding
 import androidx.navigation.findNavController
-import com.google.android.material.snackbar.Snackbar
-import cp3406.a2.lenslearn.databinding.FragmentLearningBinding
+import androidx.navigation.ui.onNavDestinationSelected
 import cp3406.a2.lenslearn.model.CategoryViewModel
 
 private const val LOG_TAG2 = "CategoryActivity"
@@ -25,71 +22,62 @@ class CategoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCategoryBinding
     private val viewModel: CategoryViewModel by viewModels()
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Inflate
         binding = DataBindingUtil.setContentView(this, R.layout.activity_category)
         Log.d(LOG_TAG2, "Category Activity is reached")
 
         // Add Navigation Bar and Navigation Graph
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
-
-
-//        binding.cardCategoryContrast.setOnClickListener {
-//            supportFragmentManager.commit {
-//                add<LearningFragment>(R.id.categoryActivityMain, null)
-//            navController.navigate(action)
-//        findNavController().navigate(R.id.action_doFragment_to_shareFragment)
-//        }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when(item.itemId) {
-//            R.id.shareFragment -> handleShare()
-////            R.id.settingsFragment-> navigateToSettings()
-////            R.id.progressFragment-> navigateToProgress()
-//            else -> return super.onOptionsItemSelected(item)
-//        }
-//    }
-//
-//    private fun handleShare(): Boolean {
-//        val intent = Intent().apply {
-//            action = Intent.ACTION_SEND
-//            type = "text/plain"
-//            // Data to share
-//            putExtra(Intent.EXTRA_TEXT, "Text to share")
-////            putExtra(Intent.EXTRA_TEXT, "Text to share ${viewModel.categoryId.value}")
-//        }
-//        startActivity(intent)
-//        return true
-//    }
-//
-//    private fun navigateToProgress() : Boolean {
-//        supportFragmentManager.commit {
-//            replace<StatsFragment>(R.id.categoryActivityMain, null, null)
-////            supportFragmentManager.commit {
-////                add<StatsFragment>(R.id.categoryActivityMain, null)
-//        }
-//        return true
-//    }
-//
-//    private fun navigateToSettings() : Boolean {
-//        supportFragmentManager.commit {
-//            replace<StatsFragment>(R.id.categoryActivityMain, null, null)
-//        }
-//        return true
-//    }
+    /** Create options for main menu */
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
+    /** Determine actions for menu item select in main menu */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.shareImplicitIntent -> {
+                handleShare()
+                true
+            }
+            else -> item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+        }
+    }
 
-    /** Create navigation up buttons to appear on all fragments, except category */
+    /** Handle share image on social media menu item */
+      private fun handleShare(): Boolean {
+
+        try {
+            Log.i(LOG_TAG2, "Share Pressed.")
+//            val lastThreeImages =
+//                CategoryDao.getLastThreeImages() // Assuming you have a DAO called `imageDao` to interact with the `ImageEntity` table
+//            if (lastThreeImages.isNotEmpty()) {
+//                val imageToShare = lastThreeImages.last() // Select the last image from the list
+//                val intent = Intent().apply {
+//                    action = Intent.ACTION_SEND
+//                    type = "image/jpeg"
+//                    putExtra(Intent.EXTRA_STREAM, Uri.parse(imageToShare.path))
+//                }
+//                startActivity(intent)
+//            }
+        }
+        catch (e: Exception) {
+            Log.i(LOG_TAG2, "No Images Available")
+        }
+            return true
+    }
+
+    /** Create navigation up buttons on all fragments except category */
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment)
         return if (navController.currentDestination?.id == R.id.categoryFragment) {
@@ -98,31 +86,4 @@ class CategoryActivity : AppCompatActivity() {
             navController.navigateUp() || super.onSupportNavigateUp()
         }
     }
-
-
-//    override fun onClick(view: View) {
-//        // Determine which category card was clicked
-//        val categoryId = when (view.id) {
-//            R.id.card_category_balance -> 1
-//            R.id.card_category_contrast -> 2
-//            R.id.card_category_emphasis -> 3
-//            R.id.card_category_pattern -> 4
-//            R.id.card_category_rhythm -> 5
-//            R.id.card_category_space -> 6
-//            R.id.card_category_unity -> 7
-//            else -> return
-//        }
-//
-//        // Create the action using the generated directions class
-////        val action = ActivityCategoryDirections.actionCategoryActivityToLearningFragment(categoryId)
-//
-//        // Navigate to the LearningFragment
-////        findNavController(R.id.nav_host_fragment).navigate(action)
-//
-//    }
-
-//
 }
-
-
-

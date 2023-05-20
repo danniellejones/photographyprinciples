@@ -8,7 +8,7 @@
         android:title="@string/progress"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/shareFragment"
+        android:id="@+id/shareImplicitIntent"
         android:icon="@drawable/ic_share"
         android:title="@string/share_menu_button"
         app:showAsAction="ifRoom" />

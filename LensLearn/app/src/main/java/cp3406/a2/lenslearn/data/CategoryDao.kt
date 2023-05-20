@@ -4,5 +4,10 @@ import androidx.room.Dao
 
 //@Dao
 interface CategoryDao {
+//    companion object {
+//        fun getLastThreeImages(): Any {
+//
+//        }
+//    }
 
 }

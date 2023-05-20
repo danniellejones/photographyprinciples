@@ -27,16 +27,47 @@ class CategoryFragment : Fragment() {
         binding = FragmentCategoryBinding.inflate(inflater, container, false)
 
         // Set click listeners for each category
-        binding.cardCategoryBalance.setOnClickListener{
-            categoryViewModel.setCategoryId(1)
+//        binding.cardCategoryBalance.setOnClickListener{
+//            categoryViewModel.setCategoryId(1)
+//            findNavController().navigate(R.id.action_categoryFragment_to_learningFragment)
+//        }
+//        binding.cardCategoryContrast.setOnClickListener{
+//            categoryViewModel.setCategoryId(2)
+//        }
+//        binding.cardCategoryEmphasis.setOnClickListener{
+//            categoryViewModel.setCategoryId(3)
+//        }
+//        binding.cardCategoryPattern.setOnClickListener{
+//            categoryViewModel.setCategoryId(4)
+//        }
+//        binding.cardCategoryRhythm.setOnClickListener{
+//            categoryViewModel.setCategoryId(5)
+//        }
+//        binding.cardCategorySpace.setOnClickListener{
+//            categoryViewModel.setCategoryId(6)
+//        }
+//        binding.cardCategoryUnity.setOnClickListener{
+//            categoryViewModel.setCategoryId(7)
+//        }
+
+        val categoryClickListener: (Int) -> Unit = { categoryId ->
+            categoryViewModel.setCategoryId(categoryId)
             findNavController().navigate(R.id.action_categoryFragment_to_learningFragment)
         }
-        binding.cardCategoryContrast.setOnClickListener{categoryViewModel.setCategoryId(2)}
-        binding.cardCategoryEmphasis.setOnClickListener{categoryViewModel.setCategoryId(3)}
-        binding.cardCategoryPattern.setOnClickListener{categoryViewModel.setCategoryId(4)}
-        binding.cardCategoryRhythm.setOnClickListener{categoryViewModel.setCategoryId(5)}
-        binding.cardCategorySpace.setOnClickListener{categoryViewModel.setCategoryId(6)}
-        binding.cardCategoryUnity.setOnClickListener{categoryViewModel.setCategoryId(7)}
+
+        binding.apply {
+            cardCategoryBalance.setOnClickListener { categoryClickListener(1) }
+            cardCategoryContrast.setOnClickListener { categoryClickListener(2) }
+            cardCategoryEmphasis.setOnClickListener { categoryClickListener(3) }
+            cardCategoryPattern.setOnClickListener { categoryClickListener(4) }
+            cardCategoryRhythm.setOnClickListener { categoryClickListener(5) }
+            cardCategorySpace.setOnClickListener { categoryClickListener(6) }
+            cardCategoryUnity.setOnClickListener { categoryClickListener(7) }
+        }
+
+       
+
+
 
         categoryViewModel.categoryId.observe(viewLifecycleOwner) {
             displaySnackbar(it)

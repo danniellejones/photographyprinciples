@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="categoryViewModel"
             type="cp3406.a2.lenslearn.model.CategoryViewModel" />
@@ -34,15 +35,15 @@
         <ImageView
             android:id="@+id/exampleImage"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/example_of_photograph_description"
             android:scaleType="fitCenter"
             android:src="@drawable/img_example_unity"
+            app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@id/textInformationTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_default="wrap"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textIndividualCategoryTitle" />
 
