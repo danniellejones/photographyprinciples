@@ -2,66 +2,66 @@
   "CategoryEntity": [
     {
       "id": 1,
-      "name": "Balance",
-      "exampleImagePath": "string",
-      "information": "string",
+      "filename": "Balance",
+      "filename": "string",
+      "definition": "string",
       "detailedInformation": "string"
     },
     {
       "id": 2,
-      "name": "Contrast",
-      "exampleImagePath": "string",
-      "information": "string",
+      "filename": "Contrast",
+      "filename": "string",
+      "definition": "string",
       "detailedInformation": "string"
     },
     {
       "id": 3,
-      "name": "Emphasis",
-      "exampleImagePath": "string",
-      "information": "string",
+      "filename": "Emphasis",
+      "filename": "string",
+      "definition": "string",
       "detailedInformation": "string"
     },
     {
       "id": 4,
-      "name": "Pattern",
-      "exampleImagePath": "string",
-      "information": "string",
+      "filename": "Pattern",
+      "filename": "string",
+      "definition": "string",
       "detailedInformation": "string"
     },
     {
       "id": 5,
-      "name": "Rhythm",
-      "exampleImagePath": "string",
-      "information": "string",
+      "filename": "Rhythm",
+      "filename": "string",
+      "definition": "string",
       "detailedInformation": "string"
     },
     {
       "id": 6,
-      "name": "Space",
-      "exampleImagePath": "string",
-      "information": "string",
+      "filename": "Space",
+      "filename": "string",
+      "definition": "string",
       "detailedInformation": "string"
     },
     {
       "id": 7,
-      "name": "Unity",
-      "exampleImagePath": "string",
-      "information": "string",
+      "filename": "Unity",
+      "filename": "string",
+      "definition": "string",
       "detailedInformation": "string"
     }
   ],
   "ImageEntity": [
     {
       "categoryId": 1,
-      "name": "string",
-      "path": "string"
+      "filename": "string",
+      "imageResourceId": "string"
     }
   ],
   "TaskEntity": [
     {
       "categoryId": 1,
       "description": "string",
-      "overlayImagePath": "string"
+      "filename": "string"
     }
   ]
 }

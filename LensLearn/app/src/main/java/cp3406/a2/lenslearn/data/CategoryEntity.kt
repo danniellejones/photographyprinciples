@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
 data class CategoryEntity(
     @PrimaryKey val id: Int,
     val name: String,
-    val exampleImagePath: String,
-    val information: String,
+    val filename: String,
+    val definition: String,
     val detailedInformation: String
 )
 
@@ -29,8 +29,7 @@ data class CategoryEntity(
 data class ImageEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val categoryId: Int,
-    val name: String,
-    val path: String
+    val filename: String,
 )
 
 // Table to hold tasks for the photography do phase
@@ -47,7 +46,7 @@ data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val categoryId: Int,
     val description: String,
-    val overlayImagePath: String
+    val filename: String
 )
 
 // Table to hold user photographs from do phase

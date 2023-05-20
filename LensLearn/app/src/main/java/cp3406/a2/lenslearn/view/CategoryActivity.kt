@@ -1,5 +1,6 @@
 package cp3406.a2.lenslearn.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -35,6 +36,15 @@ class CategoryActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
+
+        // Log Resource Id Call
+        logResourceId("img_example_balance", "drawable")
+        logResourceId("img_example_contrast", "drawable")
+        logResourceId("img_example_emphasis", "drawable")
+        logResourceId("img_example_pattern", "drawable")
+        logResourceId("img_example_rhythm", "drawable")
+        logResourceId("img_example_space", "drawable")
+        logResourceId("img_example_unity", "drawable")
     }
 
     /** Create options for main menu */
@@ -84,6 +94,18 @@ class CategoryActivity : AppCompatActivity() {
             false
         } else {
             navController.navigateUp() || super.onSupportNavigateUp()
+        }
+    }
+
+    /** Get Resource Id by using name without file extension, and type e.g. drawable */
+    @SuppressLint("DiscouragedApi")
+    private fun logResourceId(resourceName : String, resourceType: String) {
+        val resourceId = resources.getIdentifier(resourceName, resourceType, packageName)
+
+        if (resourceId != 0) {
+            Log.i(LOG_TAG2, "$resourceName Id: $resourceId")
+        } else {
+            Log.i(LOG_TAG2, "Resource Not Found")
         }
     }
 }
