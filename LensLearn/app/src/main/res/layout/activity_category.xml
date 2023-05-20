@@ -15,6 +15,18 @@
         android:orientation="vertical"
         tools:context=".view.CategoryActivity">
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/main_nav" />
+
         <TextView
             android:id="@+id/text_category_title"
             android:layout_width="match_parent"
@@ -29,7 +41,7 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
@@ -232,14 +244,7 @@
                     app:drawableTint="@color/mid_blue" />
 
             </TableRow>
-        </LinearLayout>
+        </TableLayout>
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/main_nav" />
     </LinearLayout>
 </layout>

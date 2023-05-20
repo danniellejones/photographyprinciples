@@ -27,11 +27,14 @@ class LearningFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 //        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        binding = DataBindingUtil.inflate<FragmentLearningBinding>(inflater, R.layout.fragment_learning, container, false)
-        val selectedCategory = arguments?.getString("selectedCategory")
-        binding.textIndividualCategoryTitle.text = selectedCategory
-        Log.i("LearningFragment", "$selectedCategory")
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_learning, container, false)
+
+
+//        val selectedCategory = arguments?.getString("categoryId")
+//        binding.textIndividualCategoryTitle.text = categoryId
+//        Log.i("LearningFragment", "$categoryId")
 //        binding.learningViewModel = viewModel
+
         return binding.root
     }
 
