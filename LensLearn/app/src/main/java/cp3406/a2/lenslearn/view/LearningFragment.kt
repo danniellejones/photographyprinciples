@@ -29,6 +29,16 @@ class LearningFragment : Fragment() {
 //        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_learning, container, false)
 
+        // Get reference to view model
+
+        // Retrieve category information
+//        viewModel.categoryInformation.observe(viewLifecycleOwner, { categoryInformation
+//            val categoryNames = StringBuilder()
+//            categoryInformation.foreach {
+//                categoryNames.appendLine(it.name)
+//            }
+//            binding.cartContextText.text = productNames.toString()
+//        })
 
 //        val selectedCategory = arguments?.getString("categoryId")
 //        binding.textIndividualCategoryTitle.text = categoryId
