@@ -42,7 +42,7 @@
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
@@ -245,6 +245,6 @@
                     app:drawableTint="@color/mid_blue" />
 
             </TableRow>
-        </LinearLayout>
+        </TableLayout>
     </LinearLayout>
 </layout>

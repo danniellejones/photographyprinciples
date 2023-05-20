@@ -1,0 +1,67 @@
+{
+  "CategoryEntity": [
+    {
+      "id": 1,
+      "name": "Balance",
+      "exampleImagePath": "string",
+      "information": "string",
+      "detailedInformation": "string"
+    },
+    {
+      "id": 2,
+      "name": "Contrast",
+      "exampleImagePath": "string",
+      "information": "string",
+      "detailedInformation": "string"
+    },
+    {
+      "id": 3,
+      "name": "Emphasis",
+      "exampleImagePath": "string",
+      "information": "string",
+      "detailedInformation": "string"
+    },
+    {
+      "id": 4,
+      "name": "Pattern",
+      "exampleImagePath": "string",
+      "information": "string",
+      "detailedInformation": "string"
+    },
+    {
+      "id": 5,
+      "name": "Rhythm",
+      "exampleImagePath": "string",
+      "information": "string",
+      "detailedInformation": "string"
+    },
+    {
+      "id": 6,
+      "name": "Space",
+      "exampleImagePath": "string",
+      "information": "string",
+      "detailedInformation": "string"
+    },
+    {
+      "id": 7,
+      "name": "Unity",
+      "exampleImagePath": "string",
+      "information": "string",
+      "detailedInformation": "string"
+    }
+  ],
+  "ImageEntity": [
+    {
+      "categoryId": 1,
+      "name": "string",
+      "path": "string"
+    }
+  ],
+  "TaskEntity": [
+    {
+      "categoryId": 1,
+      "description": "string",
+      "overlayImagePath": "string"
+    }
+  ]
+}

@@ -1,33 +1,30 @@
 package cp3406.a2.lenslearn.view
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.ActivityCategoryBinding
-//import cp3406.a2.lenslearn.databinding.ActivityCategoryDirections
 import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import cp3406.a2.lenslearn.model.CategoryViewModel
 
 class CategoryActivity : AppCompatActivity() {
 
-    val categoryId = -1
     private lateinit var binding: ActivityCategoryBinding
     private val viewModel: CategoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView<ActivityCategoryBinding>(
-            this,
-            R.layout.activity_category
-        )
-//        binding = ActivityCategoryBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_category)
 
         // Add Navigation Bar and Navigation Graph
         val navHostFragment =
@@ -36,7 +33,6 @@ class CategoryActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
 
         // Get reference to the view model
-//        val viewModel by viewModels<CategoryViewModel>()
         binding.lifecycleOwner = this
         binding.categoryViewModel = viewModel
 
@@ -45,9 +41,6 @@ class CategoryActivity : AppCompatActivity() {
         viewModel.categoryId.observe(this) {
             displaySnackbar(it)
         }
-
-//        val view = binding.root
-//
 
         // Set click listeners for each category
         binding.cardCategoryBalance.setOnClickListener{viewModel.setCategoryId(1)}
@@ -58,53 +51,78 @@ class CategoryActivity : AppCompatActivity() {
         binding.cardCategorySpace.setOnClickListener{viewModel.setCategoryId(6)}
         binding.cardCategoryUnity.setOnClickListener{viewModel.setCategoryId(7)}
 
-
-//        binding.cardCategoryBalance.setOnClickListener(this)
-//        binding.cardCategoryContrast.setOnClickListener(this)
-//        binding.cardCategoryEmphasis.setOnClickListener(this)
-//        binding.cardCategoryPattern.setOnClickListener(this)
-//        binding.cardCategoryRhythm.setOnClickListener(this)
-//        binding.cardCategorySpace.setOnClickListener(this)
-//        binding.cardCategoryUnity.setOnClickListener(this)
-
-
 //        // Select a category
 //        binding.cardCategoryBalance.setOnClickListener {
-//            val action = CategoryActivityDirections.actionCategoryActivityToLearningFragment(categoryId = 1)
 //            navController.navigate(action)
-//            startBalancePlay()
 //        }
 //
 //        binding.cardCategoryContrast.setOnClickListener {
-//            val action = CategoryActivityDirections.actionCategoryActivityToLearningFragment(categoryId = 2)
 //            navController.navigate(action)
 //        }
 //
 //        binding.cardCategoryEmphasis.setOnClickListener {
-//            val action = CategoryActivityDirections.actionCategoryActivityToLearningFragment(categoryId = 3)
 //            navController.navigate(action)
 //        }
 //
 //        binding.cardCategoryPattern.setOnClickListener {
-//            val action = CategoryActivityDirections.actionCategoryActivityToLearningFragment(categoryId = 4)
 //            navController.navigate(action)
 //        }
 //
 //        binding.cardCategoryRhythm.setOnClickListener {
-//            val action = CategoryActivityDirections.actionCategoryActivityToLearningFragment(categoryId = 5)
 //            navController.navigate(action)
 //        }
 //
 //        binding.cardCategorySpace.setOnClickListener {
-//            val action = CategoryActivityDirections.actionCategoryActivityToLearningFragment(categoryId = 6)
 //            navController.navigate(action)
 //        }
 //
 //        binding.cardCategoryUnity.setOnClickListener {
-//            val action = CategoryActivityDirections.actionCategoryActivityToLearningFragment(categoryId = 7)
 //            navController.navigate(action)
 //        }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.shareMenuButton -> handleShare()
+//            R.id.settingsMenuButton-> navigateToSettings()
+//            R.id.progressMenuButton-> navigateToProgress()
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun handleShare(): Boolean {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            // Data to share
+            putExtra(Intent.EXTRA_TEXT, "Text to share")
+//            putExtra(Intent.EXTRA_TEXT, "Text to share ${viewModel.categoryId.value}")
+        }
+        startActivity(intent)
+        return true
+    }
+
+    private fun navigateToProgress() : Boolean {
+        supportFragmentManager.commit {
+            replace<StatsFragment>(R.id.categoryActivityMain, null, null)
+//            supportFragmentManager.commit {
+//                add<StatsFragment>(R.id.categoryActivityMain, null)
+        }
+        return true
+    }
+
+    private fun navigateToSettings() : Boolean {
+        supportFragmentManager.commit {
+            replace<StatsFragment>(R.id.categoryActivityMain, null, null)
+        }
+        return true
+    }
+
 
     /** Create navigation up buttons */
     override fun onSupportNavigateUp(): Boolean {

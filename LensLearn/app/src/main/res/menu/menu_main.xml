@@ -22,5 +22,5 @@
         android:icon="@drawable/ic_settings"
         android:title="@string/settings"
         android:visible="true"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>
