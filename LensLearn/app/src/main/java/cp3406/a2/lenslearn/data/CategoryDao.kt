@@ -26,6 +26,15 @@ interface CategoryDao {
     @Query("SELECT * FROM task WHERE categoryId = :selectedCategoryId ORDER BY RANDOM() LIMIT 1")
     suspend fun getRandomTask(selectedCategoryId: Int): TaskEntity?
 
+    @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task) ORDER BY id DESC LIMIT 1")
+    suspend fun getLastUserImageForLastTask(): UserImageEntity?
+
+    @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task ORDER BY id DESC LIMIT 1, 1) ORDER BY id DESC LIMIT 1")
+    suspend fun getSecondLastUserImageForLastTask(): UserImageEntity?
+
+    @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task ORDER BY id DESC LIMIT 2, 1) ORDER BY id DESC LIMIT 1")
+    suspend fun getThirdLastUserImageForLastTask(): UserImageEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrUpdateProgress(progress: UserProgress)
 

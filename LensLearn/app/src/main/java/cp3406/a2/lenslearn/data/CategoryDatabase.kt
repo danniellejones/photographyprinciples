@@ -14,7 +14,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities=[CategoryEntity::class, ImageEntity::class, TaskEntity::class, UserImageEntity::class, UserProgress::class], version = 1, exportSchema = false)
+@Database(
+    entities = [CategoryEntity::class, ImageEntity::class, TaskEntity::class,
+        UserImageEntity::class, UserProgress::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class CategoryDatabase : RoomDatabase() {
 
     abstract val categoryDao: CategoryDao  // Return instance of DAO interface
@@ -63,7 +68,10 @@ abstract class CategoryDatabase : RoomDatabase() {
         }
 
         /** Insert CategoryEntity into Room Database */
-        private fun insertCategoriesIntoDatabase(database: CategoryDatabase, categories: List<CategoryEntity>) {
+        private fun insertCategoriesIntoDatabase(
+            database: CategoryDatabase,
+            categories: List<CategoryEntity>
+        ) {
             val categoryDao = database.categoryDao
             CoroutineScope(Dispatchers.IO).launch {
                 for (category in categories) {

@@ -30,9 +30,34 @@ class CategoryRepository(private val categoryDao: CategoryDao) {
     }
 
     // Update the progress of a category
-    suspend fun updateCategoryProgress(categoryId: Int, hasShared: Boolean, hasCompletedTask: Boolean, progressPercentage: Int) {
-        val progress = UserProgress(categoryId = categoryId, hasShared = hasShared, hasCompletedTask = hasCompletedTask, progressPercentage = progressPercentage)
+    suspend fun updateCategoryProgress(
+        categoryId: Int,
+        hasShared: Boolean,
+        hasCompletedTask: Boolean,
+        progressPercentage: Int
+    ) {
+        val progress = UserProgress(
+            categoryId = categoryId,
+            hasShared = hasShared,
+            hasCompletedTask = hasCompletedTask,
+            progressPercentage = progressPercentage
+        )
         categoryDao.insertOrUpdateProgress(progress)
+    }
+
+    // Retrieve the last photograph taken by the user for the last task entered
+    suspend fun getLastUserImageForLastTask(): UserImageEntity? {
+        return categoryDao.getLastUserImageForLastTask()
+    }
+
+    // Retrieve the second last photograph taken by the user for the last task entered
+    suspend fun getSecondLastUserImageForLastTask(): UserImageEntity? {
+        return categoryDao.getSecondLastUserImageForLastTask()
+    }
+
+    // Retrieve the third last photograph taken by the user for the last task entered
+    suspend fun getThirdLastUserImageForLastTask(): UserImageEntity? {
+        return categoryDao.getThirdLastUserImageForLastTask()
     }
 
 }
