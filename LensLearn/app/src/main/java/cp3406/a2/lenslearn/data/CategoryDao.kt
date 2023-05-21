@@ -1,13 +1,32 @@
 package cp3406.a2.lenslearn.data
 
-import androidx.room.Dao
+import androidx.room.*
 
-//@Dao
+@Dao
 interface CategoryDao {
-//    companion object {
-//        fun getLastThreeImages(): Any {
-//
-//        }
-//    }
+
+    @Insert
+    suspend fun insert(categoryEntity: CategoryEntity)
+
+    @Update
+    suspend fun update(categoryEntity: CategoryEntity)
+
+    @Query("SELECT * FROM category")
+    suspend fun getAllCategories(): List<CategoryEntity>
+
+    @Query("SELECT * FROM category WHERE id = :key")
+    suspend fun get(key: Int): CategoryEntity?
+
+    @Query("SELECT * FROM image WHERE categoryId = :selectedCategoryId LIMIT :limit")
+    suspend fun getCorrectIdentifyImages(selectedCategoryId: Int, limit: Int): List<ImageEntity>
+
+    @Query("SELECT * FROM image WHERE categoryId != :selectedCategoryId LIMIT :limit")
+    suspend fun getIncorrectIdentifyImages(selectedCategoryId: Int, limit: Int): List<ImageEntity>
+
+    @Query("SELECT * FROM task WHERE categoryId = :selectedCategoryId ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomTask(selectedCategoryId: Int): TaskEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrUpdateProgress(progress: UserProgress)
 
 }

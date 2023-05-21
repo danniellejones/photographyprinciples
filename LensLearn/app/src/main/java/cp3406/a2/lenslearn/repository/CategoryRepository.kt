@@ -1,34 +1,35 @@
 package cp3406.a2.lenslearn.repository
 
-import android.content.Context
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import cp3406.a2.lenslearn.data.CategoryEntity
+import cp3406.a2.lenslearn.data.*
 
-class CategoryRepository {
+class CategoryRepository(private val categoryDao: CategoryDao) {
 
-//    // Read .json file from raw resource folder
-//    fun getTextFromResource(context: Context, resourceId: Int): String {
-//        return context.resources.openRawResource(resourceId)
-//            .bufferedReader()
-//            .use{ it.readText() }  // Closes file after operation
-//    }
-//
-//    // Read .json file from assets resource folder
-//    fun getTextFromAsset(context: Context, fileName: String): String {
-//        return context.resources.assets.open(fileName)
-//            .bufferedReader()
-//            .use{ it.readText() }  // Closes file after operation
-//    }
-//
-//    fun getCategoryInformation(context: Context, fileName: String): List<CategoryEntity>? {
-//        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-//        val listType = Types.newParameterizedType(
-//            List::class.java, CategoryEntity::class.java
-//        )
-//        val adapter: JsonAdapter<List<CategoryEntity>> = moshi.adapter(listType)
-//        return adapter.fromJson(getTextFromAsset(context, fileName))
-//    }
+    suspend fun getAllCategories(): List<CategoryEntity> {
+        return categoryDao.getAllCategories()
+    }
+    suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
+        return categoryDao.get(categoryId)
+    }
+
+    // Get x images from category == selected category for identify phase
+    suspend fun getCorrectIdentifyImages(selectedCategoryId: Int, limit: Int): List<ImageEntity> {
+        return categoryDao.getCorrectIdentifyImages(selectedCategoryId, limit)
+    }
+
+    // Get x images from category != selected category for identify phase
+    suspend fun getIncorrectIdentifyImages(selectedCategoryId: Int, limit: Int): List<ImageEntity> {
+        return categoryDao.getIncorrectIdentifyImages(selectedCategoryId, limit)
+    }
+
+    // Get a random task from the selected category for do phase
+    suspend fun getRandomTask(selectedCategoryId: Int): TaskEntity? {
+        return categoryDao.getRandomTask(selectedCategoryId)
+    }
+
+    // Update the progress of a category
+    suspend fun updateCategoryProgress(categoryId: Int, hasShared: Boolean, hasCompletedTask: Boolean, progressPercentage: Int) {
+        val progress = UserProgress(categoryId = categoryId, hasShared = hasShared, hasCompletedTask = hasCompletedTask, progressPercentage = progressPercentage)
+        categoryDao.insertOrUpdateProgress(progress)
+    }
+
 }

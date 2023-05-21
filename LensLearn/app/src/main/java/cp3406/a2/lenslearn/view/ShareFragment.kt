@@ -25,6 +25,4 @@ class ShareFragment : Fragment() {
 
         return binding.root
     }
-
-
 }

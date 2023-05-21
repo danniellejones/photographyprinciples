@@ -36,15 +36,6 @@ class CategoryActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
-
-        // Log Resource Id Call
-        logResourceId("img_example_balance", "drawable")
-        logResourceId("img_example_contrast", "drawable")
-        logResourceId("img_example_emphasis", "drawable")
-        logResourceId("img_example_pattern", "drawable")
-        logResourceId("img_example_rhythm", "drawable")
-        logResourceId("img_example_space", "drawable")
-        logResourceId("img_example_unity", "drawable")
     }
 
     /** Create options for main menu */
