@@ -26,35 +26,11 @@ class CategoryFragment : Fragment() {
         // Inflate with data binding
         binding = FragmentCategoryBinding.inflate(inflater, container, false)
 
-        // Set click listeners for each category
-//        binding.cardCategoryBalance.setOnClickListener{
-//            categoryViewModel.setCategoryId(1)
-//            findNavController().navigate(R.id.action_categoryFragment_to_learningFragment)
-//        }
-//        binding.cardCategoryContrast.setOnClickListener{
-//            categoryViewModel.setCategoryId(2)
-//        }
-//        binding.cardCategoryEmphasis.setOnClickListener{
-//            categoryViewModel.setCategoryId(3)
-//        }
-//        binding.cardCategoryPattern.setOnClickListener{
-//            categoryViewModel.setCategoryId(4)
-//        }
-//        binding.cardCategoryRhythm.setOnClickListener{
-//            categoryViewModel.setCategoryId(5)
-//        }
-//        binding.cardCategorySpace.setOnClickListener{
-//            categoryViewModel.setCategoryId(6)
-//        }
-//        binding.cardCategoryUnity.setOnClickListener{
-//            categoryViewModel.setCategoryId(7)
-//        }
-
+        // Listen for click event and handle selection of category Id
         val categoryClickListener: (Int) -> Unit = { categoryId ->
             categoryViewModel.setCategoryId(categoryId)
             findNavController().navigate(R.id.action_categoryFragment_to_learningFragment)
         }
-
         binding.apply {
             cardCategoryBalance.setOnClickListener { categoryClickListener(1) }
             cardCategoryContrast.setOnClickListener { categoryClickListener(2) }
@@ -65,14 +41,10 @@ class CategoryFragment : Fragment() {
             cardCategoryUnity.setOnClickListener { categoryClickListener(7) }
         }
 
-       
 
-
-
-        categoryViewModel.categoryId.observe(viewLifecycleOwner) {
+        categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) {
             displaySnackbar(it)
         }
-
         return binding.root
     }
 
