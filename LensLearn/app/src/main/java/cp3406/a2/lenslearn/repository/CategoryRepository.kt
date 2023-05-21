@@ -60,4 +60,9 @@ class CategoryRepository(private val categoryDao: CategoryDao) {
         return categoryDao.getThirdLastUserImageForLastTask()
     }
 
+    // Insert a user image into the user image table
+    suspend fun insertUserImage(userImageEntity: UserImageEntity) {
+        categoryDao.insertUserImage(userImageEntity)
+    }
+
 }

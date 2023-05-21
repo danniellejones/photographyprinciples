@@ -8,6 +8,9 @@ interface CategoryDao {
     @Insert
     suspend fun insert(categoryEntity: CategoryEntity)
 
+    @Insert
+    suspend fun insertUserImage(userImageEntity: UserImageEntity)
+
     @Update
     suspend fun update(categoryEntity: CategoryEntity)
 
@@ -34,6 +37,9 @@ interface CategoryDao {
 
     @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task ORDER BY id DESC LIMIT 2, 1) ORDER BY id DESC LIMIT 1")
     suspend fun getThirdLastUserImageForLastTask(): UserImageEntity?
+
+    @Query("DELETE FROM category")
+    suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrUpdateProgress(progress: UserProgress)
