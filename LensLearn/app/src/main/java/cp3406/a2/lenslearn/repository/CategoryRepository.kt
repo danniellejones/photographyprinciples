@@ -4,9 +4,12 @@ import cp3406.a2.lenslearn.data.*
 
 class CategoryRepository(private val categoryDao: CategoryDao) {
 
+    // Get all categories
     suspend fun getAllCategories(): List<CategoryEntity> {
         return categoryDao.getAllCategories()
     }
+
+    // Get a category by category Id
     suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
         return categoryDao.get(categoryId)
     }
