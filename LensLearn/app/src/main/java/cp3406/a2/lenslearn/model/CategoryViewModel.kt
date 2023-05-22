@@ -20,6 +20,8 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
 
     private val categoryRepository: CategoryRepository
 
+    /** Set Up the Live Data */
+
     // CATEGORY - Select Category from on Click Event
     private val _selectedCategoryId: MutableLiveData<Int> = MutableLiveData()  // Private
     val selectedCategoryId: LiveData<Int> = _selectedCategoryId  // Public
@@ -39,7 +41,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         MutableLiveData()
 
 
-    /** Check size of study timer list and creates any missing timers */
+    /** Initialise the connection between the View Model and the Repository */
     init {
         Log.i(LOG_TAG, "Category View Model Init")
         _selectedCategoryId.value = 0

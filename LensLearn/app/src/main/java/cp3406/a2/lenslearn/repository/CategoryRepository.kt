@@ -1,3 +1,8 @@
+/**
+ * Category Repository is the intermediary between the Room Database and the View Model.
+ * It contains the methods for accessing the data, with correlation to the DAO interface.
+ */
+
 package cp3406.a2.lenslearn.repository
 
 import android.content.Context
