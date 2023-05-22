@@ -2,17 +2,14 @@ package cp3406.a2.lenslearn.repository
 
 import android.content.Context
 import android.util.Log
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import cp3406.a2.lenslearn.data.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-const val FILENAME = "data.json"
 const val FILENAME_CATEGORIES = "category_data.json"
 const val FILENAME_IMAGES = "image_data.json"
 const val FILENAME_TASKS = "task_data.json"
@@ -34,13 +31,11 @@ class CategoryRepository(private val context: Context) {
         val jsonStringTask = readJsonFile(context, FILENAME_TASKS)
         Log.i(TAG, "JSON STRING: $jsonStringCategory \n $jsonStringImage \n $jsonStringTask")
 
-//        val categories = parseJsonToCategoryEntity(jsonDataString)
-//        insertCategoryEntityData(categories)
-
         // Parse Json String data into Entities List
         val categories : List<CategoryEntity> = parseJsonToEntity(jsonStringCategory)
         val images : List<ImageEntity> = parseJsonToEntity(jsonStringImage)
         val tasks : List<TaskEntity> = parseJsonToEntity(jsonStringTask)
+
         // Insert Entities into Room Database
         insertCategoryEntityData(categories, images, tasks)
     }
@@ -53,6 +48,7 @@ class CategoryRepository(private val context: Context) {
             .use { it.readText() }
     }
 
+    /** TESTING ONLY Parse Json string and derive category entity */
     private fun parseJsonToCategoryEntity(jsonString: String): List<CategoryEntity> {
         val moshi = Moshi.Builder().build()
         Log.d(TAG, "Enter Parse")
@@ -63,6 +59,7 @@ class CategoryRepository(private val context: Context) {
         return categoryAdapter.fromJson(jsonString) ?: emptyList()
     }
 
+    /** Parse Json string and derive entities */
     private inline fun <reified T> parseJsonToEntity(jsonString: String): List<T> {
         val moshi = Moshi.Builder().build()
         val listType = Types.newParameterizedType(List::class.java, T::class.java)
@@ -70,6 +67,7 @@ class CategoryRepository(private val context: Context) {
         return entityAdapter.fromJson(jsonString) ?: emptyList()
     }
 
+    /** Insert entities into Room Database */
     private fun insertCategoryEntityData(categories: List<CategoryEntity>, images: List<ImageEntity>, tasks: List<TaskEntity>) {
 
         Log.d(TAG, "Categories: $categories")
@@ -88,33 +86,33 @@ class CategoryRepository(private val context: Context) {
         }
     }
 
-    // Get all categories
+    /** Get all categories */
     suspend fun getAllCategories(): List<CategoryEntity> {
         return categoryDao.getAllCategories()
     }
 
-    // Get a category by category Id
+    /** Get a category by category Id */
     suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
         Log.d("CategoryRepository", "categoryId passed: $categoryId")
         return categoryDao.get(categoryId)
     }
 
-    // Get x images from category == selected category for identify phase
+    /** Get x images from category == selected category for identify phase */
     suspend fun getCorrectIdentifyImages(selectedCategoryId: Int, limit: Int): List<ImageEntity> {
         return categoryDao.getCorrectIdentifyImages(selectedCategoryId, limit)
     }
 
-    // Get x images from category != selected category for identify phase
+    /** Get x images from category != selected category for identify phase */
     suspend fun getIncorrectIdentifyImages(selectedCategoryId: Int, limit: Int): List<ImageEntity> {
         return categoryDao.getIncorrectIdentifyImages(selectedCategoryId, limit)
     }
 
-    // Get a random task from the selected category for do phase
+    /** Get a random task from the selected category for do phase */
     suspend fun getRandomTask(selectedCategoryId: Int): TaskEntity? {
         return categoryDao.getRandomTask(selectedCategoryId)
     }
 
-    // Update the progress of a category
+    /** Update the progress of a category */
     suspend fun updateCategoryProgress(
         categoryId: Int,
         hasShared: Boolean,
@@ -130,22 +128,22 @@ class CategoryRepository(private val context: Context) {
         categoryDao.insertOrUpdateProgress(progress)
     }
 
-    // Retrieve the last photograph taken by the user for the last task entered
+    /** Retrieve the last photograph taken by the user for the last task entered */
     suspend fun getLastUserImageForLastTask(): UserImageEntity? {
         return categoryDao.getLastUserImageForLastTask()
     }
 
-    // Retrieve the second last photograph taken by the user for the last task entered
+    /** Retrieve the second last photograph taken by the user for the last task entered */
     suspend fun getSecondLastUserImageForLastTask(): UserImageEntity? {
         return categoryDao.getSecondLastUserImageForLastTask()
     }
 
-    // Retrieve the third last photograph taken by the user for the last task entered
+    /** Retrieve the third last photograph taken by the user for the last task entered */
     suspend fun getThirdLastUserImageForLastTask(): UserImageEntity? {
         return categoryDao.getThirdLastUserImageForLastTask()
     }
 
-    // Insert a user image into the user image table
+    /** Insert a user image into the user image table */
     suspend fun insertUserImage(userImageEntity: UserImageEntity) {
         categoryDao.insertUserImage(userImageEntity)
     }
