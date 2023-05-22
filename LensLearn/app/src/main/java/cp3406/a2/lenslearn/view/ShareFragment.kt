@@ -26,5 +26,27 @@ class ShareFragment : Fragment() {
         return binding.root
     }
 
-
+//    categoryViewModel.getLastUserImageForLastTask().observe(viewLifecycleOwner, Observer { userImageEntity ->
+//        userImageEntity?.let { // Use the safe call operator ?. and let function
+//            // Update your views with the user image entity
+//        } ?: run {
+//            // Handle the case when there is no last user image
+//        }
+//    })
+//
+//    categoryViewModel.getSecondLastUserImageForLastTask().observe(viewLifecycleOwner, Observer { userImageEntity ->
+//        userImageEntity?.let { // Use the safe call operator ?. and let function
+//            // Update your views with the user image entity
+//        } ?: run {
+//            // Handle the case when there is no second last user image
+//        }
+//    })
+//
+//    categoryViewModel.getThirdLastUserImageForLastTask().observe(viewLifecycleOwner, Observer { userImageEntity ->
+//        userImageEntity?.let { // Use the safe call operator ?. and let function
+//            // Update your views with the user image entity
+//        } ?: run {
+//            // Handle the case when there is no third last user image
+//        }
+//    })
 }

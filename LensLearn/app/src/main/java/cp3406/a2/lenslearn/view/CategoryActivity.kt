@@ -1,5 +1,6 @@
 package cp3406.a2.lenslearn.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -84,6 +85,18 @@ class CategoryActivity : AppCompatActivity() {
             false
         } else {
             navController.navigateUp() || super.onSupportNavigateUp()
+        }
+    }
+
+    /** Get Resource Id by using name without file extension, and type e.g. drawable */
+    @SuppressLint("DiscouragedApi")
+    private fun logResourceId(resourceName : String, resourceType: String) {
+        val resourceId = resources.getIdentifier(resourceName, resourceType, packageName)
+
+        if (resourceId != 0) {
+            Log.i(LOG_TAG2, "$resourceName Id: $resourceId")
+        } else {
+            Log.i(LOG_TAG2, "Resource Not Found")
         }
     }
 }

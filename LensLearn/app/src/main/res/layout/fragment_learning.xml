@@ -23,14 +23,15 @@
             android:background="@color/dark_blue"
             android:paddingTop="30dp"
             android:paddingBottom="20dp"
-            android:text="@string/category"
+            android:text="@{categoryViewModel.category.name}"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/category" />
 
         <ImageView
             android:id="@+id/exampleImage"
@@ -40,12 +41,13 @@
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/example_of_photograph_description"
             android:scaleType="fitCenter"
-            android:src="@drawable/img_example_unity"
+            app:imageFromFilename="@{categoryViewModel.category.filename}"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@id/textInformationTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textIndividualCategoryTitle" />
+            app:layout_constraintTop_toBottomOf="@id/textIndividualCategoryTitle"
+            tools:src="@drawable/img_example_unity" />
 
         <TextView
             android:id="@+id/textInformationTitle"
@@ -80,10 +82,22 @@
                 android:id="@+id/textInformation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/test"
-                android:textSize="14sp" />
+                android:text="@{categoryViewModel.isShaken ? categoryViewModel.category.detailedInformation : categoryViewModel.category.definition}"
+                android:textSize="14sp"
+                tools:text="@string/test" />
 
         </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/next"
+            app:layout_constraintBottom_toBottomOf="@+id/scrollInformation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_next" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

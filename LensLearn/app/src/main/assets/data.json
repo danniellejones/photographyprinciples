@@ -3,65 +3,230 @@
     {
       "id": 1,
       "name": "Balance",
-      "exampleImagePath": "string",
-      "information": "string",
-      "detailedInformation": "string"
+      "filename": "img_example_balance.jpg",
+      "definition": "Balance refers to the visual distribution of elements within a composition. It aims to achieve a sense of equilibrium and stability.",
+      "detailedInformation": "In photography, balance plays a crucial role in creating harmonious and pleasing images. There are two types of balance: symmetrical and asymmetrical. Symmetrical balance involves dividing the frame into equal parts, creating a mirror-like effect. Asymmetrical balance, on the other hand, involves distributing visual weight unevenly to create interest and tension. Understanding and utilizing balance can help you create visually compelling photographs with a sense of stability or dynamic tension."
     },
     {
       "id": 2,
       "name": "Contrast",
-      "exampleImagePath": "string",
-      "information": "string",
-      "detailedInformation": "string"
+      "filename": "img_example_contrast.jpg",
+      "definition": "Contrast refers to the difference between light and dark areas in an image. It adds visual interest and helps emphasize important elements.",
+      "detailedInformation": "In photography, contrast is an essential tool to create impact and draw attention to specific subjects. It can be achieved through variations in brightness, color, or texture. High contrast images have a significant difference between light and dark areas, resulting in bold and dramatic visuals. Low contrast images have minimal differences, leading to a softer and more subtle appearance. Understanding how to manipulate contrast effectively allows you to control the mood, focus, and visual hierarchy in your photographs."
     },
     {
       "id": 3,
       "name": "Emphasis",
-      "exampleImagePath": "string",
-      "information": "string",
-      "detailedInformation": "string"
+      "filename": "img_example_emphasis.jpg",
+      "definition": "Emphasis, also known as focal point or point of interest, refers to the main subject or area of focus in a photograph.",
+      "detailedInformation": "Emphasis is a powerful tool in photography to guide the viewer's attention and convey your intended message. By creating a clear and dominant point of interest, you can direct the viewer's gaze and communicate your photographic intent effectively. Techniques such as selective focus, leading lines, and framing can be employed to enhance the emphasis on the main subject. Understanding how to create and manipulate emphasis allows you to create impactful and engaging photographs."
     },
     {
       "id": 4,
       "name": "Pattern",
-      "exampleImagePath": "string",
-      "information": "string",
-      "detailedInformation": "string"
+      "filename": "img_example_pattern.jpg",
+      "definition": "Pattern refers to the repetition of elements or motifs in a composition. It adds visual interest and can evoke a sense of rhythm and harmony.",
+      "detailedInformation": "In photography, patterns can be found in various subjects such as architecture, nature, or man-made objects. By capturing and highlighting patterns, you can create visually captivating images. Patterns can convey a sense of order, predictability, or even chaos, depending on their arrangement and context. Exploring and utilizing patterns in your compositions allows you to create images that engage and intrigue the viewer."
     },
     {
       "id": 5,
       "name": "Rhythm",
-      "exampleImagePath": "string",
-      "information": "string",
-      "detailedInformation": "string"
+      "filename": "img_example_rhythm.jpg",
+      "definition": "Rhythm refers to the repetition of visual elements that create a sense of movement and flow in an image.",
+      "detailedInformation": "In photography, rhythm can be achieved through the repetition of lines, shapes, colors, or other visual elements. It creates a visual tempo that guides the viewer's eye and imparts a sense of harmony or dynamism. By understanding rhythm, you can add energy, tension, or a calming effect to your photographs. Whether it's capturing the rhythm of waves crashing on a shore or the repetition of architectural elements, rhythm helps to create visually engaging images."
     },
     {
       "id": 6,
       "name": "Space",
-      "exampleImagePath": "string",
-      "information": "string",
-      "detailedInformation": "string"
+      "filename": "img_example_space.jpg",
+      "definition": "Space refers to the area around and between objects in a composition. It helps define the relationships between elements and contributes to the overall balance.",
+      "detailedInformation": "In photography, space is an essential element for creating visual impact and conveying a sense of depth and perspective. It can be used to emphasize the subject by giving it room to breathe or to create a sense of vastness or emptiness. Understanding how to manipulate space allows you to control the composition and guide the viewer's perception. Whether it's capturing negative space, using leading lines, or composing with a foreground-background relationship, space plays a crucial role in creating compelling photographs."
     },
     {
       "id": 7,
       "name": "Unity",
-      "exampleImagePath": "string",
-      "information": "string",
-      "detailedInformation": "string"
+      "filename": "img_example_unity.jpg",
+      "definition": "Unity, also known as harmony, refers to the coherence and visual agreement between the elements in a composition.",
+      "detailedInformation": "In photography, unity is achieved when all the elements in an image work together to convey a cohesive message or evoke a specific mood. It involves the careful arrangement of visual elements such as color, shape, texture, and more. Unity can be achieved through repetition, similarity, or complementary relationships between elements. By understanding and implementing principles of unity, you can create images that are visually pleasing and impactful, where all the elements work harmoniously to deliver your intended vision."
     }
   ],
   "ImageEntity": [
     {
       "categoryId": 1,
-      "name": "string",
-      "path": "string"
+      "filename": "img_balance_01.jpg"
+    },
+    {
+      "categoryId": 1,
+      "filename": "img_balance_02.jpg"
+    },
+    {
+      "categoryId": 1,
+      "filename": "img_balance_03.jpg"
+    },
+    {
+      "categoryId": 1,
+      "filename": "img_balance_04.jpg"
+    },
+    {
+      "categoryId": 1,
+      "filename": "img_balance_05.jpg"
+    },
+    {
+      "categoryId": 2,
+      "filename": "img_contrast_01.jpg"
+    },
+    {
+      "categoryId": 2,
+      "filename": "img_contrast_02.jpg"
+    },
+    {
+      "categoryId": 2,
+      "filename": "img_contrast_03.jpg"
+    },
+    {
+      "categoryId": 2,
+      "filename": "img_contrast_04.jpg"
+    },
+    {
+      "categoryId": 2,
+      "filename": "img_contrast_05.jpg"
+    },
+    {
+      "categoryId": 3,
+      "filename": "img_emphasis_01.jpg"
+    },
+    {
+      "categoryId": 3,
+      "filename": "img_emphasis_02.jpg"
+    },
+    {
+      "categoryId": 3,
+      "filename": "img_emphasis_03.jpg"
+    },
+    {
+      "categoryId": 3,
+      "filename": "img_emphasis_04.jpg"
+    },
+    {
+      "categoryId": 3,
+      "filename": "img_emphasis_05.jpg"
+    },
+    {
+      "categoryId": 4,
+      "filename": "img_pattern_01.jpg"
+    },
+    {
+      "categoryId": 4,
+      "filename": "img_pattern_02.jpg"
+    },
+    {
+      "categoryId": 4,
+      "filename": "img_pattern_03.jpg"
+    },
+    {
+      "categoryId": 4,
+      "filename": "img_pattern_04.jpg"
+    },
+    {
+      "categoryId": 4,
+      "filename": "img_pattern_05.jpg"
+    },
+    {
+      "categoryId": 5,
+      "filename": "img_rhythm_01.jpg"
+    },
+    {
+      "categoryId": 5,
+      "filename": "img_rhythm_02.jpg"
+    },
+    {
+      "categoryId": 5,
+      "filename": "img_rhythm_03.jpg"
+    },
+    {
+      "categoryId": 5,
+      "filename": "img_rhythm_04.jpg"
+    },
+    {
+      "categoryId": 5,
+      "filename": "img_rhythm_05.jpg"
+    },
+    {
+      "categoryId": 6,
+      "filename": "img_space_01.jpg"
+    },
+    {
+      "categoryId": 6,
+      "filename": "img_space_02.jpg"
+    },
+    {
+      "categoryId": 6,
+      "filename": "img_space_03.jpg"
+    },
+    {
+      "categoryId": 6,
+      "filename": "img_space_04.jpg"
+    },
+    {
+      "categoryId": 6,
+      "filename": "img_space_05.jpg"
+    },
+    {
+      "categoryId": 7,
+      "filename": "img_unity_01.jpg"
+    },
+    {
+      "categoryId": 7,
+      "filename": "img_unity_02.jpg"
+    },
+    {
+      "categoryId": 7,
+      "filename": "img_unity_03.jpg"
+    },
+    {
+      "categoryId": 7,
+      "filename": "img_unity_04.jpg"
+    },
+    {
+      "categoryId": 7,
+      "filename": "img_unity_05.jpg"
     }
   ],
   "TaskEntity": [
     {
       "categoryId": 1,
-      "description": "string",
-      "overlayImagePath": "string"
+      "description": "Find an object that is asymmetrical and create balance by tilting the camera in different angles..",
+      "filename": "img_task_balance_01.png"
+    },
+    {
+      "categoryId": 2,
+      "description": "Find two objects with very different textures (spikes vs smooth), then photograph them together. Use shadow, light and angles to emphasise this contrast!",
+      "filename": "img_task_contrast_01.png"
+    },
+    {
+      "categoryId": 3,
+      "description": "Pick an object and make it stand out by using colour or size.",
+      "filename": "img_task_emphasis_01.png"
+    },
+    {
+      "categoryId": 4,
+      "description": "Get up close to objects and photograph the pattern on things, it should not be clear what the object is.",
+      "filename": "img_task_pattern_01.png"
+    },
+    {
+      "categoryId": 5,
+      "description": "Look at the buildings or in nature for a line that leads your eye off and match its starting point to the image.",
+      "filename": "img_task_rhythm_01.png"
+    },
+    {
+      "categoryId": 6,
+      "description": "Place a figure or object in front of a window that has lots of light shining through it towards the camera. Use the negative space to create your image.",
+      "filename": "img_task_space_01.png"
+    },
+    {
+      "categoryId": 7,
+      "description": "Find something that is all in one colour, shape or style e.g. round green hills and frame using rule-of-thirds. Two important points should meet up with the lines.",
+      "filename": "img_task_unity_01.png"
     }
   ]
 }
