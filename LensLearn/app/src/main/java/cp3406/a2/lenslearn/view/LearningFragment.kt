@@ -1,5 +1,7 @@
 package cp3406.a2.lenslearn.view
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import cp3406.a2.lenslearn.data.CategoryEntity
@@ -43,23 +47,39 @@ class LearningFragment : Fragment() {
             }
         }
 
-        categoryViewModel.isShaken.observe(viewLifecycleOwner) { shakeDetected ->
-            if (shakeDetected) {
-                // Update UI
-            }
-        }
-
-//        categoryViewModel.isShaken.observe(viewLifecycleOwner) {
-//
-//        }
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        accelerometer = Accelerometer(requireContext(), categoryViewModel)
+        val permissionFine = Manifest.permission.ACCESS_FINE_LOCATION
+        val permissionCoarse = Manifest.permission.ACCESS_COARSE_LOCATION
+        val requestCode = 1 // Use a unique request code
+        if (ContextCompat.checkSelfPermission(requireContext(), permissionFine) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(permissionFine), requestCode)
+        } else {
+            if (ContextCompat.checkSelfPermission(requireContext(), permissionCoarse) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(permissionCoarse), requestCode)
+            } else {
+                accelerometer = Accelerometer(requireContext(), categoryViewModel)
 
+                accelerometer.startListening()
+            }
+        }
+
+        categoryViewModel.isShaken.observe(viewLifecycleOwner) { shakeDetected ->
+            Log.d("LearningFragment", "Is Shaken: $shakeDetected")
+            if (shakeDetected) {
+                // Update UI
+            }
+        }
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        accelerometer.stopListening()
     }
 }

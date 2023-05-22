@@ -66,6 +66,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     init {
         Log.i(LOG_TAG, "Category View Model Init")
         _selectedCategoryId.value = 0
+        _isShaken.value = false
 
 //        val categoryDao = CategoryDatabase.getInstance(app).categoryDao()
         categoryRepository = CategoryRepository(app)
@@ -79,6 +80,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     /** Set new Category Id */
     fun toggleShaken() {
         _isShaken.value = !_isShaken.value!!
+        Log.i(LOG_TAG, "Shake Change: ${_isShaken.value.toString()}")
     }
 
     /** Retrieve the category by a specified category Id */

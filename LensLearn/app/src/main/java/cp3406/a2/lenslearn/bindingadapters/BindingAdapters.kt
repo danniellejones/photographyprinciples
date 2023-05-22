@@ -5,8 +5,11 @@ import android.app.Application
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import cp3406.a2.lenslearn.R
+import cp3406.a2.lenslearn.data.CategoryEntity
+import cp3406.a2.lenslearn.model.CategoryViewModel
 
 /** Read filename from Room Data and set image to image view */
 @SuppressLint("DiscouragedApi")
@@ -29,6 +32,15 @@ fun ImageView.setImageFromFilename(filename: String?) {
     } catch (e: Exception) {
         e.printStackTrace()
         setImageResource(R.drawable.img_default)  // Exception set default image
+    }
+}
+
+@BindingAdapter("shakeText", "viewModel")
+fun TextView.setShakeText(category: CategoryEntity?, categoryViewModel: CategoryViewModel) {
+    text = if (category != null && categoryViewModel.isShaken.value == true) {
+        category.detailedInformation
+    } else {
+        category?.definition
     }
 }
 

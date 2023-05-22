@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
+import android.hardware.SensorManager
 import android.view.GestureDetector
 import android.view.MotionEvent
 import cp3406.a2.lenslearn.model.CategoryViewModel
@@ -16,7 +17,7 @@ class Accelerometer(context: Context, categoryViewModel: CategoryViewModel) : An
     sensorType = Sensor.TYPE_ACCELEROMETER,
     categoryViewModel = categoryViewModel
 ) {
-    private val shakeThreshold = 10f
+    private val shakeThreshold = 15f
 
     override fun onSensorChanged(event: SensorEvent?) {
         super.onSensorChanged(event)
