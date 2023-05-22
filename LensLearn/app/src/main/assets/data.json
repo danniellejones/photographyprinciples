@@ -1,18 +1,51 @@
-{
-  "CategoryEntity": [
-    {
-      "id": 1,
-      "name": "Balance",
-      "filename": "img_example_balance.jpg",
-      "definition": "Balance refers to the visual distribution of elements within a composition. It aims to achieve a sense of equilibrium and stability.",
-      "detailedInformation": "In photography, balance plays a crucial role in creating harmonious and pleasing images. There are two types of balance: symmetrical and asymmetrical. Symmetrical balance involves dividing the frame into equal parts, creating a mirror-like effect. Asymmetrical balance, on the other hand, involves distributing visual weight unevenly to create interest and tension. Understanding and utilizing balance can help you create visually compelling photographs with a sense of stability or dynamic tension."
-    },
-    {
-      "id": 2,
-      "name": "Contrast",
-      "filename": "img_example_contrast.jpg",
-      "definition": "Contrast refers to the difference between light and dark areas in an image. It adds visual interest and helps emphasize important elements.",
-      "detailedInformation": "In photography, contrast is an essential tool to create impact and draw attention to specific subjects. It can be achieved through variations in brightness, color, or texture. High contrast images have a significant difference between light and dark areas, resulting in bold and dramatic visuals. Low contrast images have minimal differences, leading to a softer and more subtle appearance. Understanding how to manipulate contrast effectively allows you to control the mood, focus, and visual hierarchy in your photographs."
-    }
-    ]
-}
+[
+  {
+    "id": 1,
+    "name": "Balance",
+    "filename": "img_example_balance.jpg",
+    "definition": "Balance refers to the visual distribution of elements within a composition. It aims to achieve a sense of equilibrium and stability.",
+    "detailedInformation": "In photography, balance plays a crucial role in creating harmonious and pleasing images. There are two types of balance: symmetrical and asymmetrical. Symmetrical balance involves dividing the frame into equal parts, creating a mirror-like effect. Asymmetrical balance, on the other hand, involves distributing visual weight unevenly to create interest and tension. Understanding and utilizing balance can help you create visually compelling photographs with a sense of stability or dynamic tension."
+  },
+  {
+    "id": 2,
+    "name": "Contrast",
+    "filename": "img_example_contrast.jpg",
+    "definition": "Contrast refers to the difference between light and dark areas in an image. It adds visual interest and helps emphasize important elements.",
+    "detailedInformation": "In photography, contrast is an essential tool to create impact and draw attention to specific subjects. It can be achieved through variations in brightness, color, or texture. High contrast images have a significant difference between light and dark areas, resulting in bold and dramatic visuals. Low contrast images have minimal differences, leading to a softer and more subtle appearance. Understanding how to manipulate contrast effectively allows you to control the mood, focus, and visual hierarchy in your photographs."
+  },
+  {
+    "id": 3,
+    "name": "Emphasis",
+    "filename": "img_example_emphasis.jpg",
+    "definition": "Emphasis, also known as focal point or point of interest, refers to the main subject or area of focus in a photograph.",
+    "detailedInformation": "Emphasis is a powerful tool in photography to guide the viewer's attention and convey your intended message. By creating a clear and dominant point of interest, you can direct the viewer's gaze and communicate your photographic intent effectively. Techniques such as selective focus, leading lines, and framing can be employed to enhance the emphasis on the main subject. Understanding how to create and manipulate emphasis allows you to create impactful and engaging photographs."
+  },
+  {
+    "id": 4,
+    "name": "Pattern",
+    "filename": "img_example_pattern.jpg",
+    "definition": "Pattern refers to the repetition of elements or motifs in a composition. It adds visual interest and can evoke a sense of rhythm and harmony.",
+    "detailedInformation": "In photography, patterns can be found in various subjects such as architecture, nature, or man-made objects. By capturing and highlighting patterns, you can create visually captivating images. Patterns can convey a sense of order, predictability, or even chaos, depending on their arrangement and context. Exploring and utilizing patterns in your compositions allows you to create images that engage and intrigue the viewer."
+  },
+  {
+    "id": 5,
+    "name": "Rhythm",
+    "filename": "img_example_rhythm.jpg",
+    "definition": "Rhythm refers to the repetition of visual elements that create a sense of movement and flow in an image.",
+    "detailedInformation": "In photography, rhythm can be achieved through the repetition of lines, shapes, colors, or other visual elements. It creates a visual tempo that guides the viewer's eye and imparts a sense of harmony or dynamism. By understanding rhythm, you can add energy, tension, or a calming effect to your photographs. Whether it's capturing the rhythm of waves crashing on a shore or the repetition of architectural elements, rhythm helps to create visually engaging images."
+  },
+  {
+    "id": 6,
+    "name": "Space",
+    "filename": "img_example_space.jpg",
+    "definition": "Space refers to the area around and between objects in a composition. It helps define the relationships between elements and contributes to the overall balance.",
+    "detailedInformation": "In photography, space is an essential element for creating visual impact and conveying a sense of depth and perspective. It can be used to emphasize the subject by giving it room to breathe or to create a sense of vastness or emptiness. Understanding how to manipulate space allows you to control the composition and guide the viewer's perception. Whether it's capturing negative space, using leading lines, or composing with a foreground-background relationship, space plays a crucial role in creating compelling photographs."
+  },
+  {
+    "id": 7,
+    "name": "Unity",
+    "filename": "img_example_unity.jpg",
+    "definition": "Unity, also known as harmony, refers to the coherence and visual agreement between the elements in a composition.",
+    "detailedInformation": "In photography, unity is achieved when all the elements in an image work together to convey a cohesive message or evoke a specific mood. It involves the careful arrangement of visual elements such as color, shape, texture, and more. Unity can be achieved through repetition, similarity, or complementary relationships between elements. By understanding and implementing principles of unity, you can create images that are visually pleasing and impactful, where all the elements work harmoniously to deliver your intended vision."
+  }
+]
