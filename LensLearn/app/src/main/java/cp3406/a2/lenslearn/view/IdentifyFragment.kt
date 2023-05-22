@@ -28,6 +28,7 @@ private const val TAG = "IdentifyFragment"
 
 class IdentifyFragment : Fragment(), GestureEventListener {
 
+    // Data binding and view model
     private lateinit var binding: FragmentIdentifyBinding
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
@@ -36,13 +37,8 @@ class IdentifyFragment : Fragment(), GestureEventListener {
     // Gesture Detector
     private var currentIndex: Int = 0
     private lateinit var gestureDetector: SwipeGestureDetector
-//    val swipeGestureDetector = SwipeGestureDetector(requireContext(), this)
-    private val requestCode = 1
-    private val permissions = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    )
 
+    /** Bind data to view, initialise view model and observe live data */
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +50,7 @@ class IdentifyFragment : Fragment(), GestureEventListener {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.categoryViewModel = categoryViewModel
 
+        // Observe category id changes and generate a new set of images
         categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) { categoryId ->
             categoryId?.let {
                 Log.d(TAG, "Inside observer of selected cat id")
@@ -62,28 +59,21 @@ class IdentifyFragment : Fragment(), GestureEventListener {
             }
         }
 
-
+        // Observe changes to the images list and reset index
         categoryViewModel.identifyImagesList.observe(viewLifecycleOwner) {
             currentIndex = 0  // When list changes, reset index to first image
             categoryViewModel.setImageFileNameToIndex(currentIndex)
             Log.d(TAG, "Current Filename: ${categoryViewModel.currentImageFileName.value}")
         }
 
-        requestPermissions()
+        // Set up gesture detection and touch listener
         gestureDetector = SwipeGestureDetector(requireContext(), this)
-
         binding.identifyImage.setOnTouchListener(gestureDetector)
 
         return binding.root
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-    }
-
+    /** Handle swipe right gesture */
     override fun onSwipeRight() {
         // Compare category id to selected category id if selectedCategoryId == currentCategoryId = correct
         showToast(requireContext(), "Swiped Right!")
@@ -99,6 +89,7 @@ class IdentifyFragment : Fragment(), GestureEventListener {
         }
     }
 
+    /** Handle swipe left gesture */
     override fun onSwipeLeft() {
         // Compare category id to selected category id if selectedCategoryId != currentCategoryId = correct
         showToast(requireContext(), "Swiped Left!")
@@ -112,45 +103,12 @@ class IdentifyFragment : Fragment(), GestureEventListener {
             currentIndex++
             categoryViewModel.setImageFileNameToIndex(currentIndex)
         }
-
     }
 
+    /** Display Toast of swipe direction */
     private fun showToast(context: Context, text: String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
-
-    /** Request accelerometer permissions and initialise start */
-    private fun requestPermissions() {
-        val permissionsToRequest = permissions.filter {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                it
-            ) != PackageManager.PERMISSION_GRANTED
-        }
-
-        if (permissionsToRequest.isNotEmpty()) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                permissionsToRequest.toTypedArray(),
-                requestCode
-            )
-        }
-    }
-
-//    private fun showResultDialog(correctCount: Int, totalImages: Int) {
-//        val message = getString(R.string.results_message).format(correctCount, totalImages)
-//
-//        val dialogBuilder = AlertDialog.Builder(requireContext())
-//            .setTitle(getString(R.string.results_title))
-//            .setMessage(message)
-//            .setPositiveButton("@string/next") { dialog, _ ->
-//                dialog.dismiss()
-//                findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
-//            }
-//
-//        val dialog = dialogBuilder.create()
-//        dialog.show()
-//    }
 
     /** Display custom dialog box to display results and navigate to next screen */
     private fun showResultDialog(correctCount: Int, totalImages: Int) {
