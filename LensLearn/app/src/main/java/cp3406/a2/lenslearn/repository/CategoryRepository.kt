@@ -29,7 +29,7 @@ class CategoryRepository(private val context: Context) {
         val jsonStringCategory = readJsonFile(context, FILENAME_CATEGORIES)
         val jsonStringImage = readJsonFile(context, FILENAME_IMAGES)
         val jsonStringTask = readJsonFile(context, FILENAME_TASKS)
-        Log.i(TAG, "JSON STRING: $jsonStringCategory \n $jsonStringImage \n $jsonStringTask")
+//        Log.i(TAG, "JSON STRING: $jsonStringCategory \n $jsonStringImage \n $jsonStringTask")
 
         // Parse Json String data into Entities List
         val categories : List<CategoryEntity> = parseJsonToEntity(jsonStringCategory)
@@ -95,6 +95,12 @@ class CategoryRepository(private val context: Context) {
     suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
         Log.d("CategoryRepository", "categoryId passed: $categoryId")
         return categoryDao.getCategory(categoryId)
+    }
+
+    /** Get the selected category by using category Id */
+    suspend fun getSelectedCategory(selectedCategoryId: Int): CategoryEntity? {
+        Log.d("CategoryRepository", "categoryId passed: $selectedCategoryId")
+        return categoryDao.getSelectedCategory(selectedCategoryId)
     }
 
     /** Get x images from category == selected category for identify phase */
