@@ -11,9 +11,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import cp3406.a2.lenslearn.data.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 const val FILENAME_CATEGORIES = "category_data.json"
 const val FILENAME_IMAGES = "image_data.json"
@@ -24,25 +22,50 @@ class CategoryRepository(private val context: Context) {
 
     // Connect Room database to Repository
     private val categoryDao = CategoryDatabase.getInstance(context).categoryDao()
+    private var isDataInitialised: Boolean = false
 
     init {
         // Connect Room database to Repository
 //        val categoryDatabase = CategoryDatabase.getInstance(context)
 //        categoryDao = categoryDatabase.categoryDao()
 
+        // Check if there is data, if not initialise data
+        runDataEmptyCheck()
+        if (!isDataInitialised) {
+            initialiseData()
+        }
+    }
+
+    private fun initialiseData() {
         // Read Json Files
         val jsonStringCategory = readJsonFile(context, FILENAME_CATEGORIES)
         val jsonStringImage = readJsonFile(context, FILENAME_IMAGES)
         val jsonStringTask = readJsonFile(context, FILENAME_TASKS)
-//        Log.i(TAG, "JSON STRING: $jsonStringCategory \n $jsonStringImage \n $jsonStringTask")
+        //        Log.i(TAG, "JSON STRING: $jsonStringCategory \n $jsonStringImage \n $jsonStringTask")
 
         // Parse Json String data into Entities List
-        val categories : List<CategoryEntity> = parseJsonToEntity(jsonStringCategory)
-        val images : List<ImageEntity> = parseJsonToEntity(jsonStringImage)
-        val tasks : List<TaskEntity> = parseJsonToEntity(jsonStringTask)
+        val categories: List<CategoryEntity> = parseJsonToEntity(jsonStringCategory)
+        val images: List<ImageEntity> = parseJsonToEntity(jsonStringImage)
+        val tasks: List<TaskEntity> = parseJsonToEntity(jsonStringTask)
 
         // Insert Entities into Room Database
         insertCategoryEntityData(categories, images, tasks)
+    }
+
+    private fun runDataEmptyCheck() {
+        runBlocking {
+            try {
+                val existingData = categoryDao.getAllCategories()
+                if (existingData.isEmpty()) {
+                    return@runBlocking
+                } else {
+                    isDataInitialised = true
+                }
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+                Log.i(TAG, "Error In Fetching Data for Null Check")
+            }
+        }
     }
 
     /** Read .json file return as string */
@@ -73,7 +96,11 @@ class CategoryRepository(private val context: Context) {
     }
 
     /** Insert entities into Room Database */
-    private fun insertCategoryEntityData(categories: List<CategoryEntity>, images: List<ImageEntity>, tasks: List<TaskEntity>) {
+    private fun insertCategoryEntityData(
+        categories: List<CategoryEntity>,
+        images: List<ImageEntity>,
+        tasks: List<TaskEntity>
+    ) {
 
         Log.d(TAG, "Categories: $categories")
         Log.d(TAG, "Images: $images")

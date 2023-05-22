@@ -2,6 +2,7 @@ package cp3406.a2.lenslearn.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,14 @@ class IdentifyFragment : Fragment() {
     ): View? {
         // Inflate with data binding
         binding = FragmentIdentifyBinding.inflate(inflater, container, false)
+
+//        categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) { categoryId ->
+//            categoryId?.let {
+//                Log.d("LearningFragment", "Inside observer of selected cat id")
+//                retrieveCategoryById(categoryId)
+//            }
+//        }
+//        categoryViewModel.getIdentifyImagesList(selectedCategoryId, correctLimit, incorrectLimit)
 
         return binding.root
     }

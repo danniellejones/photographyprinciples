@@ -31,13 +31,15 @@ class LearningFragment : Fragment() {
         binding = FragmentLearningBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
+        // Observe the selected category Id and retrieve the corresponding category information
         categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) { categoryId ->
             categoryId?.let {
+                categoryViewModel.retrieveSelectedCategory()
                 Log.d("LearningFragment", "Inside observer of selected cat id")
-                retrieveCategoryById(categoryId)
-
             }
         }
+
+
 //        categoryViewModel.isShaken.observe(viewLifecycleOwner) {
 //
 //        }
@@ -45,24 +47,25 @@ class LearningFragment : Fragment() {
         return binding.root
     }
 
-    //    private fun retrieveCategoryById(categoryId: Int) {
-//        categoryViewModel.retrieveCategoryById(categoryId)
-//
+//    private fun retrieveCategoryById(categoryId: Int?) {
+//        viewLifecycleOwner.lifecycleScope.launch {
+//        if (categoryId != null) {
+//            categoryViewModel.getCategoryById(categoryId)
+//        }
 //    }
 
-
-    private fun retrieveCategoryById(categoryId: Int) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            categoryViewModel.getCategoryById(categoryId)
-
-            categoryViewModel.category.observe(viewLifecycleOwner, Observer { category ->
-                category?.let {
-                    // Log the retrieved category data
-                    Log.d("LearningFragment", "Retrieved Category: $category")
-                }
-            })
-        }
-    }
+//    private fun retrieveCategoryById(categoryId: Int) {
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            categoryViewModel.getCategoryById(categoryId)
+//
+//            categoryViewModel.category.observe(viewLifecycleOwner, Observer { category ->
+//                category?.let {
+//                    // Log the retrieved category data
+//                    Log.d("LearningFragment", "Retrieved Category: $category")
+//                }
+//            })
+//        }
+//    }
 
 //    private fun retrieveCategoryById(categoryId: Int) {
 //        categoryViewModel.retrieveCategoryById(categoryId)

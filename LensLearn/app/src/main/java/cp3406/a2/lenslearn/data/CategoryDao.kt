@@ -6,15 +6,15 @@ import androidx.room.*
 interface CategoryDao {
 
     /** Initialise Categories */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategories(categoryEntityList: List<CategoryEntity>)
 
     /** Initialise Images */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertImages(imageEntityList: List<ImageEntity>)
 
     /** Initialise Tasks */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTasks(taskEntityList: List<TaskEntity>)
 
     /** Add New Category */
