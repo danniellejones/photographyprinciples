@@ -21,13 +21,21 @@ import kotlinx.coroutines.launch
 
 class LearningFragment : Fragment() {
 
+    // Data binding and view model
     private lateinit var binding: FragmentLearningBinding
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
     }
 
+    // Accelerometer Sensor
     private lateinit var accelerometer: Accelerometer
+    private val requestCode = 1
+    private val permissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
 
+    /** Create View, Initialise data binding, connect view model, retrieve selected category */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,33 +58,48 @@ class LearningFragment : Fragment() {
         return binding.root
     }
 
+    /** Set up accelerometer, start listening for changes */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val permissionFine = Manifest.permission.ACCESS_FINE_LOCATION
-        val permissionCoarse = Manifest.permission.ACCESS_COARSE_LOCATION
-        val requestCode = 1 // Use a unique request code
-        if (ContextCompat.checkSelfPermission(requireContext(), permissionFine) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(permissionFine), requestCode)
-        } else {
-            if (ContextCompat.checkSelfPermission(requireContext(), permissionCoarse) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(permissionCoarse), requestCode)
-            } else {
-                accelerometer = Accelerometer(requireContext(), categoryViewModel)
+        // Check permission, set up and start accelerometer
+        requestPermissions()
 
-                accelerometer.startListening()
-            }
-        }
-
+        // Observe device shake change and display Log when shake detected
         categoryViewModel.isShaken.observe(viewLifecycleOwner) { shakeDetected ->
-            Log.d("LearningFragment", "Is Shaken: $shakeDetected")
             if (shakeDetected) {
-                // Update UI
+                Log.d("LearningFragment", "Is Shaken: $shakeDetected")
             }
         }
-
     }
 
+    /** Request accelerometer permissions and initialise start */
+    private fun requestPermissions() {
+        val permissionsToRequest = permissions.filter {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                it
+            ) != PackageManager.PERMISSION_GRANTED
+        }
+
+        if (permissionsToRequest.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                permissionsToRequest.toTypedArray(),
+                requestCode
+            )
+        } else {
+            startAccelerometer()
+        }
+    }
+
+    /** Start accelerometer listening */
+    private fun startAccelerometer() {
+        accelerometer = Accelerometer(requireContext(), categoryViewModel)
+        accelerometer.startListening()
+    }
+
+    /** Stop accelerometer from listening */
     override fun onDestroyView() {
         super.onDestroyView()
 

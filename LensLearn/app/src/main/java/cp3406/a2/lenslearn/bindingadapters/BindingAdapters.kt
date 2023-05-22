@@ -35,15 +35,6 @@ fun ImageView.setImageFromFilename(filename: String?) {
     }
 }
 
-@BindingAdapter("shakeText", "viewModel")
-fun TextView.setShakeText(category: CategoryEntity?, categoryViewModel: CategoryViewModel) {
-    text = if (category != null && categoryViewModel.isShaken.value == true) {
-        category.detailedInformation
-    } else {
-        category?.definition
-    }
-}
-
 //@BindingAdapter("app:hideIfNull")
 //fun hideIfNull(view: View, value: Int) {
 //
