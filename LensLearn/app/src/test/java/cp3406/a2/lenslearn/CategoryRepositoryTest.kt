@@ -1,3 +1,12 @@
+/**
+ * Unit Testing For Database
+ *
+ * About this Test:
+ * This is an old unit test for early testing, this is no longer used as it now is
+ * required to be instrumented. If you want to see it working in earlier variations you
+ * can refer to my GitHub. This is just left in as evidence of completion.
+ */
+
 package cp3406.a2.lenslearn
 
 import android.content.Context
@@ -51,7 +60,8 @@ class CategoryRepositoryTest {
     @Test
     fun testGetCategoryById() = runBlocking {
         val categoryId = 1
-        val category = CategoryEntity(categoryId, "Category 1", "filename1", "definition1", "detailedInfo1")
+        val category =
+            CategoryEntity(categoryId, "Category 1", "filename1", "definition1", "detailedInfo1")
 
         // Mock the CategoryDao's get function
         `when`(categoryDao.getCategory(categoryId)).thenReturn(category)
@@ -68,11 +78,11 @@ class CategoryRepositoryTest {
         val selectedCategoryId = 1
         val limit = 2
         val images = listOf(
-            ImageEntity(1, 1,"image1.jpg"),
-            ImageEntity(2, 1,"image2.jpg"),
-            ImageEntity(3, 1,"image3.jpg"),
-            ImageEntity(4, 2,"image1.jpg"),
-            ImageEntity(5, 2,"image2.jpg")
+            ImageEntity(1, 1, "image1.jpg"),
+            ImageEntity(2, 1, "image2.jpg"),
+            ImageEntity(3, 1, "image3.jpg"),
+            ImageEntity(4, 2, "image1.jpg"),
+            ImageEntity(5, 2, "image2.jpg")
         )
 
         `when`(categoryDao.getCorrectIdentifyImages(selectedCategoryId, limit)).thenReturn(images)
@@ -87,11 +97,11 @@ class CategoryRepositoryTest {
         val selectedCategoryId = 1
         val limit = 2
         val images = listOf(
-            ImageEntity(6, 2,"image3.jpg"),
-            ImageEntity(7, 2,"image4.jpg"),
-            ImageEntity(8, 2,"image5.jpg"),
-            ImageEntity(9, 1,"image5.jpg"),
-            ImageEntity(10,1,"image6.jpg")
+            ImageEntity(6, 2, "image3.jpg"),
+            ImageEntity(7, 2, "image4.jpg"),
+            ImageEntity(8, 2, "image5.jpg"),
+            ImageEntity(9, 1, "image5.jpg"),
+            ImageEntity(10, 1, "image6.jpg")
         )
 
         `when`(categoryDao.getIncorrectIdentifyImages(selectedCategoryId, limit)).thenReturn(images)
@@ -105,9 +115,9 @@ class CategoryRepositoryTest {
     fun testGetRandomTask() = runBlocking {
         val selectedCategoryId = 1
         val tasks = listOf(
-        TaskEntity(1, 1,"Task 1", "overlayImage01.png"),
-        TaskEntity(1, 1,"Task 2", "overlayImage02.png"),
-        TaskEntity(1, 1,"Task 3", "overlayImage03.png")
+            TaskEntity(1, 1, "Task 1", "overlayImage01.png"),
+            TaskEntity(1, 1, "Task 2", "overlayImage02.png"),
+            TaskEntity(1, 1, "Task 3", "overlayImage03.png")
         )
 
         val taskCaptor = ArgumentCaptor.forClass(Int::class.java)
@@ -135,7 +145,12 @@ class CategoryRepositoryTest {
             progressPercentage = progressPercentage
         )
 
-        categoryRepository.updateCategoryProgress(categoryId, hasShared, hasCompletedTask, progressPercentage)
+        categoryRepository.updateCategoryProgress(
+            categoryId,
+            hasShared,
+            hasCompletedTask,
+            progressPercentage
+        )
 
         // Verify that the insertOrUpdateProgress method is called with the correct progress object
         verify(categoryDao).insertOrUpdateProgress(progress)

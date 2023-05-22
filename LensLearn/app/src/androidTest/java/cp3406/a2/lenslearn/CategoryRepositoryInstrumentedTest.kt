@@ -1,3 +1,11 @@
+/**
+ * Unit Testing For Room Database
+ *
+ * About this Test:
+ * This test will compare the data in the tester list for category to the data initialised
+ * in the Room Database.
+ */
+
 package cp3406.a2.lenslearn
 
 import android.content.Context
