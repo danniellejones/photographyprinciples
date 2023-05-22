@@ -13,6 +13,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.data.CategoryEntity
 import cp3406.a2.lenslearn.databinding.FragmentLearningBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
@@ -53,6 +55,11 @@ class LearningFragment : Fragment() {
                 categoryViewModel.retrieveSelectedCategory()
                 Log.d("LearningFragment", "Inside observer of selected category Id")
             }
+        }
+
+        // Set Click Listener for Floating Action Button to move to Identify Fragment
+        binding.fab.setOnClickListener{
+            findNavController().navigate(R.id.action_learningFragment_to_identifyFragment)
         }
 
         return binding.root
