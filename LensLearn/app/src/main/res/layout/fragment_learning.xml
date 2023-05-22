@@ -23,7 +23,7 @@
             android:background="@color/dark_blue"
             android:paddingTop="30dp"
             android:paddingBottom="20dp"
-            android:text="@{categoryViewModel.category.name}"
+            android:text="@{categoryViewModel.currentCategory.name}"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/white"
@@ -41,7 +41,7 @@
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/example_of_photograph_description"
             android:scaleType="fitCenter"
-            app:imageFromFilename="@{categoryViewModel.category.filename}"
+            app:imageFromFilename="@{categoryViewModel.currentCategory.filename}"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@id/textInformationTitle"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
                 android:id="@+id/textInformation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{categoryViewModel.isShaken ? categoryViewModel.category.detailedInformation : categoryViewModel.category.definition}"
+                android:text="@{categoryViewModel.isShaken ? categoryViewModel.currentCategory.detailedInformation : categoryViewModel.currentCategory.definition}"
                 android:textSize="14sp"
                 tools:text="@string/test" />
 

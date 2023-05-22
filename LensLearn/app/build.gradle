@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.test:core-ktx:1.5.0'
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
@@ -91,6 +92,7 @@ dependencies {
     // JSON serialization and deserialization functionality
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'com.squareup.moshi:moshi-kotlin:1.13.0'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.13.0'
 
 
     // Image Loading and Caching

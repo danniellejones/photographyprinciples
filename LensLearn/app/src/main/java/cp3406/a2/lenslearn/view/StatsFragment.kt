@@ -19,8 +19,11 @@ class StatsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate with data binding
+
+        // Inflate with data binding, set lifecycle owner and attach shared view model
         binding = FragmentStatsBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.categoryViewModel = categoryViewModel
 
         return binding.root
     }

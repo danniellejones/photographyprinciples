@@ -23,12 +23,14 @@ class DoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate with data binding
+
+        // Inflate with data binding, set lifecycle owner and attach shared view model
         binding = FragmentDoBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.categoryViewModel = categoryViewModel
 
         return binding.root
     }
-
 }
 
 // Create a variable to store the captured image file path

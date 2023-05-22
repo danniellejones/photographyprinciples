@@ -3,9 +3,11 @@ package cp3406.a2.lenslearn.data
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.squareup.moshi.JsonClass
 
 // Table to hold category information
 @Entity(tableName = "category")
+@JsonClass(generateAdapter = true)
 data class CategoryEntity(
     @PrimaryKey val id: Int,
     val name: String,
@@ -24,6 +26,7 @@ data class CategoryEntity(
         onDelete = ForeignKey.CASCADE
     )]
 )
+@JsonClass(generateAdapter = true)
 data class ImageEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val categoryId: Int,
@@ -40,6 +43,7 @@ data class ImageEntity(
         onDelete = ForeignKey.CASCADE
     )]
 )
+@JsonClass(generateAdapter = true)
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val categoryId: Int,
@@ -57,6 +61,7 @@ data class TaskEntity(
         onDelete = ForeignKey.CASCADE
     )]
 )
+@JsonClass(generateAdapter = true)
 data class UserImageEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val taskId: Int,
@@ -71,6 +76,7 @@ data class UserImageEntity(
         childColumns = ["categoryId"],
         onDelete = ForeignKey.CASCADE
     )])
+@JsonClass(generateAdapter = true)
 data class UserProgress(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val categoryId: Int,

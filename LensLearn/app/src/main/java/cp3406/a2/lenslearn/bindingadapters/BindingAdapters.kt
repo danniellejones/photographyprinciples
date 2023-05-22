@@ -1,41 +1,36 @@
 package cp3406.a2.lenslearn.bindingadapters
 
 import android.annotation.SuppressLint
+import android.app.Application
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import cp3406.a2.lenslearn.R
 
-//@BindingAdapter("imageFromFilename")
-//fun ImageView.setImageFromFilename(filename: String?) {
-//    filename?.let {
-//        val drawableResId = when (filename) {
-//            "filename1" -> R.drawable.drawable1
-//            "filename2" -> R.drawable.drawable2
-//            // Add more cases for other filenames and their respective drawable resource IDs
-//            else -> R.drawable.default_image // Default drawable resource ID if filename doesn't match any cases
-//        }
-//        setImageResource(drawableResId)
-//    }
-//}
-
+/** Read filename from Room Data and set image to image view */
 @SuppressLint("DiscouragedApi")
 @BindingAdapter("imageFromFilename")
 fun ImageView.setImageFromFilename(filename: String?) {
-    filename?.let {
-        val context = this.context
-        val drawableResId = try {
-            val packageName = context.packageName
-            val resName = "drawable/$filename"
-            context.resources.getIdentifier(resName, null, packageName)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            R.drawable.img_default // Default drawable resource ID if filename is invalid or not found
+    try {
+        val resources = context.resources
+        val packageName = context.packageName
+
+        val drawableResId = filename?.let {
+            resources.getIdentifier(filename, "drawable", packageName)
+        } ?: 0  // Null or empty filename
+
+        if (drawableResId != 0) {
+            setImageResource(drawableResId)
+        } else {
+            setImageResource(R.drawable.img_default)  // File not found, set default image
         }
-        setImageResource(drawableResId)
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+        setImageResource(R.drawable.img_default)  // Exception set default image
     }
 }
-
 
 //@BindingAdapter("app:hideIfNull")
 //fun hideIfNull(view: View, value: Int) {

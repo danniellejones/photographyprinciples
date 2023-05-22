@@ -41,14 +41,15 @@ class CategoryFragment : Fragment() {
             cardCategoryUnity.setOnClickListener { categoryClickListener(7) }
         }
 
-
+        // Observe the Selected Category Id
         categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) {
-            displaySnackbar(it)
+            displaySnackBar(it)
         }
         return binding.root
     }
 
-    private fun displaySnackbar(catId: Int) {
-        Snackbar.make(binding.root, "current value: $catId", Snackbar.LENGTH_LONG).show()
+    /** Display the selected category */
+    private fun displaySnackBar(categoryId: Int) {
+        Snackbar.make(binding.root, "Category Id: $categoryId", Snackbar.LENGTH_LONG).show()
     }
 }
