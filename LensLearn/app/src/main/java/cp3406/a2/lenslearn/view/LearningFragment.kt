@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import cp3406.a2.lenslearn.data.CategoryEntity
 import cp3406.a2.lenslearn.databinding.FragmentLearningBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
+import cp3406.a2.lenslearn.sensors.Accelerometer
 import kotlinx.coroutines.launch
 
 class LearningFragment : Fragment() {
@@ -20,6 +21,8 @@ class LearningFragment : Fragment() {
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
     }
+
+    private lateinit var accelerometer: Accelerometer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,11 +43,23 @@ class LearningFragment : Fragment() {
             }
         }
 
+        categoryViewModel.isShaken.observe(viewLifecycleOwner) { shakeDetected ->
+            if (shakeDetected) {
+                // Update UI
+            }
+        }
 
 //        categoryViewModel.isShaken.observe(viewLifecycleOwner) {
 //
 //        }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        accelerometer = Accelerometer(requireContext(), categoryViewModel)
+
     }
 }

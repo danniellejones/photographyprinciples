@@ -76,6 +76,11 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         _selectedCategoryId.value = newCategoryId
     }
 
+    /** Set new Category Id */
+    fun toggleShaken() {
+        _isShaken.value = !_isShaken.value!!
+    }
+
     /** Retrieve the category by a specified category Id */
     fun retrieveCategoryById(categoryId: Int) {
         viewModelScope.launch {
@@ -87,15 +92,22 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     /** Retrieve the category by the selected category Id */
     fun retrieveSelectedCategory() {
         viewModelScope.launch {
-            val category = selectedCategoryId.value?.let { categoryRepository.getSelectedCategory(it) }
+            val category =
+                selectedCategoryId.value?.let { categoryRepository.getSelectedCategory(it) }
             _currentCategory.value = category!!
         }
     }
 
     /** Create Identify Images List with correct and incorrect images */
-    suspend fun getIdentifyImagesList(selectedCategoryId: Int, correctLimit: Int, incorrectLimit: Int) {
-        val correctImages = categoryRepository.getCorrectIdentifyImages(selectedCategoryId, correctLimit)
-        val incorrectImages = categoryRepository.getIncorrectIdentifyImages(selectedCategoryId, incorrectLimit)
+    suspend fun getIdentifyImagesList(
+        selectedCategoryId: Int,
+        correctLimit: Int,
+        incorrectLimit: Int
+    ) {
+        val correctImages =
+            categoryRepository.getCorrectIdentifyImages(selectedCategoryId, correctLimit)
+        val incorrectImages =
+            categoryRepository.getIncorrectIdentifyImages(selectedCategoryId, incorrectLimit)
 
         // Combined incorrect and correct images
         val combinedList = mutableListOf<ImageEntity>()

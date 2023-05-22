@@ -1,9 +1,10 @@
 package cp3406.a2.lenslearn.sensors
 
+import cp3406.a2.lenslearn.model.CategoryViewModel
 import kotlin.Unit
 
 abstract class GeneralSensor(
-    protected val sensorType: Int
+    protected val sensorType: Int, protected val categoryViewModel: CategoryViewModel
 ) {
 
     protected var onSensorValuesChanged: ((List<Float>) -> Unit)? = { }
