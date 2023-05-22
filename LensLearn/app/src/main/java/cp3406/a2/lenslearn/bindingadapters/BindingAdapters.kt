@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import cp3406.a2.lenslearn.R
 
+/** Read filename from Room Data and set image to image view */
 @SuppressLint("DiscouragedApi")
 @BindingAdapter("imageFromFilename")
 fun ImageView.setImageFromFilename(filename: String?) {
