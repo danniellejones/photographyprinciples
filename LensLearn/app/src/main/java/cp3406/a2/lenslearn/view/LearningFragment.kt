@@ -20,16 +20,17 @@ class LearningFragment : Fragment() {
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
     }
-//    private lateinit var category: CategoryEntity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         Log.d("LearningFragment", "Start of OnCreateView")
-        // Inflate with data binding
+
+        // Inflate with data binding, set lifecycle owner and attach shared view model
         binding = FragmentLearningBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.categoryViewModel = categoryViewModel
 
         // Observe the selected category Id and retrieve the corresponding category information
         categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) { categoryId ->
@@ -46,35 +47,4 @@ class LearningFragment : Fragment() {
 
         return binding.root
     }
-
-//    private fun retrieveCategoryById(categoryId: Int?) {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//        if (categoryId != null) {
-//            categoryViewModel.getCategoryById(categoryId)
-//        }
-//    }
-
-//    private fun retrieveCategoryById(categoryId: Int) {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            categoryViewModel.getCategoryById(categoryId)
-//
-//            categoryViewModel.category.observe(viewLifecycleOwner, Observer { category ->
-//                category?.let {
-//                    // Log the retrieved category data
-//                    Log.d("LearningFragment", "Retrieved Category: $category")
-//                }
-//            })
-//        }
-//    }
-
-//    private fun retrieveCategoryById(categoryId: Int) {
-//        categoryViewModel.retrieveCategoryById(categoryId)
-//
-//        categoryViewModel.category.observe(viewLifecycleOwner, Observer { category ->
-//            category?.let {
-//                // Log the retrieved category data
-//                Log.d("LearningFragment", "Retrieved Category: $category")
-//            }
-//        })
-//    }
 }
