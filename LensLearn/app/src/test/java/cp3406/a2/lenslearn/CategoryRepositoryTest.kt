@@ -54,7 +54,7 @@ class CategoryRepositoryTest {
         val category = CategoryEntity(categoryId, "Category 1", "filename1", "definition1", "detailedInfo1")
 
         // Mock the CategoryDao's get function
-        `when`(categoryDao.get(categoryId)).thenReturn(category)
+        `when`(categoryDao.getCategory(categoryId)).thenReturn(category)
 
         // Call the repository method
         val result = categoryRepository.getCategoryById(categoryId)

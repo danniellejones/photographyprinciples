@@ -94,7 +94,7 @@ class CategoryRepository(private val context: Context) {
     /** Get a category by category Id */
     suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
         Log.d("CategoryRepository", "categoryId passed: $categoryId")
-        return categoryDao.get(categoryId)
+        return categoryDao.getCategory(categoryId)
     }
 
     /** Get x images from category == selected category for identify phase */
