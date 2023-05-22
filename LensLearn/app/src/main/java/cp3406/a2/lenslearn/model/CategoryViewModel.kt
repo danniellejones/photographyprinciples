@@ -26,12 +26,15 @@ import cp3406.a2.lenslearn.data.ImageEntity
 import cp3406.a2.lenslearn.data.UserImageEntity
 import cp3406.a2.lenslearn.repository.CategoryRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 private const val LOG_TAG = "CategoryViewModel"
 
 class CategoryViewModel(app: Application) : AndroidViewModel(app) {
 
     private val categoryRepository: CategoryRepository
+
+//    private var currentIndex: Int = 0
 
     /** Set Up the Live Data */
 
@@ -50,9 +53,14 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     private val _identifyImagesList: MutableLiveData<List<ImageEntity>> = MutableLiveData()
     val identifyImagesList: LiveData<List<ImageEntity>> = _identifyImagesList
 
+    private val _currentImageFileName: MutableLiveData<String> = MutableLiveData()
+    val currentImageFileName: LiveData<String> = _currentImageFileName
+
     private val _correctCount: MutableLiveData<Int> = MutableLiveData()
+    val correctCount: LiveData<Int> = _correctCount
 
     private val _totalImages: MutableLiveData<Int> = MutableLiveData()
+    val totalImages: LiveData<Int> = _totalImages
 
 
     // SHARE - Last three images taken by the user
@@ -67,6 +75,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         Log.i(LOG_TAG, "Category View Model Init")
         _selectedCategoryId.value = 0
         _isShaken.value = false
+        _currentImageFileName.value = "img_default"
 
 //        val categoryDao = CategoryDatabase.getInstance(app).categoryDao()
         categoryRepository = CategoryRepository(app)
@@ -101,22 +110,61 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /** Create Identify Images List with correct and incorrect images */
-    suspend fun getIdentifyImagesList(
-        selectedCategoryId: Int,
+    fun getIdentifyImagesList(
         correctLimit: Int,
         incorrectLimit: Int
     ) {
-        val correctImages =
-            categoryRepository.getCorrectIdentifyImages(selectedCategoryId, correctLimit)
-        val incorrectImages =
-            categoryRepository.getIncorrectIdentifyImages(selectedCategoryId, incorrectLimit)
+        runBlocking {
+            val correctImages =
+                _selectedCategoryId.value?.let {
+                    categoryRepository.getCorrectIdentifyImages(
+                        it,
+                        correctLimit
+                    )
+                }
+            val incorrectImages =
+                _selectedCategoryId.value?.let {
+                    categoryRepository.getIncorrectIdentifyImages(
+                        it,
+                        incorrectLimit
+                    )
+                }
 
-        // Combined incorrect and correct images
-        val combinedList = mutableListOf<ImageEntity>()
-        combinedList.addAll(correctImages)
-        combinedList.addAll(incorrectImages)
+            // Combined incorrect and correct images
+            val combinedList = mutableListOf<ImageEntity>()
+            if (correctImages != null) {
+                combinedList.addAll(correctImages)
+            }
+            if (incorrectImages != null) {
+                combinedList.addAll(incorrectImages)
+            }
 
-        _identifyImagesList.postValue(combinedList)
+            _identifyImagesList.postValue(combinedList)
+        }
+    }
+
+//    /** Go to next Identify Image from Identify Image List */
+//    fun goToNextImage(currentIndex: Int): Int {
+//        var index = currentIndex
+//        if(_currentImageFileName.value == "img_default") {
+//            _currentImageFileName.value = identifyImagesList.value?.get(index)?.filename
+//            index++
+//        }
+//        else {
+//            _currentImageFileName.value = identifyImagesList.value?.get(index)?.filename
+//            if (identifyImagesList.value?.size?.minus(1) == index) {
+//                index = 0
+//            }
+//            else {
+//                index++
+//            }
+//        }
+//        return index
+//    }
+
+    /** Go to next Identify Image from Identify Image List */
+    fun setImageFileNameToIndex(index: Int) {
+        _currentImageFileName.value = identifyImagesList.value?.get(index)?.filename
     }
 
     /** Get last image taken by user for share fragment */

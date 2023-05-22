@@ -4,9 +4,12 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.view.GestureDetector
+import android.view.GestureDetector.OnGestureListener
 import android.view.MotionEvent
+import androidx.core.view.GestureDetectorCompat
 import cp3406.a2.lenslearn.model.CategoryViewModel
 import java.time.OffsetDateTime
 import kotlin.math.sqrt
@@ -43,26 +46,30 @@ class Accelerometer(context: Context, categoryViewModel: CategoryViewModel) : An
 //
 //}
 //
-//val gestureDetector = GestureDetector(
-//    this,
-//    object : GestureDetector.SimpleOnGestureListener() {
-//        override fun onFling(
-//            e1: MotionEvent,
-//            e2: MotionEvent,
-//            velocityX: Float,
-//            velocityY: Float
-//        ): Boolean {
-//            if (e1 != null && e2 != null) {
-//                val distanceX = e2.x - e1.x
-//                if (distanceX > 0) {
-//                    // swipe right detected, show next image
-//                } else {
-//                    // swipe left detected, show previous image
-//                }
-//                return true
-//            }
-//            return false
-//        }
-//    })
-//
-//imageView.setOnTouchListener{ _, event -> gestureDetector.onTouchEvent(event) true }
+
+
+class GestureDetector(private val gestureEventListener: GestureEventListener) {
+
+    private var gestureDetector: GestureDetector = GestureDetector(
+        object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                val distanceX = e2.x - e1.x
+                if (distanceX > 0) {
+                    gestureEventListener.onSwipeRight()
+                }
+                else {
+                    gestureEventListener.onSwipeLeft()
+                }
+                return true
+            }
+        })
+
+        fun onTouchEvent(event: MotionEvent): Boolean {
+            return gestureDetector.onTouchEvent(event)
+    }
+}
