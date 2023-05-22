@@ -18,21 +18,31 @@ const val FILENAME_IMAGES = "image_data.json"
 const val FILENAME_TASKS = "task_data.json"
 private const val TAG = "CategoryRepository"
 
-//class CategoryRepository(private val categoryDao: CategoryDao) {
 class CategoryRepository(private val context: Context) {
 
+    // Connect Room database to Repository
     private val categoryDao = CategoryDatabase.getInstance(context).categoryDao()
 
     init {
+        // Connect Room database to Repository
 //        val categoryDatabase = CategoryDatabase.getInstance(context)
 //        categoryDao = categoryDatabase.categoryDao()
 
-        val jsonDataString = readJsonFile(context, FILENAME)
-        Log.i(TAG, "JSON STRING: $jsonDataString")
-//        insertDataFromJson(jsonDataString)
-//        parseAndAddToRoomDatabase(jsonDataString)
-        val categories = parseJsonToCategoryEntity(jsonDataString)
-        insertCategoryEntityData(categories)
+        // Read Json Files
+        val jsonStringCategory = readJsonFile(context, FILENAME_CATEGORIES)
+        val jsonStringImage = readJsonFile(context, FILENAME_IMAGES)
+        val jsonStringTask = readJsonFile(context, FILENAME_TASKS)
+        Log.i(TAG, "JSON STRING: $jsonStringCategory \n $jsonStringImage \n $jsonStringTask")
+
+//        val categories = parseJsonToCategoryEntity(jsonDataString)
+//        insertCategoryEntityData(categories)
+
+        // Parse Json String data into Entities List
+        val categories : List<CategoryEntity> = parseJsonToEntity(jsonStringCategory)
+        val images : List<ImageEntity> = parseJsonToEntity(jsonStringImage)
+        val tasks : List<TaskEntity> = parseJsonToEntity(jsonStringTask)
+        // Insert Entities into Room Database
+        insertCategoryEntityData(categories, images, tasks)
     }
 
     /** Read .json file return as string */
@@ -42,7 +52,6 @@ class CategoryRepository(private val context: Context) {
             .bufferedReader()
             .use { it.readText() }
     }
-
 
     private fun parseJsonToCategoryEntity(jsonString: String): List<CategoryEntity> {
         val moshi = Moshi.Builder().build()
@@ -54,95 +63,30 @@ class CategoryRepository(private val context: Context) {
         return categoryAdapter.fromJson(jsonString) ?: emptyList()
     }
 
-    private fun insertCategoryEntityData(categories: List<CategoryEntity>) {
+    private inline fun <reified T> parseJsonToEntity(jsonString: String): List<T> {
+        val moshi = Moshi.Builder().build()
+        val listType = Types.newParameterizedType(List::class.java, T::class.java)
+        val entityAdapter: JsonAdapter<List<T>> = moshi.adapter(listType)
+        return entityAdapter.fromJson(jsonString) ?: emptyList()
+    }
 
-        Log.d(TAG, "Category $categories")
+    private fun insertCategoryEntityData(categories: List<CategoryEntity>, images: List<ImageEntity>, tasks: List<TaskEntity>) {
+
+        Log.d(TAG, "Categories: $categories")
+        Log.d(TAG, "Images: $images")
+        Log.d(TAG, "Tasks: $tasks")
         CoroutineScope(Dispatchers.IO).launch {
             if (categories != null) {
                 categoryDao.insertCategories(categories)
             }
-////            if (imageList != null) {
-////                categoryDao.insertImages(imageList)
-////            }
-////            if (taskList != null) {
-////                categoryDao.insertTasks(taskList)
-////            }
-//        }
-
+            if (images != null) {
+                categoryDao.insertImages(images)
+            }
+            if (tasks != null) {
+                categoryDao.insertTasks(tasks)
+            }
         }
     }
-
-
-//    private fun parseAndAddToRoomDatabase(json: String) {
-//        Log.d(TAG, "Enter Parse")
-//        val moshi = Moshi.Builder().build()
-//        Log.d(TAG, "Moshi")
-//        // Create JSON adapters for each entity
-//
-////        val adapter: JsonAdapter<CategoryEntity> = moshi.adapter(CategoryEntity::class.java)
-////        val categoryEntity = adapter.fromJson(categoriesJson)
-//
-//
-//        val listType = Types.newParameterizedType(List::class.java, CategoryEntity::class.java)
-//        val categoryAdapter: JsonAdapter<List<CategoryEntity>> = moshi.adapter(listType)
-////        val categoryAdapter = moshi.adapter<List<CategoryEntity>>()
-//
-////        val categoryAdapter: JsonAdapter<List<CategoryEntity>> =
-////            moshi.adapter(Types.newParameterizedType(List::class.java, CategoryEntity::class.java))
-//        Log.d(TAG, "Category")
-////        val imageAdapter: JsonAdapter<List<ImageEntity>> =
-////            moshi.adapter(Types.newParameterizedType(List::class.java, ImageEntity::class.java))
-////        val taskAdapter: JsonAdapter<List<TaskEntity>> =
-////            moshi.adapter(Types.newParameterizedType(List::class.java, TaskEntity::class.java))
-////
-//        val data = moshi.adapter<Map<String, List<Any>>>(
-//            Types.newParameterizedType(
-//                Map::class.java,
-//                String::class.java,
-//                List::class.java
-//            )
-//        )
-//            .fromJson(json)
-////
-//        val categoryList: List<CategoryEntity>? =
-//            data?.get("CategoryEntity")?.let { categoryAdapter.fromJsonValue(it) }
-////        val imageList: List<ImageEntity>? =
-////            data?.get("ImageEntity")?.let { imageAdapter.fromJsonValue(it) }
-////        val taskList: List<TaskEntity>? =
-////            data?.get("TaskEntity")?.let { taskAdapter.fromJsonValue(it) }
-////
-////        // Insert data into the database using DAO methods
-//        CoroutineScope(Dispatchers.IO).launch {
-//            if (categoryList != null) {
-//                categoryDao.insertCategories(categoryList)
-//            }
-////            if (imageList != null) {
-////                categoryDao.insertImages(imageList)
-////            }
-////            if (taskList != null) {
-////                categoryDao.insertTasks(taskList)
-////            }
-//        }
-//    }
-
-//    private suspend fun insertCategories(categories: List<CategoryEntity>) {
-//        for (category in categories) {
-//            categoryDao.insertCategory(category)
-//        }
-//    }
-//
-//    private suspend fun insertImages(images: List<ImageEntity>) {
-//        for (image in images) {
-//            categoryDao.insertImage(image)
-//        }
-//    }
-//
-//    private suspend fun insertTasks(tasks: List<TaskEntity>) {
-//        for (task in tasks) {
-//            categoryDao.insertTask(task)
-//        }
-//    }
-
 
     // Get all categories
     suspend fun getAllCategories(): List<CategoryEntity> {
@@ -205,82 +149,4 @@ class CategoryRepository(private val context: Context) {
     suspend fun insertUserImage(userImageEntity: UserImageEntity) {
         categoryDao.insertUserImage(userImageEntity)
     }
-
-
-//        private fun parseCategoriesJson(jsonString: String): List<CategoryEntity> {
-//            Log.d("CategoryDatabase", "Parse Json File")
-//            val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-//            val adapter: JsonAdapter<CategoryJsonData> = moshi.adapter(CategoryJsonData::class.java)
-//            val jsonData = adapter.fromJson(jsonString) ?: return emptyList()
-//
-//            val categories: MutableList<CategoryEntity> = mutableListOf()
-//
-//            // Process CategoryEntity data
-//            jsonData.categoryEntity?.let { categories.addAll(it) }
-//
-//            return categories
-//        }
-//
-//        /** Parse .json data into ImageEntity */
-//        private fun parseImagesJson(jsonString: String): List<ImageEntity> {
-//            val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-//            val adapter: JsonAdapter<List<ImageEntity>> = moshi.adapter(Types.newParameterizedType(List::class.java, ImageEntity::class.java))
-//            return adapter.fromJson(jsonString) ?: emptyList()
-//        }
-//
-//        /** Parse .json data into TaskEntity */
-//        private fun parseTasksJson(jsonString: String): List<TaskEntity> {
-//            val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-//            val adapter: JsonAdapter<List<TaskEntity>> = moshi.adapter(Types.newParameterizedType(List::class.java, TaskEntity::class.java))
-//            return adapter.fromJson(jsonString) ?: emptyList()
-//        }
-//
-//        private fun insertAllEntitiesIntoDatabase(
-//            database: CategoryDatabase,
-//            categories: List<CategoryEntity>,
-//            images: List<ImageEntity>,
-//            tasks: List<TaskEntity>
-//        ) {
-//            Log.d("CategoryDatabase", "Inserting Categories, Images, and Tasks into Database...")
-//            val categoryDao = database.categoryDao
-//            CoroutineScope(Dispatchers.IO).launch {
-//                for (category in categories) {
-//                    // Insert CategoryEntity
-//                    categoryDao.insert(category)
-//                    Log.d("CategoryDatabase", "Inserted Category: $category")
-//
-//                    // Insert ImageEntities associated with the category
-//                    val categoryImages = images.filter { it.categoryId == category.id }
-//                    for (image in categoryImages) {
-//                        categoryDao.insert(image)
-//                        Log.d("CategoryDatabase", "Inserted Image: $image")
-//                    }
-//
-//                    // Insert TaskEntities associated with the category
-//                    val categoryTasks = tasks.filter { it.categoryId == category.id }
-//                    for (task in categoryTasks) {
-//                        categoryDao.insert(task)
-//                        Log.d("CategoryDatabase", "Inserted Task: $task")
-//                    }
-//                }
-//            }
-//        }
-//
-//        /** Insert CategoryEntity into Room Database */
-//        private fun insertCategoriesIntoDatabase(
-//            database: CategoryDatabase,
-//            categories: List<CategoryEntity>
-//        ) {
-//            Log.d("CategoryDatabase", "Inserting Categories into Database...")
-//            val categoryDao = database.categoryDao
-//            CoroutineScope(Dispatchers.IO).launch {
-//                for (category in categories) {
-//                    categoryDao.insert(category)
-//                    Log.d("CategoryDatabase", "Inserted Category: $category")
-//                }
-//            }
-//        }
-
-    
-
 }

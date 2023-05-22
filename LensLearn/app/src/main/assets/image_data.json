@@ -1,0 +1,142 @@
+[
+  {
+    "categoryId": 1,
+    "filename": "img_balance_01.jpg"
+  },
+  {
+    "categoryId": 1,
+    "filename": "img_balance_02.jpg"
+  },
+  {
+    "categoryId": 1,
+    "filename": "img_balance_03.jpg"
+  },
+  {
+    "categoryId": 1,
+    "filename": "img_balance_04.jpg"
+  },
+  {
+    "categoryId": 1,
+    "filename": "img_balance_05.jpg"
+  },
+  {
+    "categoryId": 2,
+    "filename": "img_contrast_01.jpg"
+  },
+  {
+    "categoryId": 2,
+    "filename": "img_contrast_02.jpg"
+  },
+  {
+    "categoryId": 2,
+    "filename": "img_contrast_03.jpg"
+  },
+  {
+    "categoryId": 2,
+    "filename": "img_contrast_04.jpg"
+  },
+  {
+    "categoryId": 2,
+    "filename": "img_contrast_05.jpg"
+  },
+  {
+    "categoryId": 3,
+    "filename": "img_emphasis_01.jpg"
+  },
+  {
+    "categoryId": 3,
+    "filename": "img_emphasis_02.jpg"
+  },
+  {
+    "categoryId": 3,
+    "filename": "img_emphasis_03.jpg"
+  },
+  {
+    "categoryId": 3,
+    "filename": "img_emphasis_04.jpg"
+  },
+  {
+    "categoryId": 3,
+    "filename": "img_emphasis_05.jpg"
+  },
+  {
+    "categoryId": 4,
+    "filename": "img_pattern_01.jpg"
+  },
+  {
+    "categoryId": 4,
+    "filename": "img_pattern_02.jpg"
+  },
+  {
+    "categoryId": 4,
+    "filename": "img_pattern_03.jpg"
+  },
+  {
+    "categoryId": 4,
+    "filename": "img_pattern_04.jpg"
+  },
+  {
+    "categoryId": 4,
+    "filename": "img_pattern_05.jpg"
+  },
+  {
+    "categoryId": 5,
+    "filename": "img_rhythm_01.jpg"
+  },
+  {
+    "categoryId": 5,
+    "filename": "img_rhythm_02.jpg"
+  },
+  {
+    "categoryId": 5,
+    "filename": "img_rhythm_03.jpg"
+  },
+  {
+    "categoryId": 5,
+    "filename": "img_rhythm_04.jpg"
+  },
+  {
+    "categoryId": 5,
+    "filename": "img_rhythm_05.jpg"
+  },
+  {
+    "categoryId": 6,
+    "filename": "img_space_01.jpg"
+  },
+  {
+    "categoryId": 6,
+    "filename": "img_space_02.jpg"
+  },
+  {
+    "categoryId": 6,
+    "filename": "img_space_03.jpg"
+  },
+  {
+    "categoryId": 6,
+    "filename": "img_space_04.jpg"
+  },
+  {
+    "categoryId": 6,
+    "filename": "img_space_05.jpg"
+  },
+  {
+    "categoryId": 7,
+    "filename": "img_unity_01.jpg"
+  },
+  {
+    "categoryId": 7,
+    "filename": "img_unity_02.jpg"
+  },
+  {
+    "categoryId": 7,
+    "filename": "img_unity_03.jpg"
+  },
+  {
+    "categoryId": 7,
+    "filename": "img_unity_04.jpg"
+  },
+  {
+    "categoryId": 7,
+    "filename": "img_unity_05.jpg"
+  }
+]
