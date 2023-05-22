@@ -1,6 +1,7 @@
 package cp3406.a2.lenslearn.data
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.room.Database
 import androidx.room.Room
@@ -22,7 +23,7 @@ import kotlinx.coroutines.launch
 )
 abstract class CategoryDatabase : RoomDatabase() {
 
-    abstract val categoryDao: CategoryDao  // Return instance of DAO interface
+    abstract fun categoryDao(): CategoryDao  // Return instance of DAO interface
 
     companion object {
         @Volatile
@@ -35,48 +36,9 @@ abstract class CategoryDatabase : RoomDatabase() {
                     CategoryDatabase::class.java,
                     "category_database"
                 )
-                    .addCallback(object : RoomDatabase.Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            // Read and parse JSON data, then insert it into the database
-                            val categoriesJson = readJsonFile(context, "data.json")
-                            val categories = parseCategoriesJson(categoriesJson)
-                            INSTANCE?.let { insertCategoriesIntoDatabase(it, categories) }
-                        }
-                    })
                     .build()
                 INSTANCE = instance
                 instance
-            }
-        }
-
-        /** Read .json file */
-        private fun readJsonFile(context: Context, fileName: String): String {
-            return context.assets.open(fileName)
-                .bufferedReader()
-                .use { it.readText() }
-        }
-
-        /** Parse .json data into CategoryEntity */
-        private fun parseCategoriesJson(jsonString: String): List<CategoryEntity> {
-            val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-            val listType = Types.newParameterizedType(
-                List::class.java, CategoryEntity::class.java
-            )
-            val adapter: JsonAdapter<List<CategoryEntity>> = moshi.adapter(listType)
-            return adapter.fromJson(jsonString) ?: emptyList()
-        }
-
-        /** Insert CategoryEntity into Room Database */
-        private fun insertCategoriesIntoDatabase(
-            database: CategoryDatabase,
-            categories: List<CategoryEntity>
-        ) {
-            val categoryDao = database.categoryDao
-            CoroutineScope(Dispatchers.IO).launch {
-                for (category in categories) {
-                    categoryDao.insert(category)
-                }
             }
         }
     }

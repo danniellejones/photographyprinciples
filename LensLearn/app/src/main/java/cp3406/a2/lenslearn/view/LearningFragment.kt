@@ -2,6 +2,7 @@ package cp3406.a2.lenslearn.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,19 +20,22 @@ class LearningFragment : Fragment() {
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
     }
-    private lateinit var category: CategoryEntity
+//    private lateinit var category: CategoryEntity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("LearningFragment", "Start of OnCreateView")
         // Inflate with data binding
         binding = FragmentLearningBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
         categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) { categoryId ->
             categoryId?.let {
+                Log.d("LearningFragment", "Inside observer of selected cat id")
                 retrieveCategoryById(categoryId)
+
             }
         }
 //        categoryViewModel.isShaken.observe(viewLifecycleOwner) {
@@ -41,7 +45,33 @@ class LearningFragment : Fragment() {
         return binding.root
     }
 
+    //    private fun retrieveCategoryById(categoryId: Int) {
+//        categoryViewModel.retrieveCategoryById(categoryId)
+//
+//    }
+
+
     private fun retrieveCategoryById(categoryId: Int) {
-        categoryViewModel.retrieveCategoryById(categoryId)
+        viewLifecycleOwner.lifecycleScope.launch {
+            categoryViewModel.getCategoryById(categoryId)
+
+            categoryViewModel.category.observe(viewLifecycleOwner, Observer { category ->
+                category?.let {
+                    // Log the retrieved category data
+                    Log.d("LearningFragment", "Retrieved Category: $category")
+                }
+            })
+        }
     }
+
+//    private fun retrieveCategoryById(categoryId: Int) {
+//        categoryViewModel.retrieveCategoryById(categoryId)
+//
+//        categoryViewModel.category.observe(viewLifecycleOwner, Observer { category ->
+//            category?.let {
+//                // Log the retrieved category data
+//                Log.d("LearningFragment", "Retrieved Category: $category")
+//            }
+//        })
+//    }
 }

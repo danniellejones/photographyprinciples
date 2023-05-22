@@ -44,8 +44,8 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         Log.i(LOG_TAG, "Category View Model Init")
         _selectedCategoryId.value = 0
 
-        val categoryDao = CategoryDatabase.getInstance(app).categoryDao
-        categoryRepository = CategoryRepository(categoryDao)
+//        val categoryDao = CategoryDatabase.getInstance(app).categoryDao()
+        categoryRepository = CategoryRepository(app)
     }
 
     /** Set new Category Id */

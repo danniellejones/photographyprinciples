@@ -30,8 +30,8 @@ class CategoryRepositoryInstrumentedTest {
         database = Room.inMemoryDatabaseBuilder(context, CategoryDatabase::class.java)
             .allowMainThreadQueries()
             .build()
-        categoryDao = database.categoryDao
-        categoryRepository = CategoryRepository(categoryDao)
+        categoryDao = database.categoryDao()
+        categoryRepository = CategoryRepository(context)
     }
 
     // Clean up after test is run

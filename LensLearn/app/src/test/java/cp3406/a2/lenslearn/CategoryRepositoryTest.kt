@@ -1,5 +1,7 @@
 package cp3406.a2.lenslearn
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import cp3406.a2.lenslearn.data.*
 import cp3406.a2.lenslearn.repository.CategoryRepository
 import kotlinx.coroutines.runBlocking
@@ -10,8 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
 import org.mockito.Mock
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
+import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -20,11 +21,14 @@ class CategoryRepositoryTest {
     @Mock
     private lateinit var categoryDao: CategoryDao
 
+    private lateinit var context: Context
+
     private lateinit var categoryRepository: CategoryRepository
 
     @Before
     fun setup() {
-        categoryRepository = CategoryRepository(categoryDao)
+        context = ApplicationProvider.getApplicationContext()
+        categoryRepository = CategoryRepository(context)
     }
 
     @Test

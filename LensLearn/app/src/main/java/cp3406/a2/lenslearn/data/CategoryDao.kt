@@ -9,7 +9,28 @@ interface CategoryDao {
     suspend fun insert(categoryEntity: CategoryEntity)
 
     @Insert
+    suspend fun insertCategories(categoryEntityList: List<CategoryEntity>)
+
+    @Insert
+    suspend fun insertImages(imageEntityList: List<ImageEntity>)
+
+    @Insert
+    suspend fun insertTasks(taskEntityList: List<TaskEntity>)
+
+    @Insert
     suspend fun insertUserImage(userImageEntity: UserImageEntity)
+
+    // Insert a single CategoryEntity
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCategory(categoryEntity: CategoryEntity)
+
+    // Insert a list of ImageEntity
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertImage(imageEntity: ImageEntity)
+
+    // Insert a single TaskEntity
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTask(taskEntity: TaskEntity)
 
     @Update
     suspend fun update(categoryEntity: CategoryEntity)
