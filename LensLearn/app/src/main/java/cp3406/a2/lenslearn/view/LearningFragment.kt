@@ -25,7 +25,7 @@ class LearningFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("LearningFragment", "Start of OnCreateView")
+        Log.d("LearningFragment", "Learning Fragment Start of OnCreateView")
 
         // Inflate with data binding, set lifecycle owner and attach shared view model
         binding = FragmentLearningBinding.inflate(inflater, container, false)
@@ -36,7 +36,7 @@ class LearningFragment : Fragment() {
         categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) { categoryId ->
             categoryId?.let {
                 categoryViewModel.retrieveSelectedCategory()
-                Log.d("LearningFragment", "Inside observer of selected cat id")
+                Log.d("LearningFragment", "Inside observer of selected category Id")
             }
         }
 
