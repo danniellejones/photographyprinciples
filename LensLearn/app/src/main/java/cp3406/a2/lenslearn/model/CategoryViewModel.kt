@@ -76,6 +76,8 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         _selectedCategoryId.value = 0
         _isShaken.value = false
         _currentImageFileName.value = "img_default"
+        _correctCount.value = 0
+        _totalImages.value = 0
 
 //        val categoryDao = CategoryDatabase.getInstance(app).categoryDao()
         categoryRepository = CategoryRepository(app)
@@ -114,6 +116,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         correctLimit: Int,
         incorrectLimit: Int
     ) {
+        Log.i(LOG_TAG, "Getting Identify Images List")
         runBlocking {
             val correctImages =
                 _selectedCategoryId.value?.let {
@@ -122,6 +125,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
                         correctLimit
                     )
                 }
+            Log.i(LOG_TAG, "Correct Images: $correctImages")
             val incorrectImages =
                 _selectedCategoryId.value?.let {
                     categoryRepository.getIncorrectIdentifyImages(
@@ -129,6 +133,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
                         incorrectLimit
                     )
                 }
+            Log.i(LOG_TAG, "Incorrect Images: $incorrectImages")
 
             // Combined incorrect and correct images
             val combinedList = mutableListOf<ImageEntity>()
@@ -138,34 +143,43 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
             if (incorrectImages != null) {
                 combinedList.addAll(incorrectImages)
             }
+            Log.i(LOG_TAG, "Combined Images: $combinedList")
 
-            _identifyImagesList.postValue(combinedList)
+            _identifyImagesList.value = combinedList
+            Log.i(LOG_TAG, "IdentifyImagesList Images: ${_identifyImagesList.value}")
+
+            updateTotalImages()
         }
     }
 
-//    /** Go to next Identify Image from Identify Image List */
-//    fun goToNextImage(currentIndex: Int): Int {
-//        var index = currentIndex
-//        if(_currentImageFileName.value == "img_default") {
-//            _currentImageFileName.value = identifyImagesList.value?.get(index)?.filename
-//            index++
-//        }
-//        else {
-//            _currentImageFileName.value = identifyImagesList.value?.get(index)?.filename
-//            if (identifyImagesList.value?.size?.minus(1) == index) {
-//                index = 0
-//            }
-//            else {
-//                index++
-//            }
-//        }
-//        return index
-//    }
+    private fun updateTotalImages() {
+        _totalImages.value = _identifyImagesList.value?.size
+        Log.i(LOG_TAG, "Total Size of Identify Images: ${_totalImages.value}")
+    }
 
     /** Go to next Identify Image from Identify Image List */
     fun setImageFileNameToIndex(index: Int) {
         _currentImageFileName.value = identifyImagesList.value?.get(index)?.filename
     }
+
+    /** Check correct images by comparing selected category id to image category id */
+    fun checkImageCorrect(index: Int, leftOrRight: String) {
+        if (leftOrRight == "right") {
+            if (_selectedCategoryId.value == identifyImagesList.value?.get(index)?.categoryId) {
+                _correctCount.value = _correctCount.value!! + 1
+            }
+        }
+        else if(leftOrRight == "left") {
+            if (_selectedCategoryId.value != identifyImagesList.value?.get(index)?.categoryId) {
+                _correctCount.value = _correctCount.value!! + 1
+            }
+        }
+        else {
+            Log.i(LOG_TAG, "Error in checking image correct")
+        }
+        Log.i(LOG_TAG, "Correct Answers: ${_correctCount.value} / ${_totalImages.value}")
+    }
+
 
     /** Get last image taken by user for share fragment */
     fun getLastUserImageForLastTask(): LiveData<UserImageEntity?> {

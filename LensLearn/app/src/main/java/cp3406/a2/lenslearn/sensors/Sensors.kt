@@ -4,15 +4,14 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
+import android.util.Log
 import android.view.GestureDetector
-import android.view.GestureDetector.OnGestureListener
 import android.view.MotionEvent
+import android.view.View
 import androidx.core.view.GestureDetectorCompat
 import cp3406.a2.lenslearn.model.CategoryViewModel
-import java.time.OffsetDateTime
 import kotlin.math.sqrt
+import kotlin.math.abs
 
 class Accelerometer(context: Context, categoryViewModel: CategoryViewModel) : AndroidSensor(
     context = context,
@@ -47,29 +46,155 @@ class Accelerometer(context: Context, categoryViewModel: CategoryViewModel) : An
 //}
 //
 
+class SwipeGestureDetector(
+    context: Context,
+    private val gestureEventListener: GestureEventListener
+) :
+    View.OnTouchListener {
 
-class GestureDetector(private val gestureEventListener: GestureEventListener) {
+    private val gestureDetector: GestureDetector
 
-    private var gestureDetector: GestureDetector = GestureDetector(
-        object : GestureDetector.SimpleOnGestureListener() {
-            override fun onFling(
-                e1: MotionEvent,
-                e2: MotionEvent,
-                velocityX: Float,
-                velocityY: Float
-            ): Boolean {
-                val distanceX = e2.x - e1.x
-                if (distanceX > 0) {
-                    gestureEventListener.onSwipeRight()
+    init {
+        gestureDetector = GestureDetector(context, GestureListener())
+    }
+
+    override fun onTouch(view: View, event: MotionEvent): Boolean {
+        Log.d("Sensor", "onTouch: $event")
+        return gestureDetector.onTouchEvent(event)
+    }
+
+
+    private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
+        private val swipeThreshold = 5
+        private val swipeVelocityThreshold = 5
+
+        override fun onDown(e: MotionEvent): Boolean {
+            return true
+        }
+
+        override fun onFling(
+            e1: MotionEvent,
+            e2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            val diffX = e2.x - e1.x
+            val diffY = e2.y - e1.y
+            Log.d("Sensor", "diffX: $diffX, diffY: $diffY")
+
+            if (abs(diffX) > abs(diffY)) {
+                if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {
+                    if (diffX > 0) {
+                        gestureEventListener.onSwipeRight()
+                    } else {
+                        gestureEventListener.onSwipeLeft()
+                    }
+                    return true
                 }
-                else {
-                    gestureEventListener.onSwipeLeft()
-                }
-                return true
             }
-        })
-
-        fun onTouchEvent(event: MotionEvent): Boolean {
-            return gestureDetector.onTouchEvent(event)
+            return false
+        }
     }
 }
+//
+//class SwipeGestureDetector(context: Context, private val gestureEventListener: GestureEventListener) :
+//     {
+//
+//    private val swipeThreshold = 100
+//    private val swipeVelocityThreshold = 100
+//
+//    private val gestureDetector: GestureDetectorCompat = GestureDetectorCompat(this, MyGestureListener())
+//
+//    override fun onTouch(view: View, event: MotionEvent): Boolean {
+//        Log.d("Sensor", "onTouch: $event")
+//        return gestureDetector.onTouchEvent(event)
+//    }
+//
+//    private class MyGestureListener : GestureDetector.SimpleOnGestureListener() {
+//    override fun onDown(event: MotionEvent): Boolean {
+//        return true
+//    }
+//
+//
+//
+//
+//        override fun onFling(
+//            e1: MotionEvent,
+//            e2: MotionEvent,
+//            velocityX: Float,
+//            velocityY: Float
+//        ): Boolean {
+//            val diffX = e2.x - e1.x
+//            val diffY = e2.y - e1.y
+//            Log.d("Sensor", "diffX: $diffX, diffY: $diffY")
+//
+//            if (abs(diffX) > abs(diffY)) {
+//                if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {
+//                    if (diffX > 0) {
+//                        gestureEventListener.onSwipeRight()
+//                    } else {
+//                        gestureEventListener.onSwipeLeft()
+//                    }
+//                    return true
+//                }
+//            }
+//            Log.i("Sensor", "False on Swipe")
+//            return false
+//        }
+//    }
+//}
+//
+
+
+//class SwipeGestureDetector(private val gestureEventListener: GestureEventListener) :
+//    GestureDetector.OnGestureListener {
+//
+//    private var gestureDetector: GestureDetector = GestureDetector(
+//        object : GestureDetector.SimpleOnGestureListener() {
+//            override fun onFling(
+//                downEvent: MotionEvent,
+//                moveEvent: MotionEvent,
+//                velocityX: Float,
+//                velocityY: Float
+//            ): Boolean {
+//                val distanceX = moveEvent.x - downEvent.x
+//                val distanceY = moveEvent.y - downEvent.y
+//                if (distanceX > 0) {
+//                    gestureEventListener.onSwipeRight()
+//                }
+//                else {
+//                    gestureEventListener.onSwipeLeft()
+//                }
+//                return true
+//            }
+//        }
+//    )
+//
+//        fun onTouchEvent(event: MotionEvent): Boolean {
+//            return gestureDetector.onTouchEvent(event)
+//    }
+//
+//    override fun onDown(p0: MotionEvent): Boolean {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun onShowPress(p0: MotionEvent) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun onSingleTapUp(p0: MotionEvent): Boolean {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun onScroll(p0: MotionEvent, p1: MotionEvent, p2: Float, p3: Float): Boolean {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun onLongPress(p0: MotionEvent) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun onFling(p0: MotionEvent, p1: MotionEvent, p2: Float, p3: Float): Boolean {
+//        TODO("Not yet implemented")
+//    }
+//}
