@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -39,24 +40,24 @@ class CategoryActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
+
     }
 
     /** Create options for main menu */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
+        // Only show share option if there is a path to share
         val shareMenuItem = menu?.findItem(R.id.shareImplicitIntent)
         val imagePathToShare = binding.categoryViewModel?.imagePathToShare.toString()
-
         Log.i(LOG_TAG2, "Image path to share from menu: $imagePathToShare")
         shareMenuItem?.isVisible = !(imagePathToShare != null && imagePathToShare != "")
         return true
-//        return super.onCreateOptionsMenu(menu)
     }
 
     /** Determine actions for menu item select in main menu */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.shareImplicitIntent -> {
                 handleShare()
                 true
@@ -64,6 +65,7 @@ class CategoryActivity : AppCompatActivity() {
             else -> item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
         }
     }
+
 
     /** Handle share image on social media menu item */
     private fun handleShare(): Boolean {
@@ -83,28 +85,6 @@ class CategoryActivity : AppCompatActivity() {
         return true
     }
 
-//      private fun handleShare(): Boolean {
-//
-//        try {
-//            Log.i(LOG_TAG2, "Share Pressed.")
-////            val lastThreeImages =
-////                CategoryDao.getLastThreeImages() // Assuming you have a DAO called `imageDao` to interact with the `ImageEntity` table
-////            if (lastThreeImages.isNotEmpty()) {
-////                val imageToShare = lastThreeImages.last() // Select the last image from the list
-////                val intent = Intent().apply {
-////                    action = Intent.ACTION_SEND
-////                    type = "image/jpeg"
-////                    putExtra(Intent.EXTRA_STREAM, Uri.parse(imageToShare.path))
-////                }
-////                startActivity(intent)
-////            }
-//        }
-//        catch (e: Exception) {
-//            Log.i(LOG_TAG2, "No Images Available")
-//        }
-//            return true
-//    }
-
     /** Create navigation up buttons on all fragments except category */
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.nav_host_fragment)
@@ -112,18 +92,6 @@ class CategoryActivity : AppCompatActivity() {
             false
         } else {
             navController.navigateUp() || super.onSupportNavigateUp()
-        }
-    }
-
-    /** Get Resource Id by using name without file extension, and type e.g. drawable */
-    @SuppressLint("DiscouragedApi")
-    private fun logResourceId(resourceName : String, resourceType: String) {
-        val resourceId = resources.getIdentifier(resourceName, resourceType, packageName)
-
-        if (resourceId != 0) {
-            Log.i(LOG_TAG2, "$resourceName Id: $resourceId")
-        } else {
-            Log.i(LOG_TAG2, "Resource Not Found")
         }
     }
 }

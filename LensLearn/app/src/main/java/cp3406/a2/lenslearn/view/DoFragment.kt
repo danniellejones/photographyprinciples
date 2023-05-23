@@ -122,6 +122,7 @@ class DoFragment : Fragment() {
                     photoCount++
                     if (photoCount == MAX_PHOTOS) {
                         Toast.makeText(requireContext(), R.string.capture_success_message, Toast.LENGTH_LONG).show()
+                        photoCount = 0
                         findNavController().navigate(R.id.action_doFragment_to_shareFragment)
                     }
                 }
