@@ -1,142 +1,142 @@
 [
   {
     "categoryId": 1,
-    "filename": "img_balance_01.jpg"
+    "filename": "img_balance_01"
   },
   {
     "categoryId": 1,
-    "filename": "img_balance_02.jpg"
+    "filename": "img_balance_02"
   },
   {
     "categoryId": 1,
-    "filename": "img_balance_03.jpg"
+    "filename": "img_balance_03"
   },
   {
     "categoryId": 1,
-    "filename": "img_balance_04.jpg"
+    "filename": "img_balance_04"
   },
   {
     "categoryId": 1,
-    "filename": "img_balance_05.jpg"
+    "filename": "img_balance_05"
   },
   {
     "categoryId": 2,
-    "filename": "img_contrast_01.jpg"
+    "filename": "img_contrast_01"
   },
   {
     "categoryId": 2,
-    "filename": "img_contrast_02.jpg"
+    "filename": "img_contrast_02"
   },
   {
     "categoryId": 2,
-    "filename": "img_contrast_03.jpg"
+    "filename": "img_contrast_03"
   },
   {
     "categoryId": 2,
-    "filename": "img_contrast_04.jpg"
+    "filename": "img_contrast_04"
   },
   {
     "categoryId": 2,
-    "filename": "img_contrast_05.jpg"
+    "filename": "img_contrast_05"
   },
   {
     "categoryId": 3,
-    "filename": "img_emphasis_01.jpg"
+    "filename": "img_emphasis_01"
   },
   {
     "categoryId": 3,
-    "filename": "img_emphasis_02.jpg"
+    "filename": "img_emphasis_02"
   },
   {
     "categoryId": 3,
-    "filename": "img_emphasis_03.jpg"
+    "filename": "img_emphasis_03"
   },
   {
     "categoryId": 3,
-    "filename": "img_emphasis_04.jpg"
+    "filename": "img_emphasis_04"
   },
   {
     "categoryId": 3,
-    "filename": "img_emphasis_05.jpg"
+    "filename": "img_emphasis_05"
   },
   {
     "categoryId": 4,
-    "filename": "img_pattern_01.jpg"
+    "filename": "img_pattern_01"
   },
   {
     "categoryId": 4,
-    "filename": "img_pattern_02.jpg"
+    "filename": "img_pattern_02"
   },
   {
     "categoryId": 4,
-    "filename": "img_pattern_03.jpg"
+    "filename": "img_pattern_03"
   },
   {
     "categoryId": 4,
-    "filename": "img_pattern_04.jpg"
+    "filename": "img_pattern_04"
   },
   {
     "categoryId": 4,
-    "filename": "img_pattern_05.jpg"
+    "filename": "img_pattern_05"
   },
   {
     "categoryId": 5,
-    "filename": "img_rhythm_01.jpg"
+    "filename": "img_rhythm_01"
   },
   {
     "categoryId": 5,
-    "filename": "img_rhythm_02.jpg"
+    "filename": "img_rhythm_02"
   },
   {
     "categoryId": 5,
-    "filename": "img_rhythm_03.jpg"
+    "filename": "img_rhythm_03"
   },
   {
     "categoryId": 5,
-    "filename": "img_rhythm_04.jpg"
+    "filename": "img_rhythm_04"
   },
   {
     "categoryId": 5,
-    "filename": "img_rhythm_05.jpg"
+    "filename": "img_rhythm_05"
   },
   {
     "categoryId": 6,
-    "filename": "img_space_01.jpg"
+    "filename": "img_space_01"
   },
   {
     "categoryId": 6,
-    "filename": "img_space_02.jpg"
+    "filename": "img_space_02"
   },
   {
     "categoryId": 6,
-    "filename": "img_space_03.jpg"
+    "filename": "img_space_03"
   },
   {
     "categoryId": 6,
-    "filename": "img_space_04.jpg"
+    "filename": "img_space_04"
   },
   {
     "categoryId": 6,
-    "filename": "img_space_05.jpg"
+    "filename": "img_space_05"
   },
   {
     "categoryId": 7,
-    "filename": "img_unity_01.jpg"
+    "filename": "img_unity_01"
   },
   {
     "categoryId": 7,
-    "filename": "img_unity_02.jpg"
+    "filename": "img_unity_02"
   },
   {
     "categoryId": 7,
-    "filename": "img_unity_03.jpg"
+    "filename": "img_unity_03"
   },
   {
     "categoryId": 7,
-    "filename": "img_unity_04.jpg"
+    "filename": "img_unity_04"
   },
   {
     "categoryId": 7,
-    "filename": "img_unity_05.jpg"
+    "filename": "img_unity_05"
   }
 ]

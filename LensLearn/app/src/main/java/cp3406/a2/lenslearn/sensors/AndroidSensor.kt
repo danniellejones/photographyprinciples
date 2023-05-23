@@ -5,12 +5,14 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import cp3406.a2.lenslearn.model.CategoryViewModel
 
 abstract class AndroidSensor(
     private val context: Context,
     private val sensorFeature: String,
-    sensorType: Int
-) : GeneralSensor(sensorType),
+    sensorType: Int,
+    categoryViewModel: CategoryViewModel
+) : GeneralSensor(sensorType, categoryViewModel),
     SensorEventListener {
 
     override val doesSensorExist: Boolean

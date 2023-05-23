@@ -53,4 +53,9 @@
                         updateImage(image: Image): Updates an existing image in the local database.
                         deleteImage(image: Image): Deletes an image from the local database.
 </string>
+    <string name="results_message">You got %d correct out of %d. Well done!</string>
+    <string name="results_title">Results</string>
+    <string name="task">My Task</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="overlay_image">Overlay Image</string>
 </resources>

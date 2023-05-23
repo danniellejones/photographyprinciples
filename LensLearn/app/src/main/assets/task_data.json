@@ -2,36 +2,36 @@
   {
     "categoryId": 1,
     "description": "Find an object that is asymmetrical and create balance by tilting the camera in different angles..",
-    "filename": "img_task_balance_01.png"
+    "filename": "img_task_balance_01"
   },
   {
     "categoryId": 2,
     "description": "Find two objects with very different textures (spikes vs smooth), then photograph them together. Use shadow, light and angles to emphasise this contrast!",
-    "filename": "img_task_contrast_01.png"
+    "filename": "img_task_contrast_01"
   },
   {
     "categoryId": 3,
     "description": "Pick an object and make it stand out by using colour or size.",
-    "filename": "img_task_emphasis_01.png"
+    "filename": "img_task_emphasis_01"
   },
   {
     "categoryId": 4,
     "description": "Get up close to objects and photograph the pattern on things, it should not be clear what the object is.",
-    "filename": "img_task_pattern_01.png"
+    "filename": "img_task_pattern_01"
   },
   {
     "categoryId": 5,
     "description": "Look at the buildings or in nature for a line that leads your eye off and match its starting point to the image.",
-    "filename": "img_task_rhythm_01.png"
+    "filename": "img_task_rhythm_01"
   },
   {
     "categoryId": 6,
     "description": "Place a figure or object in front of a window that has lots of light shining through it towards the camera. Use the negative space to create your image.",
-    "filename": "img_task_space_01.png"
+    "filename": "img_task_space_01"
   },
   {
     "categoryId": 7,
     "description": "Find something that is all in one colour, shape or style e.g. round green hills and frame using rule-of-thirds. Two important points should meet up with the lines.",
-    "filename": "img_task_unity_01.png"
+    "filename": "img_task_unity_01"
   }
 ]
