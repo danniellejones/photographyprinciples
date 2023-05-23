@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.FragmentShareBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
 
@@ -25,6 +26,22 @@ class ShareFragment : Fragment() {
         binding = FragmentShareBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.categoryViewModel = categoryViewModel
+
+        categoryViewModel.getLastUserImageForLastTask { hasImage ->
+            if(!hasImage) {
+                binding.thumbnailImageBottom.setImageResource(R.drawable.img_default)
+            }
+        }
+        categoryViewModel.getSecondLastUserImageForLastTask { hasImage ->
+            if(!hasImage) {
+                binding.thumbnailImageMiddle.setImageResource(R.drawable.img_default)
+            }
+        }
+        categoryViewModel.getThirdLastUserImageForLastTask { hasImage ->
+            if(!hasImage) {
+                binding.thumbnailImageTop.setImageResource(R.drawable.img_default)
+            }
+        }
 
         return binding.root
     }

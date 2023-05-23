@@ -68,11 +68,16 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     val randomTask: LiveData<TaskEntity> = _randomTask
 
     // SHARE - Last three images taken by the user
-    private val _lastUserImageForLastTask: MutableLiveData<UserImageEntity?> = MutableLiveData()
-    private val _secondLastUserImageForLastTask: MutableLiveData<UserImageEntity?> =
+    private val _lastUserImageForLastTask: MutableLiveData<UserImageEntity> = MutableLiveData()
+    val lastUserImageForLastTask: LiveData<UserImageEntity> = _lastUserImageForLastTask
+
+    private val _secondLastUserImageForLastTask: MutableLiveData<UserImageEntity> =
         MutableLiveData()
-    private val _thirdLastUserImageForLastTask: MutableLiveData<UserImageEntity?> =
+    val secondLastUserImageForLastTask: LiveData<UserImageEntity> = _secondLastUserImageForLastTask
+
+    private val _thirdLastUserImageForLastTask: MutableLiveData<UserImageEntity> =
         MutableLiveData()
+    val thirdLastUserImageForLastTask: LiveData<UserImageEntity> = _thirdLastUserImageForLastTask
 
     /** Initialise the connection between the View Model and the Repository */
     init {
@@ -105,7 +110,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     fun addNewUserImage(path: String) {
         viewModelScope.launch {
             val newUserImageEntity = UserImageEntity(taskId = randomTask.value!!.id, path = path)
-                categoryRepository.insertUserImage(newUserImageEntity)
+            categoryRepository.insertUserImage(newUserImageEntity)
         }
     }
 
@@ -173,6 +178,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    /** Update total size of Identify Image List */
     private fun updateTotalImages() {
         _totalImages.value = _identifyImagesList.value?.size
         Log.i(LOG_TAG, "Total Size of Identify Images: ${_totalImages.value}")
@@ -201,30 +207,60 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
 
 
     /** Get last image taken by user for share fragment */
-    fun getLastUserImageForLastTask(): LiveData<UserImageEntity?> {
-        return _lastUserImageForLastTask
+    fun getLastUserImageForLastTask(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val userImageEntity = categoryRepository.getLastUserImageForLastTask()
+            val hasImage = userImageEntity != null
+            if(hasImage) {
+                _lastUserImageForLastTask.value = userImageEntity!!
+            }
+            else {
+                Log.d(LOG_TAG, "There is no image for the last")
+            }
+            callback.invoke(hasImage)
+        }
     }
 
     /** Get second last image taken by user for share fragment */
-    fun getSecondLastUserImageForLastTask(): LiveData<UserImageEntity?> {
-        return _secondLastUserImageForLastTask
+    fun getSecondLastUserImageForLastTask(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val userImageEntity = categoryRepository.getSecondLastUserImageForLastTask()
+            val hasImage = userImageEntity != null
+            if(hasImage) {
+                _secondLastUserImageForLastTask.value = userImageEntity!!
+            }
+            else {
+                Log.d(LOG_TAG, "There is no image for the last")
+            }
+            callback.invoke(hasImage)
+        }
     }
 
     /** Get third last image taken by user for share fragment */
-    fun getThirdLastUserImageForLastTask(): LiveData<UserImageEntity?> {
-        return _thirdLastUserImageForLastTask
+    fun getThirdLastUserImageForLastTask(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val userImageEntity = categoryRepository.getThirdLastUserImageForLastTask()
+            val hasImage = userImageEntity != null
+            if(hasImage) {
+                _thirdLastUserImageForLastTask.value = userImageEntity!!
+            }
+            else {
+                Log.d(LOG_TAG, "There is no image for the last")
+            }
+            callback.invoke(hasImage)
+        }
     }
 
-    suspend fun retrieveUserImagesForLastTask() {
-        val lastImage = categoryRepository.getLastUserImageForLastTask()
-        val secondLastImage = categoryRepository.getSecondLastUserImageForLastTask()
-        val thirdLastImage = categoryRepository.getThirdLastUserImageForLastTask()
-
-        // Update LiveData with image results
-        _lastUserImageForLastTask.postValue(lastImage)
-        _secondLastUserImageForLastTask.postValue(secondLastImage)
-        _thirdLastUserImageForLastTask.postValue(thirdLastImage)
-    }
+//    suspend fun retrieveUserImagesForLastTask() {
+//        val lastImage = categoryRepository.getLastUserImageForLastTask()
+//        val secondLastImage = categoryRepository.getSecondLastUserImageForLastTask()
+//        val thirdLastImage = categoryRepository.getThirdLastUserImageForLastTask()
+//
+//        // Update LiveData with image results
+//        _lastUserImageForLastTask.postValue(lastImage)
+//        _secondLastUserImageForLastTask.postValue(secondLastImage)
+//        _thirdLastUserImageForLastTask.postValue(thirdLastImage)
+//    }
 
     suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
         return categoryRepository.getCategoryById(categoryId)
