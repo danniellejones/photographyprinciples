@@ -61,7 +61,7 @@ class SwipeGestureDetector(
     }
 
     override fun onTouch(view: View, event: MotionEvent): Boolean {
-        Log.d("Sensor", "onTouch: $event")
+//        Log.d("Sensor", "onTouch: $event")
         return gestureDetector.onTouchEvent(event)
     }
 
@@ -81,7 +81,7 @@ class SwipeGestureDetector(
         ): Boolean {
             val diffX = e2.x - e1.x
             val diffY = e2.y - e1.y
-            Log.d("Sensor", "diffX: $diffX, diffY: $diffY")
+//            Log.d("Sensor", "diffX: $diffX, diffY: $diffY")
 
             if (abs(diffX) > abs(diffY)) {
                 if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {

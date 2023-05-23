@@ -68,6 +68,7 @@ class DoFragment : Fragment() {
         // Get a random task from the selected category
         categoryViewModel.retrieveRandomTask()
         Log.i("DoFragment", "Random task: ${categoryViewModel.randomTask.value}")
+//        binding.overlayImage.rotation = 90f
 
         // Show and hide the task description
         binding.toggleDescriptionButton.setOnClickListener {

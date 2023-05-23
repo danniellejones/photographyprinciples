@@ -110,6 +110,8 @@ class LearningFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
-        accelerometer.stopListening()
+        if (::accelerometer.isInitialized) {
+            accelerometer.stopListening()
+        }
     }
 }
