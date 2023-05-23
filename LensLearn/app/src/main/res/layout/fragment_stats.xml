@@ -4,18 +4,306 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="categoryViewModel"
             type="cp3406.a2.lenslearn.model.CategoryViewModel" />
     </data>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+<!--        <TextView-->
+<!--            android:id="@+id/titleTextView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/dark_blue"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="16dp"-->
+<!--            android:text="@string/stats"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="24sp"-->
+<!--            android:textStyle="bold" />-->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/category_balance" />
+
+                    <ProgressBar
+                        android:id="@+id/balanceProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:progress="50"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2" />
+
+                    <ImageView
+                        android:id="@+id/balanceSharedImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_shared"
+                        app:tint="@color/light_grey" />
+
+                    <ImageView
+                        android:id="@+id/balanceCompletedTaskImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_completed_task"
+                        app:tint="@color/light_grey" />
+
+                </LinearLayout>
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/category_contrast" />
+
+                    <ProgressBar
+                        android:id="@+id/contrastProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2" />
+
+                    <ImageView
+                        android:id="@+id/contrastSharedImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_shared"
+                        app:tint="@color/light_grey" />
+
+                    <ImageView
+                        android:id="@+id/contrastCompletedTaskImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_completed_task"
+                        app:tint="@color/light_grey" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/category_emphasis" />
+
+                    <ProgressBar
+                        android:id="@+id/emphasisProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2" />
+
+                    <ImageView
+                        android:id="@+id/emphasisSharedImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_shared"
+                        app:tint="@color/light_grey" />
+
+                    <ImageView
+                        android:id="@+id/emphasisCompletedTaskImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_completed_task"
+                        app:tint="@color/light_grey" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/category_pattern" />
+
+                    <ProgressBar
+                        android:id="@+id/patternProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2" />
+
+                    <ImageView
+                        android:id="@+id/patternSharedImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_shared"
+                        app:tint="@color/light_grey" />
+
+                    <ImageView
+                        android:id="@+id/patternCompletedTaskImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_completed_task"
+                        app:tint="@color/light_grey" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/category_rhythm" />
+
+                    <ProgressBar
+                        android:id="@+id/rhythmProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2" />
+
+                    <ImageView
+                        android:id="@+id/rhythmSharedImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_shared"
+                        app:tint="@color/light_grey" />
+
+                    <ImageView
+                        android:id="@+id/rhythmCompletedTaskImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_completed_task"
+                        app:tint="@color/light_grey" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/category_space" />
+
+                    <ProgressBar
+                        android:id="@+id/spaceProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2" />
+
+                    <ImageView
+                        android:id="@+id/spaceSharedImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_shared"
+                        app:tint="@color/light_grey" />
+
+                    <ImageView
+                        android:id="@+id/spaceCompletedTaskImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_completed_task"
+                        app:tint="@color/light_grey" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/category_unity" />
+
+                    <ProgressBar
+                        android:id="@+id/unityProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2" />
+
+                    <ImageView
+                        android:id="@+id/unitySharedImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_shared"
+                        app:tint="@color/light_grey" />
+
+                    <ImageView
+                        android:id="@+id/unityCompletedTaskImageView"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_completed_task"
+                        app:tint="@color/light_grey" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </layout>
