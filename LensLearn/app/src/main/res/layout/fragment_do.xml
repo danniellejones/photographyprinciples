@@ -1,22 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="categoryViewModel"
             type="cp3406.a2.lenslearn.model.CategoryViewModel" />
     </data>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.DoFragment">
+        android:layout_height="match_parent">
 
-        <TextView
+        <androidx.camera.view.PreviewView
+            android:id="@+id/previewView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/overlayImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Hello" />
+            android:alpha="0.5"
+            android:contentDescription="@string/overlay_image"
+            app:imageFromFilename="@{categoryViewModel.randomTask.filename}"
+            tools:src="@drawable/img_default" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/taskDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:text="@{categoryViewModel.randomTask.description}"
+            android:textSize="18sp"
+            android:visibility="visible"
+            tools:ignore="RelativeOverlap" />
+
+        <Button
+            android:id="@+id/toggleDescriptionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/task"
+            tools:ignore="RelativeOverlap" />
+
+        <ImageButton
+            android:id="@+id/takePhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/take_photo"
+            android:src="@drawable/icon_lens_learn" />
+
+    </RelativeLayout>
 </layout>

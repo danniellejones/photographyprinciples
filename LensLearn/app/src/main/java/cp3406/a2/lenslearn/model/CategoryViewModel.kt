@@ -23,6 +23,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import cp3406.a2.lenslearn.data.CategoryEntity
 import cp3406.a2.lenslearn.data.ImageEntity
+import cp3406.a2.lenslearn.data.TaskEntity
 import cp3406.a2.lenslearn.data.UserImageEntity
 import cp3406.a2.lenslearn.repository.CategoryRepository
 import kotlinx.coroutines.launch
@@ -62,6 +63,9 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     private val _totalImages: MutableLiveData<Int> = MutableLiveData()
     val totalImages: LiveData<Int> = _totalImages
 
+    // DO - Retrieve random task matching the selected category
+    private val _randomTask: MutableLiveData<TaskEntity> = MutableLiveData()
+    val randomTask: LiveData<TaskEntity> = _randomTask
 
     // SHARE - Last three images taken by the user
     private val _lastUserImageForLastTask: MutableLiveData<UserImageEntity?> = MutableLiveData()
@@ -73,6 +77,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     /** Initialise the connection between the View Model and the Repository */
     init {
         Log.i(LOG_TAG, "Category View Model Init")
+        // Initialise start values
         _selectedCategoryId.value = 0
         _isShaken.value = false
         _currentImageFileName.value = "img_default"
@@ -86,6 +91,22 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     /** Set new Category Id */
     fun setCategoryId(newCategoryId: Int) {
         _selectedCategoryId.value = newCategoryId
+    }
+
+    /** Retrieve a random task */
+    fun retrieveRandomTask() {
+        viewModelScope.launch {
+            val task = categoryRepository.getRandomTask(_selectedCategoryId.value!!)
+            _randomTask.value = task!!
+        }
+    }
+
+    /** Take path from fragment and insert into database*/
+    fun addNewUserImage(path: String) {
+        viewModelScope.launch {
+            val newUserImageEntity = UserImageEntity(taskId = randomTask.value!!.id, path = path)
+                categoryRepository.insertUserImage(newUserImageEntity)
+        }
     }
 
     /** Set new Category Id */
@@ -168,13 +189,11 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
             if (_selectedCategoryId.value == identifyImagesList.value?.get(index)?.categoryId) {
                 _correctCount.value = _correctCount.value!! + 1
             }
-        }
-        else if(leftOrRight == "left") {
+        } else if (leftOrRight == "left") {
             if (_selectedCategoryId.value != identifyImagesList.value?.get(index)?.categoryId) {
                 _correctCount.value = _correctCount.value!! + 1
             }
-        }
-        else {
+        } else {
             Log.i(LOG_TAG, "Error in checking image correct")
         }
         Log.i(LOG_TAG, "Correct Answers: ${_correctCount.value} / ${_totalImages.value}")
