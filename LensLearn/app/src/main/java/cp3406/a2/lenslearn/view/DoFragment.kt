@@ -76,12 +76,6 @@ class DoFragment : Fragment() {
         binding.takePhotoButton.setOnClickListener {
             takePhoto()
 
-            // After three photographs are taken, move to share fragment
-            photoCount++
-            if (photoCount == MAX_PHOTOS) {
-                Toast.makeText(requireContext(), R.string.capture_success_message, Toast.LENGTH_LONG).show()
-                findNavController().navigate(R.id.action_doFragment_to_shareFragment)
-            }
         }
         return binding.root
     }
@@ -111,13 +105,20 @@ class DoFragment : Fragment() {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
 
                     // Save filepath and show toast
-                    capturedImagePath = output.savedUri?.path  // Absolute Path
+                    capturedImagePath = output.savedUri?.toString()  // Absolute Path
                     Log.d(TAG, "Photo capture successful: ${output.savedUri?.path}")
                     Toast.makeText(requireContext(), R.string.capture_success_message, Toast.LENGTH_SHORT).show()
 
                     // Add path to room database
                     capturedImagePath?.let { it1 -> categoryViewModel.addNewUserImage(it1) }
                     Log.i("DoFragment", "Added Capture Path: $capturedImagePath")
+
+                    // After three photographs are taken, move to share fragment
+                    photoCount++
+                    if (photoCount == MAX_PHOTOS) {
+                        Toast.makeText(requireContext(), R.string.capture_success_message, Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_doFragment_to_shareFragment)
+                    }
                 }
 
                 override fun onError(exc: ImageCaptureException) {

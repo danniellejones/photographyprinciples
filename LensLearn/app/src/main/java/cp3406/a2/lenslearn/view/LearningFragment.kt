@@ -59,6 +59,9 @@ class LearningFragment : Fragment() {
 
         // Set Click Listener for Floating Action Button to move to Identify Fragment
         binding.fab.setOnClickListener{
+            if (::accelerometer.isInitialized) {
+                accelerometer.stopListening()
+            }
             findNavController().navigate(R.id.action_learningFragment_to_identifyFragment)
         }
 

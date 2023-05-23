@@ -210,6 +210,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     fun getLastUserImageForLastTask(callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             val userImageEntity = categoryRepository.getLastUserImageForLastTask()
+            Log.d(LOG_TAG, "Last User Image Entity: $userImageEntity")
             val hasImage = userImageEntity != null
             if(hasImage) {
                 _lastUserImageForLastTask.value = userImageEntity!!
@@ -225,6 +226,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     fun getSecondLastUserImageForLastTask(callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             val userImageEntity = categoryRepository.getSecondLastUserImageForLastTask()
+            Log.d(LOG_TAG, "Second Last User Image Entity: $userImageEntity")
             val hasImage = userImageEntity != null
             if(hasImage) {
                 _secondLastUserImageForLastTask.value = userImageEntity!!
@@ -240,6 +242,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     fun getThirdLastUserImageForLastTask(callback: (Boolean) -> Unit) {
         viewModelScope.launch {
             val userImageEntity = categoryRepository.getThirdLastUserImageForLastTask()
+            Log.d(LOG_TAG, "Third Last User Image Entity: $userImageEntity")
             val hasImage = userImageEntity != null
             if(hasImage) {
                 _thirdLastUserImageForLastTask.value = userImageEntity!!

@@ -2,6 +2,7 @@ package cp3406.a2.lenslearn.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.FragmentShareBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
 import java.io.File
+
+private const val TAG = "ShareFragment"
 
 class ShareFragment : Fragment() {
 
@@ -31,36 +34,31 @@ class ShareFragment : Fragment() {
 
         // Retrieve images from the saved filepath and display
         categoryViewModel.getLastUserImageForLastTask { hasImage ->
-            if (!hasImage) {
-                binding.thumbnailImageBottom.setImageResource(R.drawable.img_default)
+            Log.i(TAG, "Has image = $hasImage")
+            binding.thumbnailImageTop.visibility = if (hasImage) {
+                View.VISIBLE
             } else {
-                Glide.with(requireContext())
-                    .load(categoryViewModel.lastUserImageForLastTask.value?.path?.let { File(it) })
-                    .placeholder(R.drawable.img_default)
-                    .error(R.drawable.img_default)
-                    .into(binding.thumbnailImageBottom)
+                View.GONE
             }
         }
         categoryViewModel.getSecondLastUserImageForLastTask { hasImage ->
-            if (!hasImage) {
-                binding.thumbnailImageMiddle.setImageResource(R.drawable.img_default)
-            } else {
-                Glide.with(requireContext())
-                    .load(categoryViewModel.secondLastUserImageForLastTask.value?.path?.let { File(it) })
-                    .placeholder(R.drawable.img_default)
-                    .error(R.drawable.img_default)
-                    .into(binding.thumbnailImageMiddle)
+            if (hasImage) {
+                Log.i(TAG, "Has image = $hasImage")
+                binding.thumbnailImageMiddle.visibility = if (hasImage) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
             }
         }
         categoryViewModel.getThirdLastUserImageForLastTask { hasImage ->
-            if (!hasImage) {
-                binding.thumbnailImageTop.setImageResource(R.drawable.img_default)
-            } else {
-                Glide.with(requireContext())
-                    .load(categoryViewModel.thirdLastUserImageForLastTask.value?.path?.let { File(it) })
-                    .placeholder(R.drawable.img_default)
-                    .error(R.drawable.img_default)
-                    .into(binding.thumbnailImageTop)
+            if (hasImage) {
+                Log.i(TAG, "Has image = $hasImage")
+                binding.thumbnailImageBottom.visibility = if (hasImage) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
             }
         }
 

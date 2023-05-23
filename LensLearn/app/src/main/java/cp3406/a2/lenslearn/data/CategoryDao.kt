@@ -66,15 +66,15 @@ interface CategoryDao {
     suspend fun getRandomTask(selectedCategoryId: Int): TaskEntity?
 
     /** Get Last User Image Taken */
-    @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task) ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM user_image ORDER BY id DESC LIMIT 1")
     suspend fun getLastUserImageForLastTask(): UserImageEntity?
 
     /** Get Second Last User Image Taken */
-    @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task ORDER BY id DESC LIMIT 1, 1) ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM user_image ORDER BY id DESC LIMIT 1 OFFSET 1")
     suspend fun getSecondLastUserImageForLastTask(): UserImageEntity?
 
     /** Get Third Last User Image Taken */
-    @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task ORDER BY id DESC LIMIT 2, 1) ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM user_image ORDER BY id DESC LIMIT 1 OFFSET 2")
     suspend fun getThirdLastUserImageForLastTask(): UserImageEntity?
 
     /** Delete All Records */
