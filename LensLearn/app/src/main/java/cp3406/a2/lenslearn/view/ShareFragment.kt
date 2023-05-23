@@ -13,6 +13,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.FragmentShareBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
 
@@ -81,6 +83,10 @@ class ShareFragment : Fragment() {
             handleShare()
         }
 
+        // Navigate to stats fragment
+        binding.toStatsFragmentButton.setOnClickListener{
+            findNavController().navigate(R.id.action_shareFragment_to_statsFragment)
+        }
         return binding.root
     }
 
