@@ -1,18 +1,12 @@
 package cp3406.a2.lenslearn.bindingadapters
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.net.Uri
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import cp3406.a2.lenslearn.R
-import cp3406.a2.lenslearn.data.CategoryEntity
-import cp3406.a2.lenslearn.model.CategoryViewModel
-import java.io.File
 
 /** Read filename from Room Data and set image to image view */
 @SuppressLint("DiscouragedApi")
@@ -38,22 +32,17 @@ fun ImageView.setImageFromFilename(filename: String?) {
     }
 }
 
+/** Use Glide image library to set photographs from storage device */
 @BindingAdapter("imagePath")
 fun ImageView.setImagePath(imagePath: String?) {
     if (!imagePath.isNullOrEmpty()) {
         Glide.with(context)
             .load(Uri.parse(imagePath))
             .placeholder(R.drawable.img_default)
-            .error(R.drawable.img_example_pattern)
+            .error(R.drawable.img_broken)
             .into(this)
+        visibility = View.VISIBLE
     } else {
-        setImageResource(R.drawable.img_example_balance)
+        visibility = View.GONE
     }
 }
-
-//@BindingAdapter("app:hideIfNull")
-//fun hideIfNull(view: View, value: Int) {
-//
-//    // app:hideIfNull="@{categoryViewModel.value}"
-//    view.visibility = if (value == 0) View.GONE else View.VISIBLE
-//}

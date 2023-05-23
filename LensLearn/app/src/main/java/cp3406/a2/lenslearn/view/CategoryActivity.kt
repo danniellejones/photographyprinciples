@@ -1,6 +1,8 @@
 package cp3406.a2.lenslearn.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -22,9 +24,10 @@ private const val LOG_TAG2 = "CategoryActivity"
 class CategoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCategoryBinding
-    private val viewModel: CategoryViewModel by viewModels()
+    private val categoryVewModel: CategoryViewModel by viewModels()
     private lateinit var navController: NavController
 
+    /** Connect data binding and set up navigation */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Inflate
@@ -41,7 +44,14 @@ class CategoryActivity : AppCompatActivity() {
     /** Create options for main menu */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
+
+        val shareMenuItem = menu?.findItem(R.id.shareImplicitIntent)
+        val imagePathToShare = binding.categoryViewModel?.imagePathToShare.toString()
+
+        Log.i(LOG_TAG2, "Image path to share from menu: $imagePathToShare")
+        shareMenuItem?.isVisible = !(imagePathToShare != null && imagePathToShare != "")
+        return true
+//        return super.onCreateOptionsMenu(menu)
     }
 
     /** Determine actions for menu item select in main menu */
@@ -56,27 +66,44 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     /** Handle share image on social media menu item */
-      private fun handleShare(): Boolean {
-
+    private fun handleShare(): Boolean {
         try {
-            Log.i(LOG_TAG2, "Share Pressed.")
-//            val lastThreeImages =
-//                CategoryDao.getLastThreeImages() // Assuming you have a DAO called `imageDao` to interact with the `ImageEntity` table
-//            if (lastThreeImages.isNotEmpty()) {
-//                val imageToShare = lastThreeImages.last() // Select the last image from the list
-//                val intent = Intent().apply {
-//                    action = Intent.ACTION_SEND
-//                    type = "image/jpeg"
-//                    putExtra(Intent.EXTRA_STREAM, Uri.parse(imageToShare.path))
-//                }
-//                startActivity(intent)
-//            }
-        }
-        catch (e: Exception) {
+            val pathName = binding.categoryViewModel?.imagePathToShare.toString()
+            if (pathName.isEmpty()) {
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "image/jpeg"
+                    putExtra(Intent.EXTRA_STREAM, Uri.parse(pathName))
+                }
+                startActivity(intent)
+            }
+        } catch (e: Exception) {
             Log.i(LOG_TAG2, "No Images Available")
         }
-            return true
+        return true
     }
+
+//      private fun handleShare(): Boolean {
+//
+//        try {
+//            Log.i(LOG_TAG2, "Share Pressed.")
+////            val lastThreeImages =
+////                CategoryDao.getLastThreeImages() // Assuming you have a DAO called `imageDao` to interact with the `ImageEntity` table
+////            if (lastThreeImages.isNotEmpty()) {
+////                val imageToShare = lastThreeImages.last() // Select the last image from the list
+////                val intent = Intent().apply {
+////                    action = Intent.ACTION_SEND
+////                    type = "image/jpeg"
+////                    putExtra(Intent.EXTRA_STREAM, Uri.parse(imageToShare.path))
+////                }
+////                startActivity(intent)
+////            }
+//        }
+//        catch (e: Exception) {
+//            Log.i(LOG_TAG2, "No Images Available")
+//        }
+//            return true
+//    }
 
     /** Create navigation up buttons on all fragments except category */
     override fun onSupportNavigateUp(): Boolean {

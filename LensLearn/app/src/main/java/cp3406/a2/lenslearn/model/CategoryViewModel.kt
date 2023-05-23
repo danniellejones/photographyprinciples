@@ -21,6 +21,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide.init
 import cp3406.a2.lenslearn.data.CategoryEntity
 import cp3406.a2.lenslearn.data.ImageEntity
 import cp3406.a2.lenslearn.data.TaskEntity
@@ -79,6 +80,9 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         MutableLiveData()
     val thirdLastUserImageForLastTask: LiveData<UserImageEntity> = _thirdLastUserImageForLastTask
 
+    private val _imagePathToShare: MutableLiveData<String> = MutableLiveData()
+    var imagePathToShare: LiveData<String> = _imagePathToShare
+
     /** Initialise the connection between the View Model and the Repository */
     init {
         Log.i(LOG_TAG, "Category View Model Init")
@@ -96,6 +100,11 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     /** Set new Category Id */
     fun setCategoryId(newCategoryId: Int) {
         _selectedCategoryId.value = newCategoryId
+    }
+
+    /** Set image path */
+    fun setImagePath(selectedPath: String) {
+        _imagePathToShare.value = selectedPath
     }
 
     /** Retrieve a random task */

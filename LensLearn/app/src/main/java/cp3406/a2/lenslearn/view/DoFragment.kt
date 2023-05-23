@@ -64,6 +64,11 @@ class DoFragment : Fragment() {
                     View.VISIBLE
                 }
         }
+        // Hold down my task button to skip task
+        binding.toggleDescriptionButton.setOnLongClickListener {
+            findNavController().navigate(R.id.action_doFragment_to_shareFragment)
+            true
+        }
 
         // Check if permissions were granted in previous session
         if (!hasPermissions(requireContext())) {

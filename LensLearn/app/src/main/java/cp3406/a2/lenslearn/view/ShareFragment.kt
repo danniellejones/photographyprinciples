@@ -1,12 +1,14 @@
 package cp3406.a2.lenslearn.view
 
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.onNavDestinationSelected
 import com.bumptech.glide.Glide
 import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.FragmentShareBinding
@@ -32,40 +34,34 @@ class ShareFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.categoryViewModel = categoryViewModel
 
-        // Retrieve images from the saved filepath and display
+        // Retrieve images from the saved filepath and set click listeners for share
         categoryViewModel.getLastUserImageForLastTask { hasImage ->
-            Log.i(TAG, "Has image = $hasImage")
-            binding.thumbnailImageTop.visibility = if (hasImage) {
-                View.VISIBLE
-            } else {
-                View.GONE
+            Log.i(TAG, "Last Has image = $hasImage")
+            if (hasImage) {
+                binding.thumbnailImageTop.setOnClickListener {
+                    categoryViewModel.setImagePath(categoryViewModel.lastUserImageForLastTask.value?.path.toString())
+                    Log.i(TAG, "Image Path to Share: ${categoryViewModel.imagePathToShare}")
+                }
             }
         }
         categoryViewModel.getSecondLastUserImageForLastTask { hasImage ->
+            Log.i(TAG, "Second Last Has image = $hasImage")
             if (hasImage) {
-                Log.i(TAG, "Has image = $hasImage")
-                binding.thumbnailImageMiddle.visibility = if (hasImage) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
+                binding.thumbnailImageMiddle.setOnClickListener {
+                    categoryViewModel.setImagePath(categoryViewModel.secondLastUserImageForLastTask.value?.path.toString())
+                    Log.i(TAG, "Image Path to Share: ${categoryViewModel.imagePathToShare}")
                 }
             }
         }
         categoryViewModel.getThirdLastUserImageForLastTask { hasImage ->
+            Log.i(TAG, "Third Last Has image = $hasImage")
             if (hasImage) {
-                Log.i(TAG, "Has image = $hasImage")
-                binding.thumbnailImageBottom.visibility = if (hasImage) {
-                    View.VISIBLE
-                } else {
-                    View.GONE
+                binding.thumbnailImageBottom.setOnClickListener {
+                    categoryViewModel.setImagePath(categoryViewModel.thirdLastUserImageForLastTask.value?.path.toString())
+                    Log.i(TAG, "Image Path to Share: ${categoryViewModel.imagePathToShare}")
                 }
             }
         }
-
-        // TODO: Set on click listeners to know which to use for share action
-        binding.thumbnailImageTop.setOnClickListener {}
-        binding.thumbnailImageMiddle.setOnClickListener {}
-        binding.thumbnailImageBottom.setOnClickListener {}
 
         return binding.root
     }
