@@ -59,12 +59,11 @@
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/image_preview"
-            android:onClick="selectTopThumbnail"
             app:layout_constraintBottom_toTopOf="@+id/thumbnailImageMiddle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/share2Button"
-            app:srcCompat="@drawable/img_example_balance"
+            tools:srcCompat="@drawable/img_example_balance"
             tools:ignore="DuplicateSpeakableTextCheck" />
 
         <ImageView
@@ -73,12 +72,11 @@
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/image_preview"
-            android:onClick="selectMiddleThumbnail"
             app:layout_constraintBottom_toTopOf="@+id/thumbnailImageBottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/thumbnailImageTop"
-            app:srcCompat="@drawable/img_example_emphasis" />
+            tools:srcCompat="@drawable/img_example_emphasis" />
 
         <ImageView
             android:id="@+id/thumbnailImageBottom"
@@ -86,12 +84,11 @@
             android:layout_height="0dp"
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/image_preview"
-            android:onClick="selectBottomThumbnail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/thumbnailImageMiddle"
-            app:srcCompat="@drawable/img_example_unity" />
+            tools:srcCompat="@drawable/img_example_unity" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

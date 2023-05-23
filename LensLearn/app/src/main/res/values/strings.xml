@@ -12,6 +12,8 @@
     <string name="category_rhythm">Rhythm</string>
     <string name="category_space">Space</string>
     <string name="category_unity">Unity</string>
+    <string name="stats">Stats</string>
+    <string name="results_title">Results</string>
 
     <!-- Preferences -->
     <string name="theme_preference">Theme</string>
@@ -30,12 +32,15 @@
     <string name="share_menu_button">Share</string>
     <string name="progress">Progress</string>
     <string name="next">Next</string>
+    <string name="task">My Task</string>
+    <string name="take_photo">Take Photo</string>
 
     <!-- Content Descriptions and Accessibility -->
     <string name="landing_icon_description">Lens Learn Icon</string>
     <string name="example_of_photograph_description">This is an example of a photograph from this principle!</string>
     <string name="identify_image_description">A photograph to identify the principle in...</string>
     <string name="image_preview">Image Preview</string>
+    <string name="overlay_image">Overlay Image</string>
 
     <!-- Instructions and Content -->
     <string name="instructions">Select A Category to Start Your Learning Journey!</string>
@@ -44,6 +49,9 @@
     <string name="identify_instructions_middle">Identify the Principle above in the images below</string>
     <string name="identify_instructions_right">Swipe right to ACCEPT</string>
     <string name="share_instructions">Select and Share your photo on social media! </string>
+    <string name="results_message">You got %d correct out of %d. Well done!</string>
+    <string name="capture_success_message">Successful Photo Capture, Keep Going!</string>
+    <string name="capture_success_final_message">Successful Photo Capture, you successfully completed the task great job!</string>
 
     <!-- Placeholders and Testing -->
     <string name="category">Category</string>
@@ -52,11 +60,6 @@
                         insertImage(image: Image): Inserts a new image into the local database.
                         updateImage(image: Image): Updates an existing image in the local database.
                         deleteImage(image: Image): Deletes an image from the local database.
-</string>
-    <string name="results_message">You got %d correct out of %d. Well done!</string>
-    <string name="results_title">Results</string>
-    <string name="task">My Task</string>
-    <string name="take_photo">Take Photo</string>
-    <string name="overlay_image">Overlay Image</string>
-    <string name="stats">Stats</string>
+    </string>
+
 </resources>

@@ -3,8 +3,6 @@ package cp3406.a2.lenslearn.view
 import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
-import android.media.Image
-import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,24 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.core.*
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import cp3406.a2.lenslearn.R
-import cp3406.a2.lenslearn.data.UserImageEntity
 import cp3406.a2.lenslearn.databinding.FragmentDoBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
-import kotlinx.coroutines.launch
-import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,14 +34,10 @@ class DoFragment : Fragment() {
         ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
     }
 
-    // Camerax
-    private val imageCapture: ImageCapture? = null
-
-    //    private val imageCapture = ImageCapture.Builder().build()
+    // CameraX
     private var capturedImagePath: String? = null
     private var photoCount = 0
     private lateinit var cameraController: LifecycleCameraController
-
 
     /** Initialise data binding, connect view model, retrieve task and set up button actions */
     override fun onCreateView(
@@ -87,29 +72,23 @@ class DoFragment : Fragment() {
             startCamera()
         }
 
-//        // Camera provider
-//        if (!hasPermissions(requireContext())) {
-//            activityResultLauncher.launch(REQUIRED_PERMISSIONS)
-//        } else {
-//            lifecycleScope.launch {
-//                startCamera()
-//            }
-//        }
-
         // Take the photograph and save path to Room database
         binding.takePhotoButton.setOnClickListener {
-            Log.i("DoFragment", "Take Photo")
             takePhoto()
+
+            // After three photographs are taken, move to share fragment
             photoCount++
-            capturedImagePath?.let { it1 -> categoryViewModel.addNewUserImage(it1) }
             if (photoCount == MAX_PHOTOS) {
+                Toast.makeText(requireContext(), R.string.capture_success_message, Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_doFragment_to_shareFragment)
             }
         }
         return binding.root
     }
 
+    /** Handle taking a photo and save images */
     private fun takePhoto() {
+        Log.i("DoFragment", "Take Photo")
         val name =
             SimpleDateFormat(FILENAME_FORMAT, Locale.ENGLISH).format(System.currentTimeMillis())
         val contentValues = ContentValues().apply {
@@ -130,10 +109,15 @@ class DoFragment : Fragment() {
             ContextCompat.getMainExecutor(requireContext()),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val msg = "Photo capture successful: ${output.savedUri}"
-                    capturedImagePath = "${output.savedUri}"
-                    Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
-                    Log.d(TAG, msg)
+
+                    // Save filepath and show toast
+                    capturedImagePath = output.savedUri?.path  // Absolute Path
+                    Log.d(TAG, "Photo capture successful: ${output.savedUri?.path}")
+                    Toast.makeText(requireContext(), R.string.capture_success_message, Toast.LENGTH_SHORT).show()
+
+                    // Add path to room database
+                    capturedImagePath?.let { it1 -> categoryViewModel.addNewUserImage(it1) }
+                    Log.i("DoFragment", "Added Capture Path: $capturedImagePath")
                 }
 
                 override fun onError(exc: ImageCaptureException) {
@@ -143,57 +127,22 @@ class DoFragment : Fragment() {
         )
     }
 
-//    // Camera Provider
-//    private suspend fun starCamera() {
-//        val cameraProvider = ProcessCameraProvider.getInstance(requireContext()).await()
-//
-//        val preview = Preview.Builder().build()
-//        preview.setSurfaceProvider(binding.previewView.surfaceProvider)
-//        imageCapture = imageCapture.Builder().build()
-//        val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-//
-//        try {
-//            cameraProvider.unbindAll()
-//            var camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
-//        }
-//        catch (e: java.lang.Exception) {
-//            Log.e(TAG, "UseCase binding failed", e)
-//        }
-//    }
-
-    // Camera Controller
+    /** Start Camera connected to preview view */
     private fun startCamera() {
         val previewView: PreviewView = binding.previewView
         cameraController = LifecycleCameraController((requireContext()))
         cameraController.bindToLifecycle(this)
         cameraController.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
         previewView.controller = cameraController
+        Log.i(TAG, "Camera Started")
     }
 
-//    // Camera Provider
-//    private val activityResultLauncher =
-//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-//            var permissionGranted = true
-//            permissions.entries.forEach {
-//                if (it.key in REQUIRED_PERMISSIONS && it.value == false)
-//                    permissionGranted = false
-//            }
-//            if (!permissionGranted) {
-//                Toast.makeText(requireContext(), "Permission Request Denied", Toast.LENGTH_LONG)
-//                    .show()
-//            } else {
-//                lifecycleScope.launch{
-//                    startCamera()
-//                }
-//            }
-//        }
-
-    // Camera Controller
+    /** Launch camera activity if permissions are granted */
     private val activityResultLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             var permissionGranted = true
             permissions.entries.forEach {
-                if (it.key in REQUIRED_PERMISSIONS && it.value == false)
+                if (it.key in REQUIRED_PERMISSIONS && !it.value)
                     permissionGranted = false
             }
             if (!permissionGranted) {
@@ -204,6 +153,7 @@ class DoFragment : Fragment() {
             }
         }
 
+    /** Set companion for permissions and format */
     companion object {
         private const val TAG = "CameraXApp"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"

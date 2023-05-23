@@ -251,17 +251,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-//    suspend fun retrieveUserImagesForLastTask() {
-//        val lastImage = categoryRepository.getLastUserImageForLastTask()
-//        val secondLastImage = categoryRepository.getSecondLastUserImageForLastTask()
-//        val thirdLastImage = categoryRepository.getThirdLastUserImageForLastTask()
-//
-//        // Update LiveData with image results
-//        _lastUserImageForLastTask.postValue(lastImage)
-//        _secondLastUserImageForLastTask.postValue(secondLastImage)
-//        _thirdLastUserImageForLastTask.postValue(thirdLastImage)
-//    }
-
     suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
         return categoryRepository.getCategoryById(categoryId)
     }

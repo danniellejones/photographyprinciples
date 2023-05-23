@@ -38,6 +38,7 @@ class Accelerometer(context: Context, categoryViewModel: CategoryViewModel) : An
     }
 }
 
+/** TODO: Use rotation sensors for photographing at different angles */
 //class Rotation(context: Context) : AndroidSensor(
 //    context = context,
 //    sensorFeature = PackageManager.FEATURE_SENSOR_GYROSCOPE,
@@ -45,7 +46,6 @@ class Accelerometer(context: Context, categoryViewModel: CategoryViewModel) : An
 //) {
 //
 //}
-//
 
 /** Use Swipe Gestures for image identification */
 class SwipeGestureDetector(
