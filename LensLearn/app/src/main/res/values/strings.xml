@@ -62,5 +62,6 @@
                         updateImage(image: Image): Updates an existing image in the local database.
                         deleteImage(image: Image): Deletes an image from the local database.
     </string>
+    <string name="camera">Camera</string>
 
 </resources>

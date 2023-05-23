@@ -15,8 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -43,10 +41,10 @@
                     <ProgressBar
                         android:id="@+id/balanceProgressBar"
                         style="?android:attr/progressBarStyleHorizontal"
-                        android:progress="50"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2" />
+                        android:layout_weight="2"
+                        android:progress="50" />
 
                     <ImageView
                         android:id="@+id/balanceSharedImageView"
@@ -54,7 +52,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_shared"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/share" />
 
                     <ImageView
                         android:id="@+id/balanceCompletedTaskImageView"
@@ -62,7 +61,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_completed_task"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/camera" />
 
                 </LinearLayout>
 
@@ -92,7 +92,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_shared"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/share" />
 
                     <ImageView
                         android:id="@+id/contrastCompletedTaskImageView"
@@ -100,7 +101,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_completed_task"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/camera" />
 
                 </LinearLayout>
 
@@ -130,7 +132,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_shared"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/share" />
 
                     <ImageView
                         android:id="@+id/emphasisCompletedTaskImageView"
@@ -138,7 +141,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_completed_task"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/camera" />
 
                 </LinearLayout>
 
@@ -168,7 +172,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_shared"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/share" />
 
                     <ImageView
                         android:id="@+id/patternCompletedTaskImageView"
@@ -176,7 +181,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_completed_task"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/camera" />
 
                 </LinearLayout>
 
@@ -206,7 +212,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_shared"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/share" />
 
                     <ImageView
                         android:id="@+id/rhythmCompletedTaskImageView"
@@ -214,7 +221,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_completed_task"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/camera" />
 
                 </LinearLayout>
 
@@ -244,7 +252,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_shared"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/share" />
 
                     <ImageView
                         android:id="@+id/spaceCompletedTaskImageView"
@@ -252,7 +261,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_completed_task"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/camera" />
 
                 </LinearLayout>
 
@@ -282,7 +292,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_shared"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/share" />
 
                     <ImageView
                         android:id="@+id/unityCompletedTaskImageView"
@@ -290,7 +301,8 @@
                         android:layout_height="48dp"
                         android:padding="8dp"
                         android:src="@drawable/ic_completed_task"
-                        app:tint="@color/light_grey" />
+                        app:tint="@color/grey"
+                        android:contentDescription="@string/camera" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
