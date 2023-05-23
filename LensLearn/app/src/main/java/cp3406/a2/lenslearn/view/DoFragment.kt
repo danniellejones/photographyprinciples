@@ -112,7 +112,13 @@ class DoFragment : Fragment() {
                     // Save filepath and show toast
                     capturedImagePath = output.savedUri?.toString()  // Absolute Path
                     Log.d(TAG, "Photo capture successful: ${output.savedUri?.path}")
-                    Toast.makeText(requireContext(), R.string.capture_success_message, Toast.LENGTH_SHORT).show()
+                    if (photoCount < 3) {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.capture_success_message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
                     // Add path to room database
                     capturedImagePath?.let { it1 -> categoryViewModel.addNewUserImage(it1) }
@@ -121,7 +127,11 @@ class DoFragment : Fragment() {
                     // After three photographs are taken, move to share fragment
                     photoCount++
                     if (photoCount == MAX_PHOTOS) {
-                        Toast.makeText(requireContext(), R.string.capture_success_message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.capture_success_final_message,
+                            Toast.LENGTH_LONG
+                        ).show()
                         photoCount = 0
                         findNavController().navigate(R.id.action_doFragment_to_shareFragment)
                     }
