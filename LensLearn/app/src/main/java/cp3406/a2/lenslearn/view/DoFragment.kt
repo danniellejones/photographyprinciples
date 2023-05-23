@@ -112,7 +112,7 @@ class DoFragment : Fragment() {
                     // Save filepath and show toast
                     capturedImagePath = output.savedUri?.toString()  // Absolute Path
                     Log.d(TAG, "Photo capture successful: ${output.savedUri?.path}")
-                    if (photoCount < 3) {
+                    if (photoCount < 2) {
                         Toast.makeText(
                             requireContext(),
                             R.string.capture_success_message,

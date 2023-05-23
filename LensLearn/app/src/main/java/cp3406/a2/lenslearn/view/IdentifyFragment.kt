@@ -1,30 +1,27 @@
 package cp3406.a2.lenslearn.view
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
-import android.content.pm.PackageManager
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.FragmentIdentifyBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
-import cp3406.a2.lenslearn.sensors.Accelerometer
-import cp3406.a2.lenslearn.sensors.SwipeGestureDetector
 import cp3406.a2.lenslearn.sensors.GestureEventListener
+import cp3406.a2.lenslearn.sensors.SwipeGestureDetector
 
 private const val TAG = "IdentifyFragment"
+private const val CORRECT_LIMIT = 3
+private const val INCORRECT_LIMIT = 3
 
 class IdentifyFragment : Fragment(), GestureEventListener {
 
@@ -53,8 +50,7 @@ class IdentifyFragment : Fragment(), GestureEventListener {
         // Observe category id changes and generate a new set of images
         categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) { categoryId ->
             categoryId?.let {
-                Log.d(TAG, "Inside observer of selected cat id")
-                categoryViewModel.getIdentifyImagesList(2, 4)
+                categoryViewModel.getIdentifyImagesList(CORRECT_LIMIT, INCORRECT_LIMIT)
                 Log.d(TAG, "Images: ${categoryViewModel.identifyImagesList.value}")
             }
         }
@@ -75,12 +71,11 @@ class IdentifyFragment : Fragment(), GestureEventListener {
 
     /** Handle swipe right gesture */
     override fun onSwipeRight() {
-        // Compare category id to selected category id if selectedCategoryId == currentCategoryId = correct
-        showToast(requireContext(), "Swiped Right!")
-        categoryViewModel.checkImageCorrect(currentIndex, "right")
-        // If no more images navigate to the next view
+        // Compare selectedCategoryId == currentCategoryId = correct
+        val isCorrect = categoryViewModel.checkImageCorrect(currentIndex, "right")
+        if (isCorrect) { showToast(requireContext(), "Correct!")}
+        // Show results
         if (categoryViewModel.totalImages.value?.minus(1) == currentIndex) {
-//            findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
             showResultDialog(categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!)
         }
         else {
@@ -91,13 +86,12 @@ class IdentifyFragment : Fragment(), GestureEventListener {
 
     /** Handle swipe left gesture */
     override fun onSwipeLeft() {
-        // Compare category id to selected category id if selectedCategoryId != currentCategoryId = correct
-        showToast(requireContext(), "Swiped Left!")
-        categoryViewModel.checkImageCorrect(currentIndex, "left")
-        // If no more images navigate to the next view
+        // Compare selectedCategoryId != currentCategoryId = correct
+        val isCorrect = categoryViewModel.checkImageCorrect(currentIndex, "left")
+        if (isCorrect) { showToast(requireContext(), "Correct!")}
+        // Show results
         if (categoryViewModel.totalImages.value?.minus(1) == currentIndex) {
             showResultDialog(categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!)
-//            findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
         }
         else {
             currentIndex++

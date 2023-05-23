@@ -15,17 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-<!--        <TextView-->
-<!--            android:id="@+id/titleTextView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/dark_blue"-->
-<!--            android:gravity="center"-->
-<!--            android:padding="16dp"-->
-<!--            android:text="@string/stats"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="24sp"-->
-<!--            android:textStyle="bold" />-->
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -302,8 +292,20 @@
                         android:src="@drawable/ic_completed_task"
                         app:tint="@color/light_grey" />
                 </LinearLayout>
-
             </LinearLayout>
         </ScrollView>
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_blue"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/home"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </layout>

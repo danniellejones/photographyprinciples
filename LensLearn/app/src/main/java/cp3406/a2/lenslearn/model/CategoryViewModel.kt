@@ -199,19 +199,24 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /** Check correct images by comparing selected category id to image category id */
-    fun checkImageCorrect(index: Int, leftOrRight: String) {
+    fun checkImageCorrect(index: Int, leftOrRight: String): Boolean {
+        var isCorrect = false
         if (leftOrRight == "right") {
             if (_selectedCategoryId.value == identifyImagesList.value?.get(index)?.categoryId) {
                 _correctCount.value = _correctCount.value!! + 1
+                isCorrect = true
             }
         } else if (leftOrRight == "left") {
             if (_selectedCategoryId.value != identifyImagesList.value?.get(index)?.categoryId) {
                 _correctCount.value = _correctCount.value!! + 1
+                isCorrect = true
             }
         } else {
             Log.i(LOG_TAG, "Error in checking image correct")
         }
+
         Log.i(LOG_TAG, "Correct Answers: ${_correctCount.value} / ${_totalImages.value}")
+        return isCorrect
     }
 
 

@@ -34,6 +34,7 @@
     <string name="next">Next</string>
     <string name="task">My Task</string>
     <string name="take_photo">Take Photo</string>
+    <string name="home">Return to Categories</string>
 
     <!-- Content Descriptions and Accessibility -->
     <string name="landing_icon_description">Lens Learn Icon</string>
