@@ -1,17 +1,16 @@
 package cp3406.a2.lenslearn.sensors
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.view.GestureDetectorCompat
 import cp3406.a2.lenslearn.model.CategoryViewModel
-import kotlin.math.sqrt
 import kotlin.math.abs
+import kotlin.math.sqrt
 
 /** Use Accelerometer for shaking the device */
 class Accelerometer(context: Context, categoryViewModel: CategoryViewModel) : AndroidSensor(
@@ -39,13 +38,11 @@ class Accelerometer(context: Context, categoryViewModel: CategoryViewModel) : An
 }
 
 /** TODO: Use rotation sensors for photographing at different angles */
-//class Rotation(context: Context) : AndroidSensor(
+//class Rotation(context: Context, categoryViewModel: CategoryViewModel) : AndroidSensor(
 //    context = context,
 //    sensorFeature = PackageManager.FEATURE_SENSOR_GYROSCOPE,
-//    sensorType = Sensor.TYPE_ROTATION_VECTOR
-//) {
-//
-//}
+//    sensorType = Sensor.TYPE_ROTATION_VECTOR,
+//    categoryViewModel = categoryViewModel) {}
 
 /** Use Swipe Gestures for image identification */
 class SwipeGestureDetector(
@@ -60,8 +57,8 @@ class SwipeGestureDetector(
         gestureDetector = GestureDetector(context, GestureListener())
     }
 
+    @SuppressLint("ClickableViewAccessibility")  // TODO: Improve Accessibility
     override fun onTouch(view: View, event: MotionEvent): Boolean {
-//        Log.d("Sensor", "onTouch: $event")
         return gestureDetector.onTouchEvent(event)
     }
 
@@ -70,7 +67,7 @@ class SwipeGestureDetector(
         private val swipeVelocityThreshold = 5
 
         override fun onDown(e: MotionEvent): Boolean {
-            return true
+            return true  // Must be set to true for swipe to work
         }
 
         override fun onFling(
@@ -81,7 +78,6 @@ class SwipeGestureDetector(
         ): Boolean {
             val diffX = e2.x - e1.x
             val diffY = e2.y - e1.y
-//            Log.d("Sensor", "diffX: $diffX, diffY: $diffY")
 
             if (abs(diffX) > abs(diffY)) {
                 if (abs(diffX) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {

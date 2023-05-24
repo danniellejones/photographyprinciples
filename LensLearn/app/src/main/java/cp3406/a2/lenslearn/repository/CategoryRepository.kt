@@ -6,17 +6,18 @@
 package cp3406.a2.lenslearn.repository
 
 import android.content.Context
-import android.util.Log
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import cp3406.a2.lenslearn.data.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 const val FILENAME_CATEGORIES = "category_data.json"
 const val FILENAME_IMAGES = "image_data.json"
 const val FILENAME_TASKS = "task_data.json"
-private const val TAG = "CategoryRepository"
 
 class CategoryRepository(private val context: Context) {
 
@@ -25,10 +26,6 @@ class CategoryRepository(private val context: Context) {
     private var isDataInitialised: Boolean = false
 
     init {
-        // Connect Room database to Repository
-//        val categoryDatabase = CategoryDatabase.getInstance(context)
-//        categoryDao = categoryDatabase.categoryDao()
-
         // Check if there is data, if not initialise data
         runDataEmptyCheck()
         if (!isDataInitialised) {
@@ -41,7 +38,6 @@ class CategoryRepository(private val context: Context) {
         val jsonStringCategory = readJsonFile(context, FILENAME_CATEGORIES)
         val jsonStringImage = readJsonFile(context, FILENAME_IMAGES)
         val jsonStringTask = readJsonFile(context, FILENAME_TASKS)
-        //        Log.i(TAG, "JSON STRING: $jsonStringCategory \n $jsonStringImage \n $jsonStringTask")
 
         // Parse Json String data into Entities List
         val categories: List<CategoryEntity> = parseJsonToEntity(jsonStringCategory)
@@ -63,28 +59,13 @@ class CategoryRepository(private val context: Context) {
                 }
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
-                Log.i(TAG, "Error In Fetching Data for Null Check")
             }
         }
     }
 
     /** Read .json file return as string */
     private fun readJsonFile(context: Context, fileName: String): String {
-        Log.d(TAG, "Read Json File")
-        return context.assets.open(fileName)
-            .bufferedReader()
-            .use { it.readText() }
-    }
-
-    /** TESTING ONLY Parse Json string and derive category entity */
-    private fun parseJsonToCategoryEntity(jsonString: String): List<CategoryEntity> {
-        val moshi = Moshi.Builder().build()
-        Log.d(TAG, "Enter Parse")
-        val listType = Types.newParameterizedType(List::class.java, CategoryEntity::class.java)
-        Log.d(TAG, "List Type Created")
-        val categoryAdapter: JsonAdapter<List<CategoryEntity>> = moshi.adapter(listType)
-        Log.d(TAG, "Category Adapter done")
-        return categoryAdapter.fromJson(jsonString) ?: emptyList()
+        return context.assets.open(fileName).bufferedReader().use { it.readText() }
     }
 
     /** Parse Json string and derive entities */
@@ -97,15 +78,10 @@ class CategoryRepository(private val context: Context) {
 
     /** Insert entities into Room Database */
     private fun insertCategoryEntityData(
-        categories: List<CategoryEntity>,
-        images: List<ImageEntity>,
-        tasks: List<TaskEntity>
+        categories: List<CategoryEntity>, images: List<ImageEntity>, tasks: List<TaskEntity>
     ) {
-
-        Log.d(TAG, "Categories: $categories")
-        Log.d(TAG, "Images: $images")
-        Log.d(TAG, "Tasks: $tasks")
         CoroutineScope(Dispatchers.IO).launch {
+            // Not Null checks are required, at runtime throw error
             if (categories != null) {
                 categoryDao.insertCategories(categories)
             }
@@ -125,13 +101,11 @@ class CategoryRepository(private val context: Context) {
 
     /** Get a category by category Id */
     suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
-        Log.d("CategoryRepository", "categoryId passed: $categoryId")
         return categoryDao.getCategory(categoryId)
     }
 
     /** Get the selected category by using category Id */
     suspend fun getSelectedCategory(selectedCategoryId: Int): CategoryEntity? {
-        Log.d("CategoryRepository", "categoryId passed: $selectedCategoryId")
         return categoryDao.getSelectedCategory(selectedCategoryId)
     }
 
@@ -152,10 +126,7 @@ class CategoryRepository(private val context: Context) {
 
     /** Update the progress of a category */
     suspend fun updateCategoryProgress(
-        categoryId: Int,
-        hasShared: Boolean,
-        hasCompletedTask: Boolean,
-        progressPercentage: Int
+        categoryId: Int, hasShared: Boolean, hasCompletedTask: Boolean, progressPercentage: Int
     ) {
         val progress = UserProgress(
             categoryId = categoryId,
