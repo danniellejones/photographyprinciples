@@ -1,7 +1,6 @@
 package cp3406.a2.lenslearn.bindingadapters
 
 import android.annotation.SuppressLint
-import android.graphics.PorterDuff
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
@@ -38,15 +37,15 @@ fun ImageView.setImageFromFilename(filename: String?) {
 /** Use Glide image library to set photographs from storage device */
 @BindingAdapter("imagePath")
 fun ImageView.setImagePath(imagePath: String?) {
-    if (!imagePath.isNullOrEmpty()) {
+    visibility = if (!imagePath.isNullOrEmpty()) {
         Glide.with(context)
             .load(Uri.parse(imagePath))
             .placeholder(R.drawable.img_default)
             .error(R.drawable.img_broken)
             .into(this)
-        visibility = View.VISIBLE
+        View.VISIBLE
     } else {
-        visibility = View.GONE
+        View.GONE
     }
 }
 
@@ -58,9 +57,9 @@ fun setHasCompletedTaskImageTint(
 ) {
     val context = imageView.context
     val tintColorResId = if (hasCompletedTask) {
-        R.color.mid_purple // hasShared complete
+        R.color.mid_purple
     } else {
-        R.color.grey // Default
+        R.color.grey // Incomplete
     }
     val tintColor = ContextCompat.getColor(context, tintColorResId)
     imageView.setColorFilter(tintColor)
@@ -80,9 +79,9 @@ fun setHasSharedImageTint(
 ) {
     val context = imageView.context
     val tintColorResId = if (hasShared) {
-        R.color.mid_purple // hasShared complete
+        R.color.mid_purple
     } else {
-        R.color.grey // Default
+        R.color.grey // Incomplete
     }
     val tintColor = ContextCompat.getColor(context, tintColorResId)
     imageView.setColorFilter(tintColor)
