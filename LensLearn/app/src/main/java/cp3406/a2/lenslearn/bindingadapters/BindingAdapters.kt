@@ -1,3 +1,7 @@
+/**
+ * Binding Adapters for data binding views.
+ */
+
 package cp3406.a2.lenslearn.bindingadapters
 
 import android.annotation.SuppressLint

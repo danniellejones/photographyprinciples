@@ -2,23 +2,13 @@
  * Category View Model links the Repository and the View (Activity/Fragment).
  * This is a shared view model between the category activity and all fragments.
  * The purpose is to retrieve and perform operations on the data ready for display.
- *
- * Notes:
- *
- * Use viewModelScope.launch to perform asynchronous operation across multiple fragments.
- * This will be linked to the view model lifecycle.
- *
- * Use suspend to perform asynchronous operation in a single fragment.
- * Prevents the main thread from being blocked when retrieving/loading is slower.
  */
 
 package cp3406.a2.lenslearn.model
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.bumptech.glide.Glide.init
 import cp3406.a2.lenslearn.data.*
 import cp3406.a2.lenslearn.repository.CategoryRepository
 import kotlinx.coroutines.launch
@@ -30,8 +20,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
 
     private val categoryRepository: CategoryRepository
 
-//    private var currentIndex: Int = 0
-
     /** Set Up the Live Data */
 
     // CATEGORY - Select Category from on Click Event
@@ -42,8 +30,8 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     private val _currentCategory = MutableLiveData<CategoryEntity>()
     val currentCategory: MutableLiveData<CategoryEntity> = _currentCategory
 
-    private val _isShaken: MutableLiveData<Boolean> = MutableLiveData()  // Private
-    val isShaken: LiveData<Boolean> = _isShaken  // Public
+    private val _isShaken: MutableLiveData<Boolean> = MutableLiveData()
+    val isShaken: LiveData<Boolean> = _isShaken
 
     // IDENTIFY - Retrieve both correct and incorrect images, track correct answers over total
     private val _identifyImagesList: MutableLiveData<List<ImageEntity>> = MutableLiveData()
@@ -84,16 +72,14 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
 
     /** Initialise the connection between the View Model and the Repository */
     init {
-        Log.i(LOG_TAG, "Category View Model Init")
+        categoryRepository = CategoryRepository(app)
+
         // Initialise start values
         _selectedCategoryId.value = 0
         _isShaken.value = false
         _currentImageFileName.value = "img_default"
         _correctCount.value = 0
         _totalImages.value = 0
-
-//        val categoryDao = CategoryDatabase.getInstance(app).categoryDao()
-        categoryRepository = CategoryRepository(app)
     }
 
     /** Set new Category Id */
@@ -128,14 +114,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         Log.i(LOG_TAG, "Shake Change: ${_isShaken.value.toString()}")
     }
 
-    /** Retrieve the category by a specified category Id */
-    fun retrieveCategoryById(categoryId: Int) {
-        viewModelScope.launch {
-            val category = categoryRepository.getCategoryById(categoryId)
-            _currentCategory.value = category!!
-        }
-    }
-
     /** Retrieve the category by the selected category Id */
     fun retrieveSelectedCategory() {
         viewModelScope.launch {
@@ -150,7 +128,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         correctLimit: Int,
         incorrectLimit: Int
     ) {
-        Log.i(LOG_TAG, "Getting Identify Images List")
         runBlocking {
             val correctImages =
                 _selectedCategoryId.value?.let {
@@ -159,7 +136,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
                         correctLimit
                     )
                 }
-            Log.i(LOG_TAG, "Correct Images: $correctImages")
             val incorrectImages =
                 _selectedCategoryId.value?.let {
                     categoryRepository.getIncorrectIdentifyImages(
@@ -167,7 +143,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
                         incorrectLimit
                     )
                 }
-            Log.i(LOG_TAG, "Incorrect Images: $incorrectImages")
 
             // Combined incorrect and correct images
             val combinedList = mutableListOf<ImageEntity>()
@@ -177,7 +152,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
             if (incorrectImages != null) {
                 combinedList.addAll(incorrectImages)
             }
-            Log.i(LOG_TAG, "Combined Images: $combinedList")
 
             _identifyImagesList.value = combinedList
             Log.i(LOG_TAG, "IdentifyImagesList Images: ${_identifyImagesList.value}")
@@ -189,7 +163,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     /** Update total size of Identify Image List */
     private fun updateTotalImages() {
         _totalImages.value = _identifyImagesList.value?.size
-        Log.i(LOG_TAG, "Total Size of Identify Images: ${_totalImages.value}")
     }
 
     /** Go to next Identify Image from Identify Image List */
@@ -211,7 +184,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
                 isCorrect = true
             }
         } else {
-            Log.i(LOG_TAG, "Error in checking image correct")
+            Log.i(LOG_TAG, "Error: Check Correct Image")
         }
 
         Log.i(LOG_TAG, "Correct Answers: ${_correctCount.value} / ${_totalImages.value}")
@@ -222,13 +195,16 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     /** Get last image taken by user for share fragment */
     fun getLastUserImageForLastTask(callback: (Boolean) -> Unit) {
         viewModelScope.launch {
+            // Retrieve and check
             val userImageEntity = categoryRepository.getLastUserImageForLastTask()
-            Log.d(LOG_TAG, "Last User Image Entity: $userImageEntity")
             val hasImage = userImageEntity != null
+            Log.d(LOG_TAG, "Last User Image Entity: $userImageEntity")
+
+            // Assign value
             if (hasImage) {
                 _lastUserImageForLastTask.value = userImageEntity!!
             } else {
-                Log.d(LOG_TAG, "There is no image for the last")
+                Log.d(LOG_TAG, "Error: No User Image")
             }
             callback.invoke(hasImage)
         }
@@ -237,13 +213,16 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     /** Get second last image taken by user for share fragment */
     fun getSecondLastUserImageForLastTask(callback: (Boolean) -> Unit) {
         viewModelScope.launch {
+            // Retrieve and check
             val userImageEntity = categoryRepository.getSecondLastUserImageForLastTask()
-            Log.d(LOG_TAG, "Second Last User Image Entity: $userImageEntity")
             val hasImage = userImageEntity != null
+            Log.d(LOG_TAG, "Second Last User Image Entity: $userImageEntity")
+
+            // Assign value
             if (hasImage) {
                 _secondLastUserImageForLastTask.value = userImageEntity!!
             } else {
-                Log.d(LOG_TAG, "There is no image for the last")
+                Log.d(LOG_TAG, "Error: No User Image")
             }
             callback.invoke(hasImage)
         }
@@ -252,13 +231,16 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     /** Get third last image taken by user for share fragment */
     fun getThirdLastUserImageForLastTask(callback: (Boolean) -> Unit) {
         viewModelScope.launch {
+            // Retrieve and check
             val userImageEntity = categoryRepository.getThirdLastUserImageForLastTask()
-            Log.d(LOG_TAG, "Third Last User Image Entity: $userImageEntity")
             val hasImage = userImageEntity != null
+            Log.d(LOG_TAG, "Third Last User Image Entity: $userImageEntity")
+
+            // Assign value
             if (hasImage) {
                 _thirdLastUserImageForLastTask.value = userImageEntity!!
             } else {
-                Log.d(LOG_TAG, "There is no image for the last")
+                Log.d(LOG_TAG, "Error: No User Image")
             }
             callback.invoke(hasImage)
         }
@@ -272,16 +254,17 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-
     /** Update the user progress percentage */
     fun updateProgressPercentage() {
         viewModelScope.launch {
+            // Calculate progress
             val correctCount = _correctCount.value ?: 0
             val totalImages = _totalImages.value ?: 0
             val userProgress =
                 categoryRepository.getUserProgressByCategoryId(selectedCategoryId.value!!)
             val progressNumber = ((correctCount.toFloat() / totalImages) * 100).toInt()
-            Log.i(LOG_TAG, "Progress: $progressNumber from $correctCount / $totalImages")
+
+            // Assign value by update or insert
             if (userProgress != null) {
                 userProgress.progressPercentage = progressNumber
                 categoryRepository.updateUserProgress(userProgress)
@@ -296,8 +279,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
 
-        // Reset correct count
-        _correctCount.value = 0
+        _correctCount.value = 0  // Reset correct count
     }
 
     /** Update the user progress has shared */
@@ -346,19 +328,4 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
             userProgressList.find { it.categoryId == categoryId }
         }
     }
-
-    suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
-        return categoryRepository.getCategoryById(categoryId)
-    }
-
-    // Get the image resource ID based on the file name
-    @SuppressLint("DiscouragedApi")
-    fun getImageResId(fileName: String): Int {
-        val resources = getApplication<Application>().resources
-        val packageName = getApplication<Application>().packageName
-
-        // Assuming your images are stored in the "drawable" directory
-        return resources.getIdentifier(fileName, "drawable", packageName)
-    }
-
 }
