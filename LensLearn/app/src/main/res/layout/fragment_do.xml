@@ -25,6 +25,7 @@
             android:layout_height="match_parent"
             android:alpha="0.5"
             android:contentDescription="@string/overlay_image"
+            android:scaleType="fitXY"
             app:imageFromFilename="@{categoryViewModel.randomTask.filename}"
             tools:src="@drawable/img_default" />
 
@@ -32,9 +33,12 @@
             android:id="@+id/taskDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:padding="8dp"
             android:text="@{categoryViewModel.randomTask.description}"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:visibility="visible"
             tools:ignore="RelativeOverlap" />

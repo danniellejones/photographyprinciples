@@ -1,30 +1,26 @@
+/** Use swipe gestures to determine if the image belongs to the category. */
 package cp3406.a2.lenslearn.view
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
-import android.content.pm.PackageManager
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.FragmentIdentifyBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
-import cp3406.a2.lenslearn.sensors.Accelerometer
-import cp3406.a2.lenslearn.sensors.SwipeGestureDetector
 import cp3406.a2.lenslearn.sensors.GestureEventListener
+import cp3406.a2.lenslearn.sensors.SwipeGestureDetector
 
-private const val TAG = "IdentifyFragment"
+private const val CORRECT_LIMIT = 2
+private const val INCORRECT_LIMIT = 6
 
 class IdentifyFragment : Fragment(), GestureEventListener {
 
@@ -41,9 +37,8 @@ class IdentifyFragment : Fragment(), GestureEventListener {
     /** Bind data to view, initialise view model and observe live data */
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
 
         // Inflate with data binding, set lifecycle owner and attach shared view model
         binding = FragmentIdentifyBinding.inflate(inflater, container, false)
@@ -53,17 +48,14 @@ class IdentifyFragment : Fragment(), GestureEventListener {
         // Observe category id changes and generate a new set of images
         categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) { categoryId ->
             categoryId?.let {
-                Log.d(TAG, "Inside observer of selected cat id")
-                categoryViewModel.getIdentifyImagesList(2, 4)
-                Log.d(TAG, "Images: ${categoryViewModel.identifyImagesList.value}")
+                categoryViewModel.getIdentifyImagesList(CORRECT_LIMIT, INCORRECT_LIMIT)
             }
         }
 
-        // Observe changes to the images list and reset index
+        // Observe changes to the images list
         categoryViewModel.identifyImagesList.observe(viewLifecycleOwner) {
             currentIndex = 0  // When list changes, reset index to first image
             categoryViewModel.setImageFileNameToIndex(currentIndex)
-            Log.d(TAG, "Current Filename: ${categoryViewModel.currentImageFileName.value}")
         }
 
         // Set up gesture detection and touch listener
@@ -73,17 +65,31 @@ class IdentifyFragment : Fragment(), GestureEventListener {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        if(categoryViewModel.identifyImagesList == null) {
+            categoryViewModel.getIdentifyImagesList(CORRECT_LIMIT, INCORRECT_LIMIT)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        categoryViewModel.resetIdentifyImagesList()
+    }
+
     /** Handle swipe right gesture */
     override fun onSwipeRight() {
-        // Compare category id to selected category id if selectedCategoryId == currentCategoryId = correct
-        showToast(requireContext(), "Swiped Right!")
-        categoryViewModel.checkImageCorrect(currentIndex, "right")
-        // If no more images navigate to the next view
-        if (categoryViewModel.totalImages.value?.minus(1) == currentIndex) {
-//            findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
-            showResultDialog(categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!)
+        // Check answer
+        val isCorrect = categoryViewModel.checkImageCorrect(currentIndex, "right")
+        if (isCorrect) {
+            showToast(requireContext(), "Correct!")
         }
-        else {
+        // Show results
+        if (categoryViewModel.totalImages.value?.minus(1) == currentIndex) {
+            showResultDialog(
+                categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!
+            )
+        } else {
             currentIndex++
             categoryViewModel.setImageFileNameToIndex(currentIndex)
         }
@@ -91,15 +97,17 @@ class IdentifyFragment : Fragment(), GestureEventListener {
 
     /** Handle swipe left gesture */
     override fun onSwipeLeft() {
-        // Compare category id to selected category id if selectedCategoryId != currentCategoryId = correct
-        showToast(requireContext(), "Swiped Left!")
-        categoryViewModel.checkImageCorrect(currentIndex, "left")
-        // If no more images navigate to the next view
-        if (categoryViewModel.totalImages.value?.minus(1) == currentIndex) {
-            showResultDialog(categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!)
-//            findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
+        // Check answer
+        val isCorrect = categoryViewModel.checkImageCorrect(currentIndex, "left")
+        if (isCorrect) {
+            showToast(requireContext(), "Correct!")
         }
-        else {
+        // Show results
+        if (categoryViewModel.totalImages.value?.minus(1) == currentIndex) {
+            showResultDialog(
+                categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!
+            )
+        } else {
             currentIndex++
             categoryViewModel.setImageFileNameToIndex(currentIndex)
         }
@@ -114,13 +122,13 @@ class IdentifyFragment : Fragment(), GestureEventListener {
     private fun showResultDialog(correctCount: Int, totalImages: Int) {
         val message = getString(R.string.results_message).format(correctCount, totalImages)
 
-        val dialogBuilder = AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.results_title))
-            .setMessage(message)
-            .setPositiveButton(getString(R.string.next)) { dialog, _ ->
-                dialog.dismiss()
-                findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
-            }
+        val dialogBuilder =
+            AlertDialog.Builder(requireContext()).setTitle(getString(R.string.results_title))
+                .setMessage(message).setPositiveButton(getString(R.string.next)) { dialog, _ ->
+                    dialog.dismiss()
+                    categoryViewModel.updateProgressPercentage()
+                    findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
+                }
 
         // Customize dialog appearance
         val dialog = dialogBuilder.create()

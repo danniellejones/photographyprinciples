@@ -1,3 +1,7 @@
+/**
+ * Room Database Dao.
+ */
+
 package cp3406.a2.lenslearn.data
 
 import androidx.room.*
@@ -33,9 +37,13 @@ interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUserImage(userImageEntity: UserImageEntity)
 
-    /** Update User Progress */
+    /** Add New User Progress */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdateProgress(progress: UserProgress)
+    suspend fun insertUserProgress(progress: UserProgress)
+
+    /** Update User Progress */
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateUserProgress(progress: UserProgress)
 
     /** Update Category Entity */
     @Update(onConflict = OnConflictStrategy.REPLACE)
@@ -66,18 +74,26 @@ interface CategoryDao {
     suspend fun getRandomTask(selectedCategoryId: Int): TaskEntity?
 
     /** Get Last User Image Taken */
-    @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task) ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM user_image ORDER BY id DESC LIMIT 1")
     suspend fun getLastUserImageForLastTask(): UserImageEntity?
 
     /** Get Second Last User Image Taken */
-    @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task ORDER BY id DESC LIMIT 1, 1) ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM user_image ORDER BY id DESC LIMIT 1 OFFSET 1")
     suspend fun getSecondLastUserImageForLastTask(): UserImageEntity?
 
     /** Get Third Last User Image Taken */
-    @Query("SELECT * FROM user_image WHERE taskId = (SELECT MAX(id) FROM task ORDER BY id DESC LIMIT 2, 1) ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM user_image ORDER BY id DESC LIMIT 1 OFFSET 2")
     suspend fun getThirdLastUserImageForLastTask(): UserImageEntity?
 
-    /** Delete All Records */
+    /** Get User Progress by Id */
+    @Query("SELECT * FROM progress WHERE categoryId = :categoryId")
+    suspend fun getUserProgressByCategoryId(categoryId: Int): UserProgress?
+
+    /** Get All User Progress for All Categories */
+    @Query("SELECT * FROM progress")
+    suspend fun getAllUserProgress(): List<UserProgress>
+
+    /** Delete All Category Records */
     @Query("DELETE FROM category")
     suspend fun deleteAll()
 

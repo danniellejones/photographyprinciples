@@ -1,15 +1,18 @@
+/**
+ * Binding Adapters for data binding views.
+ */
+
 package cp3406.a2.lenslearn.bindingadapters
 
 import android.annotation.SuppressLint
-import android.app.Application
-import android.util.Log
+import android.net.Uri
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
+import android.widget.ProgressBar
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import cp3406.a2.lenslearn.R
-import cp3406.a2.lenslearn.data.CategoryEntity
-import cp3406.a2.lenslearn.model.CategoryViewModel
 
 /** Read filename from Room Data and set image to image view */
 @SuppressLint("DiscouragedApi")
@@ -35,9 +38,56 @@ fun ImageView.setImageFromFilename(filename: String?) {
     }
 }
 
-//@BindingAdapter("app:hideIfNull")
-//fun hideIfNull(view: View, value: Int) {
-//
-//    // app:hideIfNull="@{categoryViewModel.value}"
-//    view.visibility = if (value == 0) View.GONE else View.VISIBLE
-//}
+/** Use Glide image library to set photographs from storage device */
+@BindingAdapter("imagePath")
+fun ImageView.setImagePath(imagePath: String?) {
+    visibility = if (!imagePath.isNullOrEmpty()) {
+        Glide.with(context)
+            .load(Uri.parse(imagePath))
+            .placeholder(R.drawable.img_default)
+            .error(R.drawable.img_broken)
+            .into(this)
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
+}
+
+/** Change appearance on stats based on task progress */
+@BindingAdapter("app:hasCompletedTask")
+fun setHasCompletedTaskImageTint(
+    imageView: ImageView,
+    hasCompletedTask: Boolean
+) {
+    val context = imageView.context
+    val tintColorResId = if (hasCompletedTask) {
+        R.color.mid_purple
+    } else {
+        R.color.grey // Incomplete
+    }
+    val tintColor = ContextCompat.getColor(context, tintColorResId)
+    imageView.setColorFilter(tintColor)
+}
+
+/** Change appearance on stats based on share progress */
+@BindingAdapter("app:progressPercentage")
+fun setProgressBarProgress(progressBar: ProgressBar, progressPercentage: Int) {
+    progressBar.progress = progressPercentage
+}
+
+/** Change appearance on stats based on share progress */
+@BindingAdapter("app:hasShared")
+fun setHasSharedImageTint(
+    imageView: ImageView,
+    hasShared: Boolean
+) {
+    val context = imageView.context
+    val tintColorResId = if (hasShared) {
+        R.color.mid_purple
+    } else {
+        R.color.grey // Incomplete
+    }
+    val tintColor = ContextCompat.getColor(context, tintColorResId)
+    imageView.setColorFilter(tintColor)
+}
+

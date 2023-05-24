@@ -1,3 +1,6 @@
+/**
+ * Entities for the Room database.
+ */
 package cp3406.a2.lenslearn.data
 
 import androidx.room.Entity
@@ -69,19 +72,21 @@ data class UserImageEntity(
 )
 
 // Table to hold user progress
-@Entity(tableName = "progress",
+@Entity(
+    tableName = "progress",
     foreignKeys = [ForeignKey(
         entity = CategoryEntity::class,
         parentColumns = ["id"],
         childColumns = ["categoryId"],
         onDelete = ForeignKey.CASCADE
-    )])
+    )]
+)
 @JsonClass(generateAdapter = true)
 data class UserProgress(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val categoryId: Int,
-    val hasShared: Boolean,
-    val hasCompletedTask: Boolean,
-    val progressPercentage: Int,
+    var hasShared: Boolean,
+    var hasCompletedTask: Boolean,
+    var progressPercentage: Int,
 )
 

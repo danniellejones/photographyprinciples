@@ -1,3 +1,6 @@
+/**
+ * Abstract sensor class specific to Android sensors for common purposes.
+ */
 package cp3406.a2.lenslearn.sensors
 
 import android.content.Context
@@ -22,6 +25,7 @@ abstract class AndroidSensor(
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     private val sensor: Sensor? = sensorManager.getDefaultSensor(sensorType)
 
+    /** Start listening to sensor */
     override fun startListening() {
         if (!doesSensorExist || sensor == null) {
             return
@@ -29,6 +33,7 @@ abstract class AndroidSensor(
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
     }
 
+    /** Stop listening to sensor */
     override fun stopListening() {
         if (sensor == null) {
             return
@@ -36,6 +41,7 @@ abstract class AndroidSensor(
         sensorManager.unregisterListener(this)
     }
 
+    /** Sensor change */
     override fun onSensorChanged(event: SensorEvent?) {
         if (!doesSensorExist) {
             return
@@ -45,6 +51,7 @@ abstract class AndroidSensor(
         }
     }
 
+    /** Sensor Accuracy Change */
     override fun onAccuracyChanged(sensor: Sensor?, p1: Int) = Unit
 
 }

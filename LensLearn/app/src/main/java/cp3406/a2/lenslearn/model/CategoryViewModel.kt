@@ -2,29 +2,14 @@
  * Category View Model links the Repository and the View (Activity/Fragment).
  * This is a shared view model between the category activity and all fragments.
  * The purpose is to retrieve and perform operations on the data ready for display.
- *
- * Notes:
- *
- * Use viewModelScope.launch to perform asynchronous operation across multiple fragments.
- * This will be linked to the view model lifecycle.
- *
- * Use suspend to perform asynchronous operation in a single fragment.
- * Prevents the main thread from being blocked when retrieving/loading is slower.
  */
 
 package cp3406.a2.lenslearn.model
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import cp3406.a2.lenslearn.data.CategoryEntity
-import cp3406.a2.lenslearn.data.ImageEntity
-import cp3406.a2.lenslearn.data.TaskEntity
-import cp3406.a2.lenslearn.data.UserImageEntity
+import androidx.lifecycle.*
+import cp3406.a2.lenslearn.data.*
 import cp3406.a2.lenslearn.repository.CategoryRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -34,8 +19,7 @@ private const val LOG_TAG = "CategoryViewModel"
 class CategoryViewModel(app: Application) : AndroidViewModel(app) {
 
     private val categoryRepository: CategoryRepository
-
-//    private var currentIndex: Int = 0
+    private var isIdentifyImagesListGenerated = false
 
     /** Set Up the Live Data */
 
@@ -47,8 +31,8 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     private val _currentCategory = MutableLiveData<CategoryEntity>()
     val currentCategory: MutableLiveData<CategoryEntity> = _currentCategory
 
-    private val _isShaken: MutableLiveData<Boolean> = MutableLiveData()  // Private
-    val isShaken: LiveData<Boolean> = _isShaken  // Public
+    private val _isShaken: MutableLiveData<Boolean> = MutableLiveData()
+    val isShaken: LiveData<Boolean> = _isShaken
 
     // IDENTIFY - Retrieve both correct and incorrect images, track correct answers over total
     private val _identifyImagesList: MutableLiveData<List<ImageEntity>> = MutableLiveData()
@@ -68,29 +52,45 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     val randomTask: LiveData<TaskEntity> = _randomTask
 
     // SHARE - Last three images taken by the user
-    private val _lastUserImageForLastTask: MutableLiveData<UserImageEntity?> = MutableLiveData()
-    private val _secondLastUserImageForLastTask: MutableLiveData<UserImageEntity?> =
+    private val _lastUserImageForLastTask: MutableLiveData<UserImageEntity> = MutableLiveData()
+    val lastUserImageForLastTask: LiveData<UserImageEntity> = _lastUserImageForLastTask
+
+    private val _secondLastUserImageForLastTask: MutableLiveData<UserImageEntity> =
         MutableLiveData()
-    private val _thirdLastUserImageForLastTask: MutableLiveData<UserImageEntity?> =
+    val secondLastUserImageForLastTask: LiveData<UserImageEntity> = _secondLastUserImageForLastTask
+
+    private val _thirdLastUserImageForLastTask: MutableLiveData<UserImageEntity> =
         MutableLiveData()
+    val thirdLastUserImageForLastTask: LiveData<UserImageEntity> = _thirdLastUserImageForLastTask
+
+    private val _imagePathToShare: MutableLiveData<String> = MutableLiveData()
+    var imagePathToShare: LiveData<String> = _imagePathToShare
+
+    // STATS - Progress, has Shared and has Completed Task
+    private val _progressEntities: MutableLiveData<List<UserProgress>> = MutableLiveData()
+    var progressEntities: LiveData<List<UserProgress>> = _progressEntities
+
 
     /** Initialise the connection between the View Model and the Repository */
     init {
-        Log.i(LOG_TAG, "Category View Model Init")
+        categoryRepository = CategoryRepository(app)
+
         // Initialise start values
         _selectedCategoryId.value = 0
         _isShaken.value = false
         _currentImageFileName.value = "img_default"
         _correctCount.value = 0
         _totalImages.value = 0
-
-//        val categoryDao = CategoryDatabase.getInstance(app).categoryDao()
-        categoryRepository = CategoryRepository(app)
     }
 
     /** Set new Category Id */
     fun setCategoryId(newCategoryId: Int) {
         _selectedCategoryId.value = newCategoryId
+    }
+
+    /** Set image path */
+    fun setImagePath(selectedPath: String) {
+        _imagePathToShare.value = selectedPath
     }
 
     /** Retrieve a random task */
@@ -105,7 +105,7 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     fun addNewUserImage(path: String) {
         viewModelScope.launch {
             val newUserImageEntity = UserImageEntity(taskId = randomTask.value!!.id, path = path)
-                categoryRepository.insertUserImage(newUserImageEntity)
+            categoryRepository.insertUserImage(newUserImageEntity)
         }
     }
 
@@ -113,14 +113,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     fun toggleShaken() {
         _isShaken.value = !_isShaken.value!!
         Log.i(LOG_TAG, "Shake Change: ${_isShaken.value.toString()}")
-    }
-
-    /** Retrieve the category by a specified category Id */
-    fun retrieveCategoryById(categoryId: Int) {
-        viewModelScope.launch {
-            val category = categoryRepository.getCategoryById(categoryId)
-            _currentCategory.value = category!!
-        }
     }
 
     /** Retrieve the category by the selected category Id */
@@ -137,7 +129,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
         correctLimit: Int,
         incorrectLimit: Int
     ) {
-        Log.i(LOG_TAG, "Getting Identify Images List")
         runBlocking {
             val correctImages =
                 _selectedCategoryId.value?.let {
@@ -146,7 +137,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
                         correctLimit
                     )
                 }
-            Log.i(LOG_TAG, "Correct Images: $correctImages")
             val incorrectImages =
                 _selectedCategoryId.value?.let {
                     categoryRepository.getIncorrectIdentifyImages(
@@ -154,7 +144,6 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
                         incorrectLimit
                     )
                 }
-            Log.i(LOG_TAG, "Incorrect Images: $incorrectImages")
 
             // Combined incorrect and correct images
             val combinedList = mutableListOf<ImageEntity>()
@@ -164,18 +153,26 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
             if (incorrectImages != null) {
                 combinedList.addAll(incorrectImages)
             }
-            Log.i(LOG_TAG, "Combined Images: $combinedList")
+
+            combinedList.shuffle()
 
             _identifyImagesList.value = combinedList
             Log.i(LOG_TAG, "IdentifyImagesList Images: ${_identifyImagesList.value}")
 
             updateTotalImages()
+            isIdentifyImagesListGenerated = true
         }
     }
 
+    /** Reset Identify Image List */
+    fun resetIdentifyImagesList() {
+        _identifyImagesList.value = emptyList()
+        isIdentifyImagesListGenerated = false
+    }
+
+    /** Update total size of Identify Image List */
     private fun updateTotalImages() {
         _totalImages.value = _identifyImagesList.value?.size
-        Log.i(LOG_TAG, "Total Size of Identify Images: ${_totalImages.value}")
     }
 
     /** Go to next Identify Image from Identify Image List */
@@ -184,60 +181,161 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     /** Check correct images by comparing selected category id to image category id */
-    fun checkImageCorrect(index: Int, leftOrRight: String) {
+    fun checkImageCorrect(index: Int, leftOrRight: String): Boolean {
+        var isCorrect = false
         if (leftOrRight == "right") {
             if (_selectedCategoryId.value == identifyImagesList.value?.get(index)?.categoryId) {
                 _correctCount.value = _correctCount.value!! + 1
+                isCorrect = true
             }
         } else if (leftOrRight == "left") {
             if (_selectedCategoryId.value != identifyImagesList.value?.get(index)?.categoryId) {
                 _correctCount.value = _correctCount.value!! + 1
+                isCorrect = true
             }
         } else {
-            Log.i(LOG_TAG, "Error in checking image correct")
+            Log.i(LOG_TAG, "Error: Check Correct Image")
         }
+
         Log.i(LOG_TAG, "Correct Answers: ${_correctCount.value} / ${_totalImages.value}")
+        return isCorrect
     }
 
 
     /** Get last image taken by user for share fragment */
-    fun getLastUserImageForLastTask(): LiveData<UserImageEntity?> {
-        return _lastUserImageForLastTask
+    fun getLastUserImageForLastTask(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            // Retrieve and check
+            val userImageEntity = categoryRepository.getLastUserImageForLastTask()
+            val hasImage = userImageEntity != null
+            Log.d(LOG_TAG, "Last User Image Entity: $userImageEntity")
+
+            // Assign value
+            if (hasImage) {
+                _lastUserImageForLastTask.value = userImageEntity!!
+            } else {
+                Log.d(LOG_TAG, "Error: No User Image")
+            }
+            callback.invoke(hasImage)
+        }
     }
 
     /** Get second last image taken by user for share fragment */
-    fun getSecondLastUserImageForLastTask(): LiveData<UserImageEntity?> {
-        return _secondLastUserImageForLastTask
+    fun getSecondLastUserImageForLastTask(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            // Retrieve and check
+            val userImageEntity = categoryRepository.getSecondLastUserImageForLastTask()
+            val hasImage = userImageEntity != null
+            Log.d(LOG_TAG, "Second Last User Image Entity: $userImageEntity")
+
+            // Assign value
+            if (hasImage) {
+                _secondLastUserImageForLastTask.value = userImageEntity!!
+            } else {
+                Log.d(LOG_TAG, "Error: No User Image")
+            }
+            callback.invoke(hasImage)
+        }
     }
 
     /** Get third last image taken by user for share fragment */
-    fun getThirdLastUserImageForLastTask(): LiveData<UserImageEntity?> {
-        return _thirdLastUserImageForLastTask
+    fun getThirdLastUserImageForLastTask(callback: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            // Retrieve and check
+            val userImageEntity = categoryRepository.getThirdLastUserImageForLastTask()
+            val hasImage = userImageEntity != null
+            Log.d(LOG_TAG, "Third Last User Image Entity: $userImageEntity")
+
+            // Assign value
+            if (hasImage) {
+                _thirdLastUserImageForLastTask.value = userImageEntity!!
+            } else {
+                Log.d(LOG_TAG, "Error: No User Image")
+            }
+            callback.invoke(hasImage)
+        }
     }
 
-    suspend fun retrieveUserImagesForLastTask() {
-        val lastImage = categoryRepository.getLastUserImageForLastTask()
-        val secondLastImage = categoryRepository.getSecondLastUserImageForLastTask()
-        val thirdLastImage = categoryRepository.getThirdLastUserImageForLastTask()
-
-        // Update LiveData with image results
-        _lastUserImageForLastTask.postValue(lastImage)
-        _secondLastUserImageForLastTask.postValue(secondLastImage)
-        _thirdLastUserImageForLastTask.postValue(thirdLastImage)
+    /** Get all user progress for stats */
+    fun getAllUserProgress() {
+        viewModelScope.launch {
+            val allUserProgress = categoryRepository.getAllUserProgress()
+            _progressEntities.value = allUserProgress
+        }
     }
 
-    suspend fun getCategoryById(categoryId: Int): CategoryEntity? {
-        return categoryRepository.getCategoryById(categoryId)
+    /** Update the user progress percentage */
+    fun updateProgressPercentage() {
+        viewModelScope.launch {
+            // Calculate progress
+            val correctCount = _correctCount.value ?: 0
+            val totalImages = _totalImages.value ?: 0
+            val userProgress =
+                categoryRepository.getUserProgressByCategoryId(selectedCategoryId.value!!)
+            val progressNumber = ((correctCount.toFloat() / totalImages) * 100).toInt()
+
+            // Assign value by update or insert
+            if (userProgress != null) {
+                userProgress.progressPercentage = progressNumber
+                categoryRepository.updateUserProgress(userProgress)
+            } else {
+                val newProgress = UserProgress(
+                    categoryId = selectedCategoryId.value!!,
+                    hasShared = false,
+                    hasCompletedTask = false,
+                    progressPercentage = progressNumber
+                )
+                categoryRepository.insertUserProgress(newProgress)
+            }
+        }
+
+        _correctCount.value = 0  // Reset correct count
     }
 
-    // Get the image resource ID based on the file name
-    @SuppressLint("DiscouragedApi")
-    fun getImageResId(fileName: String): Int {
-        val resources = getApplication<Application>().resources
-        val packageName = getApplication<Application>().packageName
-
-        // Assuming your images are stored in the "drawable" directory
-        return resources.getIdentifier(fileName, "drawable", packageName)
+    /** Update the user progress has shared */
+    fun updateHasShared(hasShared: Boolean) {
+        viewModelScope.launch {
+            val userProgress =
+                categoryRepository.getUserProgressByCategoryId(selectedCategoryId.value!!)
+            if (userProgress != null) {
+                userProgress.hasShared = hasShared
+                categoryRepository.updateUserProgress(userProgress)
+            } else {
+                val newProgress = UserProgress(
+                    categoryId = selectedCategoryId.value!!,
+                    hasShared = hasShared,
+                    hasCompletedTask = false,
+                    progressPercentage = 0
+                )
+                categoryRepository.insertUserProgress(newProgress)
+            }
+        }
     }
 
+    /** Update the user progress has completed task */
+    fun updateHasCompletedTask(hasCompletedTask: Boolean) {
+        viewModelScope.launch {
+            val userProgress =
+                categoryRepository.getUserProgressByCategoryId(selectedCategoryId.value!!)
+            if (userProgress != null) {
+                userProgress.hasCompletedTask = hasCompletedTask
+                categoryRepository.updateUserProgress(userProgress)
+            } else {
+                val newProgress = UserProgress(
+                    categoryId = selectedCategoryId.value!!,
+                    hasShared = false,
+                    hasCompletedTask = hasCompletedTask,
+                    progressPercentage = 0
+                )
+                categoryRepository.insertUserProgress(newProgress)
+            }
+        }
+    }
+
+    /** Method to get specific category for stats data binding */
+    fun getUserProgressByCategoryId(categoryId: Int): LiveData<UserProgress?> {
+        return Transformations.map(progressEntities) { userProgressList ->
+            userProgressList.find { it.categoryId == categoryId }
+        }
+    }
 }

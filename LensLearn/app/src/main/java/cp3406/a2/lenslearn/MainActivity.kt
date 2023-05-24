@@ -1,16 +1,10 @@
+/** Landing screen for the application title. */
 package cp3406.a2.lenslearn
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import android.widget.Button
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
+import androidx.appcompat.app.AppCompatActivity
 import cp3406.a2.lenslearn.view.CategoryActivity
 
 class MainActivity : AppCompatActivity() {
