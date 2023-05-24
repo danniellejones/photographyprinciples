@@ -1,25 +1,24 @@
+/** Read the definition and detail information on the category. */
 package cp3406.a2.lenslearn.view
 
 import android.Manifest
 import android.content.pm.PackageManager
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import cp3406.a2.lenslearn.R
-import cp3406.a2.lenslearn.data.CategoryEntity
 import cp3406.a2.lenslearn.databinding.FragmentLearningBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
 import cp3406.a2.lenslearn.sensors.Accelerometer
-import kotlinx.coroutines.launch
+
+private const val LOG_TAG = "LearningFragment"
 
 class LearningFragment : Fragment() {
 
@@ -42,8 +41,6 @@ class LearningFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("LearningFragment", "Learning Fragment Start of OnCreateView")
-
         // Inflate with data binding, set lifecycle owner and attach shared view model
         binding = FragmentLearningBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -78,7 +75,7 @@ class LearningFragment : Fragment() {
         // Observe device shake change and display Log when shake detected
         categoryViewModel.isShaken.observe(viewLifecycleOwner) { shakeDetected ->
             if (shakeDetected) {
-                Log.d("LearningFragment", "Is Shaken: $shakeDetected")
+                Log.d(LOG_TAG, "Shaken: $shakeDetected")
             }
         }
     }

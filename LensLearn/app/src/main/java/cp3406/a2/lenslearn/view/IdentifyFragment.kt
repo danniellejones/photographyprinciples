@@ -1,10 +1,10 @@
+/** Use swipe gestures to determine if the image belongs to the category. */
 package cp3406.a2.lenslearn.view
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
@@ -19,9 +19,8 @@ import cp3406.a2.lenslearn.model.CategoryViewModel
 import cp3406.a2.lenslearn.sensors.GestureEventListener
 import cp3406.a2.lenslearn.sensors.SwipeGestureDetector
 
-private const val TAG = "IdentifyFragment"
-private const val CORRECT_LIMIT = 3
-private const val INCORRECT_LIMIT = 3
+private const val CORRECT_LIMIT = 2
+private const val INCORRECT_LIMIT = 6
 
 class IdentifyFragment : Fragment(), GestureEventListener {
 
@@ -38,9 +37,8 @@ class IdentifyFragment : Fragment(), GestureEventListener {
     /** Bind data to view, initialise view model and observe live data */
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
 
         // Inflate with data binding, set lifecycle owner and attach shared view model
         binding = FragmentIdentifyBinding.inflate(inflater, container, false)
@@ -51,15 +49,13 @@ class IdentifyFragment : Fragment(), GestureEventListener {
         categoryViewModel.selectedCategoryId.observe(viewLifecycleOwner) { categoryId ->
             categoryId?.let {
                 categoryViewModel.getIdentifyImagesList(CORRECT_LIMIT, INCORRECT_LIMIT)
-                Log.d(TAG, "Images: ${categoryViewModel.identifyImagesList.value}")
             }
         }
 
-        // Observe changes to the images list and reset index
+        // Observe changes to the images list
         categoryViewModel.identifyImagesList.observe(viewLifecycleOwner) {
             currentIndex = 0  // When list changes, reset index to first image
             categoryViewModel.setImageFileNameToIndex(currentIndex)
-            Log.d(TAG, "Current Filename: ${categoryViewModel.currentImageFileName.value}")
         }
 
         // Set up gesture detection and touch listener
@@ -69,16 +65,31 @@ class IdentifyFragment : Fragment(), GestureEventListener {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        if(categoryViewModel.identifyImagesList == null) {
+            categoryViewModel.getIdentifyImagesList(CORRECT_LIMIT, INCORRECT_LIMIT)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        categoryViewModel.resetIdentifyImagesList()
+    }
+
     /** Handle swipe right gesture */
     override fun onSwipeRight() {
-        // Compare selectedCategoryId == currentCategoryId = correct
+        // Check answer
         val isCorrect = categoryViewModel.checkImageCorrect(currentIndex, "right")
-        if (isCorrect) { showToast(requireContext(), "Correct!")}
+        if (isCorrect) {
+            showToast(requireContext(), "Correct!")
+        }
         // Show results
         if (categoryViewModel.totalImages.value?.minus(1) == currentIndex) {
-            showResultDialog(categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!)
-        }
-        else {
+            showResultDialog(
+                categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!
+            )
+        } else {
             currentIndex++
             categoryViewModel.setImageFileNameToIndex(currentIndex)
         }
@@ -86,14 +97,17 @@ class IdentifyFragment : Fragment(), GestureEventListener {
 
     /** Handle swipe left gesture */
     override fun onSwipeLeft() {
-        // Compare selectedCategoryId != currentCategoryId = correct
+        // Check answer
         val isCorrect = categoryViewModel.checkImageCorrect(currentIndex, "left")
-        if (isCorrect) { showToast(requireContext(), "Correct!")}
+        if (isCorrect) {
+            showToast(requireContext(), "Correct!")
+        }
         // Show results
         if (categoryViewModel.totalImages.value?.minus(1) == currentIndex) {
-            showResultDialog(categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!)
-        }
-        else {
+            showResultDialog(
+                categoryViewModel.correctCount.value!!, categoryViewModel.totalImages.value!!
+            )
+        } else {
             currentIndex++
             categoryViewModel.setImageFileNameToIndex(currentIndex)
         }
@@ -108,14 +122,13 @@ class IdentifyFragment : Fragment(), GestureEventListener {
     private fun showResultDialog(correctCount: Int, totalImages: Int) {
         val message = getString(R.string.results_message).format(correctCount, totalImages)
 
-        val dialogBuilder = AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.results_title))
-            .setMessage(message)
-            .setPositiveButton(getString(R.string.next)) { dialog, _ ->
-                dialog.dismiss()
-                categoryViewModel.updateProgressPercentage()
-                findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
-            }
+        val dialogBuilder =
+            AlertDialog.Builder(requireContext()).setTitle(getString(R.string.results_title))
+                .setMessage(message).setPositiveButton(getString(R.string.next)) { dialog, _ ->
+                    dialog.dismiss()
+                    categoryViewModel.updateProgressPercentage()
+                    findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
+                }
 
         // Customize dialog appearance
         val dialog = dialogBuilder.create()

@@ -1,3 +1,4 @@
+/** Select an image from photography task and share on social media. */
 package cp3406.a2.lenslearn.view
 
 import android.Manifest
@@ -30,6 +31,7 @@ class ShareFragment : Fragment() {
 
     // Permissions for share
     private val requestCode = 2
+
     @RequiresApi(Build.VERSION_CODES.R)
     private val permissions = arrayOf(
         Manifest.permission.MANAGE_EXTERNAL_STORAGE,
@@ -39,9 +41,8 @@ class ShareFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
 
         // Inflate with data binding, set lifecycle owner and attach shared view model
         binding = FragmentShareBinding.inflate(inflater, container, false)
@@ -50,42 +51,57 @@ class ShareFragment : Fragment() {
 
         // Retrieve images from the saved filepath and set click listeners for share
         categoryViewModel.getLastUserImageForLastTask { hasImage ->
-            Log.i(TAG, "Last Has image = $hasImage")
             if (hasImage) {
                 binding.thumbnailImageTop.setOnClickListener {
                     categoryViewModel.setImagePath(categoryViewModel.lastUserImageForLastTask.value?.path.toString())
                     Log.i(TAG, "Image Path to Share: ${categoryViewModel.imagePathToShare.value}")
+                    binding.thumbnailImageTop.scaleX = 1.2f
+                    binding.thumbnailImageTop.scaleY = 1.2f
+                    binding.thumbnailImageMiddle.scaleX = 1.0f
+                    binding.thumbnailImageMiddle.scaleY = 1.0f
+                    binding.thumbnailImageBottom.scaleX = 1.0f
+                    binding.thumbnailImageBottom.scaleY = 1.0f
                 }
             }
         }
         categoryViewModel.getSecondLastUserImageForLastTask { hasImage ->
-            Log.i(TAG, "Second Last Has image = $hasImage")
             if (hasImage) {
                 binding.thumbnailImageMiddle.setOnClickListener {
                     categoryViewModel.setImagePath(categoryViewModel.secondLastUserImageForLastTask.value?.path.toString())
                     Log.i(TAG, "Image Path to Share: ${categoryViewModel.imagePathToShare.value}")
+                    binding.thumbnailImageTop.scaleX = 1.0f
+                    binding.thumbnailImageTop.scaleY = 1.0f
+                    binding.thumbnailImageMiddle.scaleX = 1.2f
+                    binding.thumbnailImageMiddle.scaleY = 1.2f
+                    binding.thumbnailImageBottom.scaleX = 1.0f
+                    binding.thumbnailImageBottom.scaleY = 1.0f
                 }
             }
         }
         categoryViewModel.getThirdLastUserImageForLastTask { hasImage ->
-            Log.i(TAG, "Third Last Has image = $hasImage")
             if (hasImage) {
                 binding.thumbnailImageBottom.setOnClickListener {
                     categoryViewModel.setImagePath(categoryViewModel.thirdLastUserImageForLastTask.value?.path.toString())
                     Log.i(TAG, "Image Path to Share: ${categoryViewModel.imagePathToShare.value}")
+                    binding.thumbnailImageTop.scaleX = 1.0f
+                    binding.thumbnailImageTop.scaleY = 1.0f
+                    binding.thumbnailImageMiddle.scaleX = 1.0f
+                    binding.thumbnailImageMiddle.scaleY = 1.0f
+                    binding.thumbnailImageBottom.scaleX = 1.2f
+                    binding.thumbnailImageBottom.scaleY = 1.2f
                 }
             }
         }
 
         // Handle share with share button click
-        binding.share2Button.setOnClickListener{
+        binding.share2Button.setOnClickListener {
             requestPermissions()
             handleShare()
             categoryViewModel.updateHasShared(true)
         }
 
         // Navigate to stats fragment
-        binding.toStatsFragmentButton.setOnClickListener{
+        binding.toStatsFragmentButton.setOnClickListener {
             findNavController().navigate(R.id.action_shareFragment_to_statsFragment)
         }
         return binding.root
@@ -96,16 +112,13 @@ class ShareFragment : Fragment() {
     private fun requestPermissions() {
         val permissionsToRequest = permissions.filter {
             ContextCompat.checkSelfPermission(
-                requireContext(),
-                it
+                requireContext(), it
             ) != PackageManager.PERMISSION_GRANTED
         }
 
         if (permissionsToRequest.isNotEmpty()) {
             ActivityCompat.requestPermissions(
-                requireActivity(),
-                permissionsToRequest.toTypedArray(),
-                requestCode
+                requireActivity(), permissionsToRequest.toTypedArray(), requestCode
             )
         }
     }
@@ -113,7 +126,6 @@ class ShareFragment : Fragment() {
     /** Handle share image on social media menu item */
     private fun handleShare(): Boolean {
         try {
-            Log.i(TAG, "Enter Share")
             val pathName = binding.categoryViewModel?.imagePathToShare.toString()
             if (pathName.isNotEmpty()) {
                 val intent = Intent().apply {
@@ -124,7 +136,7 @@ class ShareFragment : Fragment() {
                 startActivity(intent)
             }
         } catch (e: Exception) {
-            Log.i(TAG, "No Images Available")
+            Log.i(TAG, "Error: No Image Available")
         }
         return true
     }

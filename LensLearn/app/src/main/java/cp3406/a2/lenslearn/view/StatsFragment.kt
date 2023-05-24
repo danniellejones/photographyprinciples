@@ -1,3 +1,4 @@
+/** Display progress to user. */
 package cp3406.a2.lenslearn.view
 
 import androidx.lifecycle.ViewModelProvider
@@ -17,10 +18,11 @@ class StatsFragment : Fragment() {
     private val categoryViewModel: CategoryViewModel by lazy {
         ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
     }
+
+    /** Set up binding, get progress data and start click listeners */
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
 
         // Inflate with data binding, set lifecycle owner and attach shared view model
         binding = FragmentStatsBinding.inflate(inflater, container, false)
@@ -29,10 +31,6 @@ class StatsFragment : Fragment() {
 
         categoryViewModel.getAllUserProgress()
 
-        categoryViewModel.progressEntities.observe(viewLifecycleOwner) {progressEntities ->
-
-        }
-
         // Navigate back to categories fragment
         binding.returnToCategories.setOnClickListener {
             findNavController().navigate(R.id.action_statsFragment_to_categoryFragment)
@@ -40,5 +38,4 @@ class StatsFragment : Fragment() {
 
         return binding.root
     }
-
 }

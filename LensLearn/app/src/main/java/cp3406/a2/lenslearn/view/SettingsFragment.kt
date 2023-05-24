@@ -1,15 +1,14 @@
+/** Uses SharedPreferences for settings. */
 package cp3406.a2.lenslearn.view
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
-import android.Manifest
 import cp3406.a2.lenslearn.R
 
 class SettingsFragment : PreferenceFragmentCompat() {

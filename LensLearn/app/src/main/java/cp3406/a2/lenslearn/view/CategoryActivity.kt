@@ -1,31 +1,27 @@
+/** Category Activity hosts all fragments and the controls menu navigation */
 package cp3406.a2.lenslearn.view
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.onNavDestinationSelected
 import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.ActivityCategoryBinding
-import androidx.navigation.findNavController
-import androidx.navigation.ui.onNavDestinationSelected
-import cp3406.a2.lenslearn.model.CategoryViewModel
 
-private const val LOG_TAG2 = "CategoryActivity"
+private const val LOG_TAG = "CategoryActivity"
 
 class CategoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCategoryBinding
-    private val categoryVewModel: CategoryViewModel by viewModels()
     private lateinit var navController: NavController
 
     /** Connect data binding and set up navigation */
@@ -33,7 +29,6 @@ class CategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // Inflate
         binding = DataBindingUtil.setContentView(this, R.layout.activity_category)
-        Log.d(LOG_TAG2, "Category Activity is reached")
 
         // Add Navigation Bar and Navigation Graph
         val navHostFragment =
@@ -47,10 +42,10 @@ class CategoryActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
-        // Only show share option if there is a path to share
+        // TODO: Dynamic menu - Show if path to share, hidden but doesn't show up dynamically
         val shareMenuItem = menu?.findItem(R.id.shareImplicitIntent)
         val imagePathToShare = binding.categoryViewModel?.imagePathToShare.toString()
-        Log.i(LOG_TAG2, "Image path to share from menu: $imagePathToShare")
+        // Null check required at runtime
         shareMenuItem?.isVisible = !(imagePathToShare != null && imagePathToShare != "")
         return true
     }
@@ -66,7 +61,6 @@ class CategoryActivity : AppCompatActivity() {
         }
     }
 
-
     /** Handle share image on social media menu item */
     private fun handleShare(): Boolean {
         try {
@@ -75,12 +69,12 @@ class CategoryActivity : AppCompatActivity() {
                 val intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     type = "image/jpeg"
-                    putExtra(Intent.EXTRA_STREAM, Uri.parse(pathName))
+                    putExtra(Intent.EXTRA_STREAM, Uri.parse(pathName))  // TODO: Fix file format
                 }
                 startActivity(intent)
             }
         } catch (e: Exception) {
-            Log.i(LOG_TAG2, "No Images Available")
+            Log.i(LOG_TAG, "Error: No Image Available")
         }
         return true
     }

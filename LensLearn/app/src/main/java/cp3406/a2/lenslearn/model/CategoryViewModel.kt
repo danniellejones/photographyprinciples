@@ -19,6 +19,7 @@ private const val LOG_TAG = "CategoryViewModel"
 class CategoryViewModel(app: Application) : AndroidViewModel(app) {
 
     private val categoryRepository: CategoryRepository
+    private var isIdentifyImagesListGenerated = false
 
     /** Set Up the Live Data */
 
@@ -153,11 +154,20 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
                 combinedList.addAll(incorrectImages)
             }
 
+            combinedList.shuffle()
+
             _identifyImagesList.value = combinedList
             Log.i(LOG_TAG, "IdentifyImagesList Images: ${_identifyImagesList.value}")
 
             updateTotalImages()
+            isIdentifyImagesListGenerated = true
         }
+    }
+
+    /** Reset Identify Image List */
+    fun resetIdentifyImagesList() {
+        _identifyImagesList.value = emptyList()
+        isIdentifyImagesListGenerated = false
     }
 
     /** Update total size of Identify Image List */

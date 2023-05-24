@@ -1,3 +1,4 @@
+/** Displays the categories for selection. */
 package cp3406.a2.lenslearn.view
 
 import androidx.lifecycle.ViewModelProvider
@@ -20,9 +21,8 @@ class CategoryFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         // Inflate with data binding
         binding = FragmentCategoryBinding.inflate(inflater, container, false)
 
@@ -64,7 +64,7 @@ class CategoryFragment : Fragment() {
         if (R.string.unknown != categoryName) {
             messagePrefix = getString(R.string.selected_category_message)
         }
-        val message =  messagePrefix + " " + getString(categoryName)
+        val message = messagePrefix + " " + getString(categoryName)
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 }

@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/statsFragment"
         android:name="cp3406.a2.lenslearn.view.StatsFragment"
-        android:label="Stats">
+        android:label="Your Progress">
         <action
             android:id="@+id/action_statsFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />

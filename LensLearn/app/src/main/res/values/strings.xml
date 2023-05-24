@@ -12,7 +12,7 @@
     <string name="category_rhythm">Rhythm</string>
     <string name="category_space">Space</string>
     <string name="category_unity">Unity</string>
-    <string name="stats">Stats</string>
+    <string name="stats">Progress</string>
     <string name="results_title">Results</string>
 
     <!-- Preferences -->
@@ -42,6 +42,7 @@
     <string name="identify_image_description">A photograph to identify the principle in...</string>
     <string name="image_preview">Image Preview</string>
     <string name="overlay_image">Overlay Image</string>
+    <string name="camera">Camera</string>
 
     <!-- Instructions and Content -->
     <string name="instructions">Select A Category to Start Your Learning Journey!</string>
@@ -64,6 +65,5 @@
                         updateImage(image: Image): Updates an existing image in the local database.
                         deleteImage(image: Image): Deletes an image from the local database.
     </string>
-    <string name="camera">Camera</string>
 
 </resources>

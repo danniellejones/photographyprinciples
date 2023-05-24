@@ -19,7 +19,7 @@ class Accelerometer(context: Context, categoryViewModel: CategoryViewModel) : An
     sensorType = Sensor.TYPE_ACCELEROMETER,
     categoryViewModel = categoryViewModel
 ) {
-    private val shakeThreshold = 15f
+    private val shakeThreshold = 10f
 
     override fun onSensorChanged(event: SensorEvent?) {
         super.onSensorChanged(event)
