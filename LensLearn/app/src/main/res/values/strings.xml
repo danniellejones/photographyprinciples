@@ -53,6 +53,8 @@
     <string name="results_message">You got %d correct out of %d. Well done!</string>
     <string name="capture_success_message">Successful Photo Capture, Keep Going!</string>
     <string name="capture_success_final_message">Successful Photo Capture, you successfully completed the task great job!</string>
+    <string name="unknown">Choose a Category to Begin!</string>
+    <string name="selected_category_message">Selected Category: </string>
 
     <!-- Placeholders and Testing -->
     <string name="category">Category</string>

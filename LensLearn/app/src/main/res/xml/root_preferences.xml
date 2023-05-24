@@ -4,7 +4,7 @@
 
         <SwitchPreference
             app:defaultValue="false"
-            app:key="dark_theme_activate"
+            app:key="dark_theme_preference"
             app:summary="@string/dark_theme_summary"
             app:title="@string/dark_theme_title" />
 
@@ -14,13 +14,13 @@
 
         <SwitchPreference
             app:defaultValue="true"
-            app:key="camera_permission"
+            app:key="camera_permission_preference"
             app:summary="@string/camera_permission_summary"
             app:title="@string/camera_permission_title" />
 
         <SwitchPreference
             app:defaultValue="true"
-            app:key="internet_permission"
+            app:key="internet_permission_preference"
             app:summary="@string/internet_permission_summary"
             app:title="@string/internet_permission_title" />
 

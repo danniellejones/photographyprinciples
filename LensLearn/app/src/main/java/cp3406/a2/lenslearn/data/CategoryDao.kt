@@ -89,7 +89,7 @@ interface CategoryDao {
     @Query("SELECT * FROM progress")
     suspend fun getAllUserProgress(): List<UserProgress>
 
-    /** Delete All Records */
+    /** Delete All Category Records */
     @Query("DELETE FROM category")
     suspend fun deleteAll()
 

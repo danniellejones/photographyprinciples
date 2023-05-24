@@ -19,18 +19,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         const val INTERNET_PERMISSION_REQUEST_CODE = 101
     }
 
-//    private lateinit var userSettingsDao: UserSettingsDao
-//    private lateinit var userSettings: UserSettings
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        userSettingsDao = MyRoomDatabase.getDatabase(ContentProviderCompat.requireContext()).userSettingsDao()
-//        userSettings = userSettingsDao.getUserSettings() ?: UserSettings()
-    }
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
-//        val darkThemePreference = find
 
         // Add Dark Theme Setting
         val darkThemePreference = findPreference<SwitchPreference>("dark_theme_preference")
@@ -50,31 +40,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         cameraPermissionPreference?.setOnPreferenceChangeListener { _, newValue ->
             val isCameraPermissionEnabled = newValue as Boolean
             if (isCameraPermissionEnabled) {
-                // Request camera permission
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.CAMERA
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        arrayOf(Manifest.permission.CAMERA),
-                        CAMERA_PERMISSION_REQUEST_CODE
-                    )
-                }
+                requestCameraPermission()
             } else {
-                // Revoke camera permission
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.CAMERA
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        arrayOf(Manifest.permission.CAMERA),
-                        CAMERA_PERMISSION_REQUEST_CODE
-                    )
-                }
+                revokeCameraPermission()
             }
             true
         }
@@ -84,34 +52,69 @@ class SettingsFragment : PreferenceFragmentCompat() {
             findPreference<SwitchPreference>("internet_permission_preference")
         internetPermissionPreference?.setOnPreferenceChangeListener { _, newValue ->
             val isInternetPermissionEnabled = newValue as Boolean
+            // Request internet permission
             if (isInternetPermissionEnabled) {
-                // Request internet permission
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.INTERNET
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        arrayOf(Manifest.permission.INTERNET),
-                        INTERNET_PERMISSION_REQUEST_CODE
-                    )
-                }
+                requestInternetPermission()
             } else {
-                // Revoke internet permission
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.INTERNET
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    ActivityCompat.requestPermissions(
-                        requireActivity(),
-                        arrayOf(Manifest.permission.INTERNET),
-                        INTERNET_PERMISSION_REQUEST_CODE
-                    )
-                }
+                revokeInternetPermission()
             }
             true
+        }
+    }
+
+    private fun requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+    private fun revokeCameraPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+    private fun requestInternetPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.INTERNET
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.INTERNET),
+                INTERNET_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+    private fun revokeInternetPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.INTERNET
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.INTERNET),
+                INTERNET_PERMISSION_REQUEST_CODE
+            )
         }
     }
 }

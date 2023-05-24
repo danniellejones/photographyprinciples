@@ -50,6 +50,21 @@ class CategoryFragment : Fragment() {
 
     /** Display the selected category */
     private fun displaySnackBar(categoryId: Int) {
-        Snackbar.make(binding.root, "Category Id: $categoryId", Snackbar.LENGTH_LONG).show()
+        val categoryName = when (categoryId) {
+            1 -> R.string.category_balance
+            2 -> R.string.category_contrast
+            3 -> R.string.category_emphasis
+            4 -> R.string.category_pattern
+            5 -> R.string.category_rhythm
+            6 -> R.string.category_space
+            7 -> R.string.category_unity
+            else -> R.string.unknown
+        }
+        var messagePrefix = ""
+        if (R.string.unknown != categoryName) {
+            messagePrefix = getString(R.string.selected_category_message)
+        }
+        val message =  messagePrefix + " " + getString(categoryName)
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 }
