@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import cp3406.a2.lenslearn.R
 import cp3406.a2.lenslearn.databinding.FragmentStatsBinding
 import cp3406.a2.lenslearn.model.CategoryViewModel
 
@@ -24,6 +26,17 @@ class StatsFragment : Fragment() {
         binding = FragmentStatsBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.categoryViewModel = categoryViewModel
+
+        categoryViewModel.getAllUserProgress()
+
+        categoryViewModel.progressEntities.observe(viewLifecycleOwner) {progressEntities ->
+
+        }
+
+        // Navigate back to categories fragment
+        binding.returnToCategories.setOnClickListener {
+            findNavController().navigate(R.id.action_statsFragment_to_categoryFragment)
+        }
 
         return binding.root
     }

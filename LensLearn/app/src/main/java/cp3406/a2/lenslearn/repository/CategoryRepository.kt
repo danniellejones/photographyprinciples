@@ -163,7 +163,7 @@ class CategoryRepository(private val context: Context) {
             hasCompletedTask = hasCompletedTask,
             progressPercentage = progressPercentage
         )
-        categoryDao.insertOrUpdateProgress(progress)
+        categoryDao.updateUserProgress(progress)
     }
 
     /** Retrieve the last photograph taken by the user for the last task entered */
@@ -184,5 +184,25 @@ class CategoryRepository(private val context: Context) {
     /** Insert a user image into the user image table */
     suspend fun insertUserImage(userImageEntity: UserImageEntity) {
         categoryDao.insertUserImage(userImageEntity)
+    }
+
+    /** Update User Progress */
+    suspend fun updateUserProgress(progressEntity: UserProgress) {
+        categoryDao.updateUserProgress(progressEntity)
+    }
+
+    /** Insert User Progress */
+    suspend fun insertUserProgress(progressEntity: UserProgress) {
+        categoryDao.insertUserProgress(progressEntity)
+    }
+
+    /** Get User Progress by Category Id */
+    suspend fun getUserProgressByCategoryId(categoryId: Int): UserProgress? {
+        return categoryDao.getUserProgressByCategoryId(categoryId)
+    }
+
+    /** Get User Progress for All Categories */
+    suspend fun getAllUserProgress(): List<UserProgress> {
+        return categoryDao.getAllUserProgress()
     }
 }

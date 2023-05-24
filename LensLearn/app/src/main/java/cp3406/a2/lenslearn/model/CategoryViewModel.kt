@@ -17,15 +17,9 @@ package cp3406.a2.lenslearn.model
 import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.bumptech.glide.Glide.init
-import cp3406.a2.lenslearn.data.CategoryEntity
-import cp3406.a2.lenslearn.data.ImageEntity
-import cp3406.a2.lenslearn.data.TaskEntity
-import cp3406.a2.lenslearn.data.UserImageEntity
+import cp3406.a2.lenslearn.data.*
 import cp3406.a2.lenslearn.repository.CategoryRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -82,6 +76,11 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
 
     private val _imagePathToShare: MutableLiveData<String> = MutableLiveData()
     var imagePathToShare: LiveData<String> = _imagePathToShare
+
+    // STATS - Progress, has Shared and has Completed Task
+    private val _progressEntities: MutableLiveData<List<UserProgress>> = MutableLiveData()
+    var progressEntities: LiveData<List<UserProgress>> = _progressEntities
+
 
     /** Initialise the connection between the View Model and the Repository */
     init {
@@ -226,10 +225,9 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
             val userImageEntity = categoryRepository.getLastUserImageForLastTask()
             Log.d(LOG_TAG, "Last User Image Entity: $userImageEntity")
             val hasImage = userImageEntity != null
-            if(hasImage) {
+            if (hasImage) {
                 _lastUserImageForLastTask.value = userImageEntity!!
-            }
-            else {
+            } else {
                 Log.d(LOG_TAG, "There is no image for the last")
             }
             callback.invoke(hasImage)
@@ -242,10 +240,9 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
             val userImageEntity = categoryRepository.getSecondLastUserImageForLastTask()
             Log.d(LOG_TAG, "Second Last User Image Entity: $userImageEntity")
             val hasImage = userImageEntity != null
-            if(hasImage) {
+            if (hasImage) {
                 _secondLastUserImageForLastTask.value = userImageEntity!!
-            }
-            else {
+            } else {
                 Log.d(LOG_TAG, "There is no image for the last")
             }
             callback.invoke(hasImage)
@@ -258,13 +255,95 @@ class CategoryViewModel(app: Application) : AndroidViewModel(app) {
             val userImageEntity = categoryRepository.getThirdLastUserImageForLastTask()
             Log.d(LOG_TAG, "Third Last User Image Entity: $userImageEntity")
             val hasImage = userImageEntity != null
-            if(hasImage) {
+            if (hasImage) {
                 _thirdLastUserImageForLastTask.value = userImageEntity!!
-            }
-            else {
+            } else {
                 Log.d(LOG_TAG, "There is no image for the last")
             }
             callback.invoke(hasImage)
+        }
+    }
+
+    /** Get all user progress for stats */
+    fun getAllUserProgress() {
+        viewModelScope.launch {
+            val allUserProgress = categoryRepository.getAllUserProgress()
+            _progressEntities.value = allUserProgress
+        }
+    }
+
+
+    /** Update the user progress percentage */
+    fun updateProgressPercentage() {
+        viewModelScope.launch {
+            val correctCount = _correctCount.value ?: 0
+            val totalImages = _totalImages.value ?: 0
+            val userProgress =
+                categoryRepository.getUserProgressByCategoryId(selectedCategoryId.value!!)
+            val progressNumber = ((correctCount.toFloat() / totalImages) * 100).toInt()
+            Log.i(LOG_TAG, "Progress: $progressNumber from $correctCount / $totalImages")
+            if (userProgress != null) {
+                userProgress.progressPercentage = progressNumber
+                categoryRepository.updateUserProgress(userProgress)
+            } else {
+                val newProgress = UserProgress(
+                    categoryId = selectedCategoryId.value!!,
+                    hasShared = false,
+                    hasCompletedTask = false,
+                    progressPercentage = progressNumber
+                )
+                categoryRepository.insertUserProgress(newProgress)
+            }
+        }
+
+        // Reset correct count
+        _correctCount.value = 0
+    }
+
+    /** Update the user progress has shared */
+    fun updateHasShared(hasShared: Boolean) {
+        viewModelScope.launch {
+            val userProgress =
+                categoryRepository.getUserProgressByCategoryId(selectedCategoryId.value!!)
+            if (userProgress != null) {
+                userProgress.hasShared = hasShared
+                categoryRepository.updateUserProgress(userProgress)
+            } else {
+                val newProgress = UserProgress(
+                    categoryId = selectedCategoryId.value!!,
+                    hasShared = hasShared,
+                    hasCompletedTask = false,
+                    progressPercentage = 0
+                )
+                categoryRepository.insertUserProgress(newProgress)
+            }
+        }
+    }
+
+    /** Update the user progress has completed task */
+    fun updateHasCompletedTask(hasCompletedTask: Boolean) {
+        viewModelScope.launch {
+            val userProgress =
+                categoryRepository.getUserProgressByCategoryId(selectedCategoryId.value!!)
+            if (userProgress != null) {
+                userProgress.hasCompletedTask = hasCompletedTask
+                categoryRepository.updateUserProgress(userProgress)
+            } else {
+                val newProgress = UserProgress(
+                    categoryId = selectedCategoryId.value!!,
+                    hasShared = false,
+                    hasCompletedTask = hasCompletedTask,
+                    progressPercentage = 0
+                )
+                categoryRepository.insertUserProgress(newProgress)
+            }
+        }
+    }
+
+    /** Method to get specific category for stats data binding */
+    fun getUserProgressByCategoryId(categoryId: Int): LiveData<UserProgress?> {
+        return Transformations.map(progressEntities) { userProgressList ->
+            userProgressList.find { it.categoryId == categoryId }
         }
     }
 

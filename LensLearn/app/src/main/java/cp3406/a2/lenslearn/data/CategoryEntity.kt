@@ -80,8 +80,8 @@ data class UserImageEntity(
 data class UserProgress(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val categoryId: Int,
-    val hasShared: Boolean,
-    val hasCompletedTask: Boolean,
-    val progressPercentage: Int,
+    var hasShared: Boolean,
+    var hasCompletedTask: Boolean,
+    var progressPercentage: Int,
 )
 

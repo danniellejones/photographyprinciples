@@ -153,6 +153,6 @@ class CategoryRepositoryTest {
         )
 
         // Verify that the insertOrUpdateProgress method is called with the correct progress object
-        verify(categoryDao).insertOrUpdateProgress(progress)
+        verify(categoryDao).updateUserProgress(progress)
     }
 }

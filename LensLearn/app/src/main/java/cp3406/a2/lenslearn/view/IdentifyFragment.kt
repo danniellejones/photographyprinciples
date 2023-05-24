@@ -113,6 +113,7 @@ class IdentifyFragment : Fragment(), GestureEventListener {
             .setMessage(message)
             .setPositiveButton(getString(R.string.next)) { dialog, _ ->
                 dialog.dismiss()
+                categoryViewModel.updateProgressPercentage()
                 findNavController().navigate(R.id.action_identifyFragment_to_doFragment)
             }
 

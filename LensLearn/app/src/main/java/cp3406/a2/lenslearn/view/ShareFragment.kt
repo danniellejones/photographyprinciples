@@ -81,6 +81,7 @@ class ShareFragment : Fragment() {
         binding.share2Button.setOnClickListener{
             requestPermissions()
             handleShare()
+            categoryViewModel.updateHasShared(true)
         }
 
         // Navigate to stats fragment

@@ -1,9 +1,12 @@
 package cp3406.a2.lenslearn.bindingadapters
 
 import android.annotation.SuppressLint
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import cp3406.a2.lenslearn.R
@@ -46,3 +49,42 @@ fun ImageView.setImagePath(imagePath: String?) {
         visibility = View.GONE
     }
 }
+
+/** Change appearance on stats based on task progress */
+@BindingAdapter("app:hasCompletedTask")
+fun setHasCompletedTaskImageTint(
+    imageView: ImageView,
+    hasCompletedTask: Boolean
+) {
+    val context = imageView.context
+    val tintColorResId = if (hasCompletedTask) {
+        R.color.mid_purple // hasShared complete
+    } else {
+        R.color.grey // Default
+    }
+    val tintColor = ContextCompat.getColor(context, tintColorResId)
+    imageView.setColorFilter(tintColor)
+}
+
+/** Change appearance on stats based on share progress */
+@BindingAdapter("app:progressPercentage")
+fun setProgressBarProgress(progressBar: ProgressBar, progressPercentage: Int) {
+    progressBar.progress = progressPercentage
+}
+
+/** Change appearance on stats based on share progress */
+@BindingAdapter("app:hasShared")
+fun setHasSharedImageTint(
+    imageView: ImageView,
+    hasShared: Boolean
+) {
+    val context = imageView.context
+    val tintColorResId = if (hasShared) {
+        R.color.mid_purple // hasShared complete
+    } else {
+        R.color.grey // Default
+    }
+    val tintColor = ContextCompat.getColor(context, tintColorResId)
+    imageView.setColorFilter(tintColor)
+}
+

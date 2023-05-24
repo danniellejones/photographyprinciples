@@ -133,6 +133,7 @@ class DoFragment : Fragment() {
                             Toast.LENGTH_LONG
                         ).show()
                         photoCount = 0
+                        categoryViewModel.updateHasCompletedTask(true)
                         findNavController().navigate(R.id.action_doFragment_to_shareFragment)
                     }
                 }
